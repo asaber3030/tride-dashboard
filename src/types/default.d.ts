@@ -16,7 +16,7 @@ export type ApiError<T> = {
 }
 
 export type TLanguage = "ar" | "en"
-export type TSearchParams = Record<string, string | string[] | undefined>
+export type TObject = Record<string, string | string[] | undefined>
 export type TSettingsURL = "roles" | "account"
 
 export type Timestamps = {

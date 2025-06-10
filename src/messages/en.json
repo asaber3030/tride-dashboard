@@ -183,5 +183,27 @@
   "schoolsDescription": "Manage available Schools and control actions & filter.",
   "tripsDescription": "Manage available Trips and control actions & filter.",
   "accountSettings": "Account Settings",
-  "adminRoles": "Admin Roles"
+  "adminRoles": "Admin Roles",
+
+  "forgotPassword": "Forgot Password?",
+  "signIn": "Sign In",
+  "loginWelcomeText": "Welcome to TRide Dashboard",
+  "welcomeBackText": "Welcome back! Please enter your details to sign in.",
+  "passwordLabel": "Password",
+  "sendLink": "Send Link",
+  "backToLogin": "Back to Login",
+  "forgotPasswordDescription": "No worries, we'll send you reset instructions.",
+  "verifyEmailAddress": "Verify Email Address",
+  "weHaveSent": "We have sent a verification link to your email address.",
+  "verify": "Verify",
+  "verificationCode": "Verification Code",
+  "didNotReceiveCode": "Didn't receive the code?",
+  "resend": "Resend",
+  "code": "Code",
+  "back": "Back",
+  "enterYourEmail": "Enter your email",
+  "enterYourPassword": "Enter your password",
+  "todaysTrip": "Today's Trip",
+  "pendingRequests": "Pending Requests",
+  "pendingPayments": "Pending Payments"
 }

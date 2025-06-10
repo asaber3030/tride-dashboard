@@ -1,16 +1,29 @@
 import axios from "axios"
 
-import { API_URL } from "./constants"
+import { API_URL, AUTH_COOKIE } from "./constants"
 
 import { loadDefaultHeaders } from "./api"
-import { ApiError, ApiResponse } from "@/types/default"
+import { ApiError, ApiResponse, TObject } from "@/types/default"
+
+import { cookies } from "next/headers"
 
 const api = axios.create({
-  baseURL: API_URL,
-  headers: loadDefaultHeaders()
+  baseURL: API_URL
 })
 
-export const getRequest = async <T>(url: string, headers?: Record<string, string>): Promise<ApiResponse<T>> => {
+api.interceptors.request.use(async (config) => {
+  const cookieStore = await cookies()
+  const token = cookieStore.get(AUTH_COOKIE)?.value || ""
+
+  config.headers = {
+    ...loadDefaultHeaders(token),
+    ...config.headers
+  }
+
+  return config
+})
+
+export const getRequest = async <T>(url: string, headers?: TObject): Promise<ApiResponse<T>> => {
   try {
     const response = await api.get<ApiResponse<T>>(url, {
       headers
@@ -21,7 +34,7 @@ export const getRequest = async <T>(url: string, headers?: Record<string, string
   }
 }
 
-export const postRequest = async <T>(url: string, body: any, headers?: Record<string, string>): Promise<ApiResponse<T>> => {
+export const postRequest = async <T>(url: string, body: any, headers?: TObject): Promise<ApiResponse<T>> => {
   try {
     const response = await api.post<ApiResponse<T>>(url, body, {
       headers
@@ -32,7 +45,7 @@ export const postRequest = async <T>(url: string, body: any, headers?: Record<st
   }
 }
 
-export const putRequest = async <T>(url: string, body: any, headers?: Record<string, string>): Promise<ApiResponse<T>> => {
+export const putRequest = async <T>(url: string, body: any, headers?: TObject): Promise<ApiResponse<T>> => {
   try {
     const response = await api.put<ApiResponse<T>>(url, body, {
       headers
@@ -43,7 +56,7 @@ export const putRequest = async <T>(url: string, body: any, headers?: Record<str
   }
 }
 
-export const patchRequest = async <T>(url: string, body: any, headers?: Record<string, string>): Promise<ApiResponse<T>> => {
+export const patchRequest = async <T>(url: string, body: any, headers?: TObject): Promise<ApiResponse<T>> => {
   try {
     const response = await api.patch<ApiResponse<T>>(url, body, {
       headers
@@ -54,7 +67,7 @@ export const patchRequest = async <T>(url: string, body: any, headers?: Record<s
   }
 }
 
-export const deleteRequest = async <T>(url: string, headers?: Record<string, string>): Promise<ApiResponse<T>> => {
+export const deleteRequest = async <T>(url: string, headers?: TObject): Promise<ApiResponse<T>> => {
   try {
     const response = await api.delete<ApiResponse<T>>(url, {
       headers
@@ -75,5 +88,3 @@ const handleApiError = (error: any): ApiError<any> => {
   }
   return { message: "Network error", status: 500, data: null }
 }
-
-export default api

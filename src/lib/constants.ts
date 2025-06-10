@@ -7,5 +7,6 @@ export const API_URL = process.env.NEXT_PUBLIC_API_URL
 export const TOKEN_EXPIRATION_DATE = Date.now() + 24 * 60 * 60 * 1000 * 30
 export const IMAGES = {
   user: "/defaults/images/user.png",
-  placeholder: "/defaults/images/placeholder.jpg"
+  placeholder: "/defaults/images/placeholder.jpg",
+  auth: "/defaults/auth/login.png"
 }

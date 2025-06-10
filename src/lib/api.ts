@@ -1,3 +1,5 @@
+import { TObject } from "@/types/default"
+
 export const responseCodes = {
   ok: 200,
   created: 201,
@@ -8,9 +10,11 @@ export const responseCodes = {
   serverError: 500
 }
 
-export function loadDefaultHeaders(token?: string, rest?: Record<string, string>): any {
+export function loadDefaultHeaders(token?: string, rest?: TObject): any {
   return {
     Authorization: `Bearer ${token}`,
+    Accept: "application/json",
+    "Content-Type": "application/json",
     ...rest
   }
 }

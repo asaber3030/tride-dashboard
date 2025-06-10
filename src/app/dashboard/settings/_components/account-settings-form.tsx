@@ -11,6 +11,7 @@ import { useTranslations } from "next-intl"
 
 export function AccountSettingsForm() {
   const t = useTranslations()
+
   const [showCurrentPassword, setShowCurrentPassword] = useState(false)
   const [showNewPassword, setShowNewPassword] = useState(false)
   const [emails, setEmails] = useState([t("emailPlaceholder")])

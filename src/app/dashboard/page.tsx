@@ -7,6 +7,8 @@ import { TripsTable } from "@/components/dashboard/trips-table"
 import { ProceduresList } from "@/components/dashboard/procedures-list"
 import { StatsCard } from "@/components/dashboard/stats-card"
 import { PageHeader } from "@/components/dashboard/page-header"
+import { getTranslations } from "next-intl/server"
+import { formatToEGP } from "@/lib/utils"
 
 const initialFilters = [
   { id: "today", label: "today" },
@@ -85,10 +87,12 @@ const procedures = [
   }
 ]
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const t = await getTranslations()
+
   return (
     <div className='p-6 max-w-[1600px] mx-auto'>
-      <PageHeader title='' description='Dashboard' />
+      <PageHeader title={t("dashboard")} description={t("dashboard")} />
 
       {/* Filters */}
       <div className='mb-6'>
@@ -97,9 +101,9 @@ export default function DashboardPage() {
 
       {/* Metrics */}
       <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-6'>
-        <MetricCard title="Today's Trips" value='80' icon={<Car className='h-5 w-5 text-blue-600' />} iconColor='bg-blue-100' />
-        <MetricCard title='Pending Requests' value='120' icon={<FileText className='h-5 w-5 text-orange-600' />} iconColor='bg-orange-100' />
-        <MetricCard title='Pending Payments' value='10,000 EGP' icon={<CreditCard className='h-5 w-5 text-green-600' />} iconColor='bg-green-100' />
+        <MetricCard title={t("todaysTrip")} value='80' icon={<Car className='h-5 w-5 text-blue-600' />} iconColor='bg-blue-100' />
+        <MetricCard title={t("pendingRequests")} value='120' icon={<FileText className='h-5 w-5 text-orange-600' />} iconColor='bg-orange-100' />
+        <MetricCard title={t("pendingPayments")} value={formatToEGP(10000)} icon={<CreditCard className='h-5 w-5 text-green-600' />} iconColor='bg-green-100' />
       </div>
 
       {/* Main content */}
@@ -107,7 +111,7 @@ export default function DashboardPage() {
         <div className='lg:col-span-2'>
           <TripsTable trips={trips} />
         </div>
-        <div>map view goes here.</div>
+        <div>MAP VIEW GOES HERE.</div>
       </div>
 
       {/* Procedures and Stats */}

@@ -2,8 +2,10 @@ import { TSettingsURL } from "@/types/default"
 
 const routes = {
   home: "/dashboard",
-  login: "/login",
+  login: "/",
   register: "/register",
+  forgotPassword: "/forgot-password",
+  verifyEmail: "/verify-email",
   trips: "/dashboard/trips",
   requests: "/dashboard/requests",
   tracking: "/dashboard/live-tracking",
