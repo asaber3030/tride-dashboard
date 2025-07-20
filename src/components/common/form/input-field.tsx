@@ -1,50 +1,37 @@
-import { Control } from "react-hook-form"
-import { Input } from "../../ui/input"
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../../ui/form"
-import { Textarea } from "../../ui/textarea"
-import { ClassValue } from "class-variance-authority/types"
+import React from "react"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { FormItem, FormLabel, FormControl, FormDescription, FormMessage } from "@/components/ui/form"
+import { FieldError, UseFormRegisterReturn, FieldValues, Path } from "react-hook-form"
 import { cn } from "@/lib/utils"
 
-type Props = {
+type InputFieldProps<TFieldValues extends FieldValues = FieldValues> = {
   label: string
-  name: string
+  name: Path<TFieldValues>
   description?: string
-  formFieldDisabled?: boolean
-  formFieldDefaultValue?: string
-  isTextarea?: boolean
-  control: Control<any, any>
-  type?: string
-  disabled?: boolean
-  value?: string
-  register?: any
   placeholder?: string
+  type?: string
+  className?: string
+  isTextarea?: boolean
+  disabled?: boolean
   defaultValue?: string | number
-  valueAsNumber?: boolean
-  className?: ClassValue
+  field: UseFormRegisterReturn
+  error?: FieldError
 }
 
-export const InputField = ({ name, disabled, description, label, isTextarea = false, formFieldDisabled, formFieldDefaultValue, placeholder, type, control, register, valueAsNumber, defaultValue, className }: Props) => {
+export function InputField<TFieldValues extends FieldValues = FieldValues>({ label, name, description, placeholder, type = "text", className, isTextarea = false, disabled = false, defaultValue, field, error }: InputFieldProps<TFieldValues>) {
   return (
-    <FormField
-      control={control}
-      name={name}
-      disabled={formFieldDisabled}
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>{label}</FormLabel>
-          <FormControl>
-            {isTextarea ? (
-              <Textarea disabled={disabled} className='resize-none h-32' placeholder={placeholder} {...field}>
-                {defaultValue}
-              </Textarea>
-            ) : (
-              <Input disabled={disabled} type={type} placeholder={placeholder} defaultValue={defaultValue} className={cn(className)} {...field} {...register} onChange={valueAsNumber ? (e) => field.onChange(isNaN(parseInt(e.target.value)) ? 0 : parseInt(e.target.value)) : field.onChange} />
-            )}
-          </FormControl>
-          <FormDescription>{description}</FormDescription>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
+    <FormItem>
+      <FormLabel htmlFor={name}>{label}</FormLabel>
+      <FormControl>
+        {isTextarea ? (
+          <Textarea id={name} disabled={disabled} placeholder={placeholder} className={cn("resize-none h-32", className)} defaultValue={defaultValue as string} {...field} />
+        ) : (
+          <Input id={name} disabled={disabled} type={type} placeholder={placeholder} defaultValue={defaultValue} className={cn(className)} {...field} />
+        )}
+      </FormControl>
+      {description && <FormDescription>{description}</FormDescription>}
+      <FormMessage>{error?.message}</FormMessage>
+    </FormItem>
   )
 }

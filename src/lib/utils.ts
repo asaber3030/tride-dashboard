@@ -1,7 +1,5 @@
 import moment from "moment"
 
-import { ApiResponse, TLanguage } from "@/types/default"
-
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { toast } from "react-toastify"
@@ -21,6 +19,10 @@ export function showResponse<T>(data: ApiResponse<T>, execute?: () => void) {
   toast.error(data?.message)
   if (execute) execute()
   return
+}
+
+export function handleError(error: any) {
+  toast.error(error?.message || "ERROR - Something went wrong")
 }
 
 export function diffForHumans(date: Date) {

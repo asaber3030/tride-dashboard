@@ -1,8 +1,7 @@
-import { TSettingsURL } from "@/types/default"
-
 const routes = {
   home: "/dashboard",
-  login: "/",
+  dashboard: "/dashboard",
+  login: "/login",
   register: "/register",
   forgotPassword: "/forgot-password",
   verifyEmail: "/verify-email",

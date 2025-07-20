@@ -1,9 +1,15 @@
+import { z } from "zod"
 import { Timestamps } from "./default"
 
-export type User = Timestamps & {
-  user_id: number
-  name: string
-  username: string
+import { LoginSchema, RegisterSchema } from "@/schema/auth"
+
+type LoginData = z.infer<typeof LoginSchema>
+type RegisterData = z.infer<typeof RegisterSchema>
+
+type User = {
+  id: string
   email: string
-  password: string
+  profileComplete: boolean
+  is_verified: boolean
+  accountType: TAccountType
 }

@@ -1,5 +1,3 @@
-"use client"
-
 import { Car, FileText, CreditCard } from "lucide-react"
 import { FilterBar } from "@/components/dashboard/filter-bar"
 import { MetricCard } from "@/components/dashboard/metric-card"

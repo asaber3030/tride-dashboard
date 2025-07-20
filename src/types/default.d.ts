@@ -1,33 +1,19 @@
-import { z } from "zod"
-import { LoginSchema, RegisterSchema } from "@/schema/auth"
-import { LucideIcon } from "lucide-react"
-import { Employee, User } from "@/types/models"
-
-export type ApiResponse<T> = {
+type ApiResponse<T> = {
   data: T
   message: string
   status: number
 }
 
-export type ApiError<T> = {
-  message: string
-  status: number
-  data: T
-}
+type TLanguage = "ar" | "en"
+type TObject = Record<string, string | string[] | undefined>
+type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE"
 
-export type TLanguage = "ar" | "en"
-export type TObject = Record<string, string | string[] | undefined>
-export type TSettingsURL = "roles" | "account"
-
-export type Timestamps = {
+type Timestamps = {
   created_at: Date
   updated_at: Date
 }
 
-export type LoginData = z.infer<typeof LoginSchema>
-export type RegisterData = z.infer<typeof RegisterSchema>
-
-export type PaginatedData<T> = {
+type PaginatedData<T> = {
   page: number
   nextPage: number | null
   lastPage: number | null
@@ -37,6 +23,5 @@ export type PaginatedData<T> = {
   data: T[]
 }
 
-export type LoginResponse = {
-  user: User
-}
+type TSettingsURL = "account" | "roles"
+type TAccountType = "admin" | "parent" | "driver"
