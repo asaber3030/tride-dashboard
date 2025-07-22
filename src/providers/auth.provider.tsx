@@ -1,15 +1,15 @@
 "use client"
 
-import { LoginResponse } from "@/types/default"
+import { Admin } from "@/types/models"
 import { createContext } from "react"
 
-export const UserContext = createContext<LoginResponse | null>(null)
+export const AuthContext = createContext<Admin | null>(null)
 
 type AuthProviderProps = {
-  value: LoginResponse | null
+  value: Admin | null
   children: React.ReactNode
 }
 
 export const AuthProvider = ({ value, children }: AuthProviderProps) => {
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

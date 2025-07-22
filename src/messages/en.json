@@ -36,7 +36,7 @@
   "genderLabel": "Gender",
   "gender": "Male",
   "governorateLabel": "Governorate",
-  "governorate": "Cairo",
+  "governorate": "Governorate",
   "workAreaLabel": "Work Area",
   "workArea": "maadi",
   "vehicleInformation": "Vehicle Information",
@@ -205,5 +205,52 @@
   "enterYourPassword": "Enter your password",
   "todaysTrip": "Today's Trip",
   "pendingRequests": "Pending Requests",
-  "pendingPayments": "Pending Payments"
+  "pendingPayments": "Pending Payments",
+
+  "admins": {
+    "admins": "Admins",
+    "admin": "Admin",
+    "create": "Create Admin",
+    "createTitle": "Create Admin With His Details",
+    "createDescription": "Fill in the details below to create a new admin account.",
+
+    "updateRoleTitle": "Update Admin Role",
+    "updateRoleDescription": "Select the new role for this admin."
+  },
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "email": "Email",
+  "language": "Language",
+  "cities": "Cities",
+  "citiesDescription": "Manage available Cities and control actions & filter.",
+  "governorateName": "Governorate Name",
+  "create": "Create",
+  "delete": "Delete",
+  "close": "Close",
+  "update": "Update",
+  "name": "Name",
+  "citiesSchema": {
+    "createTitle": "Create new city",
+    "createDescription": "Fill in the details below to create a new city.",
+    "updateTitle": "Update city",
+    "updateDescription": "Update the details below to modify the city."
+  },
+  "governoratesSchema": {
+    "createTitle": "Create new governorate",
+    "createDescription": "Fill in the details below to create a new governorate."
+  },
+  "schoolsSchema": {
+    "createTitle": "Create new school",
+    "createDescription": "Fill in the details below to create a new school.",
+    "updateTitle": "Update school",
+    "updateDescription": "Update the details below to modify the school."
+  },
+  "city": "City",
+  "governoratesDescription": "Manage available Governorates and control actions & filter.",
+  "governorates": "Governorates",
+  "deleteTitle": "Delete This Item",
+  "deleteDescription": "Are you sure that you want to delete this item? Once you delete it you can't restore it again.",
+  "latitude": "Latitude",
+  "longitude": "Longitude",
+  "paymentsDescription": "Manage available Payments and control actions & filter."
 }

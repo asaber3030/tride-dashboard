@@ -57,3 +57,30 @@ export function extractInfoFromDate(txt: string) {
     month: arr[1]
   }
 }
+
+export function objectToFormData(obj: Record<string, any>): FormData {
+  const formData = new FormData()
+
+  function appendFormData(data: any, rootKey?: string) {
+    if (data instanceof File) {
+      if (rootKey) formData.append(rootKey, data)
+    } else if (Array.isArray(data)) {
+      data.forEach((item, idx) => {
+        const key = rootKey ? `${rootKey}[${idx}]` : `${idx}`
+        appendFormData(item, key)
+      })
+    } else if (typeof data === "object" && data !== null) {
+      Object.keys(data).forEach((key) => {
+        const value = data[key]
+        const formKey = rootKey ? `${rootKey}[${key}]` : key
+        appendFormData(value, formKey)
+      })
+    } else if (data !== undefined && data !== null) {
+      if (rootKey) formData.append(rootKey, data)
+    }
+  }
+
+  appendFormData(obj)
+
+  return formData
+}

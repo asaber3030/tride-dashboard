@@ -1,5 +1,5 @@
 import routes from "./routes"
-import { BarChart2, Car, FileText, MapPin, MessageSquare, CreditCard, School } from "lucide-react"
+import { BarChart2, Car, FileText, MapPin, MessageSquare, CreditCard, School, LockIcon, BuildingIcon } from "lucide-react"
 
 export const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
@@ -46,8 +46,23 @@ export const SidebarLinks = [
     icon: CreditCard
   },
   {
+    name: "admins.admins",
+    href: "/dashboard/admins",
+    icon: LockIcon
+  },
+  {
     name: "schools",
     href: "/dashboard/schools",
     icon: School
+  },
+  {
+    name: "cities",
+    href: "/dashboard/cities",
+    icon: BuildingIcon
+  },
+  {
+    name: "governorates",
+    href: "/dashboard/governorates",
+    icon: LockIcon
   }
 ]

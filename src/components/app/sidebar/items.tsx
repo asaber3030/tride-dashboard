@@ -1,9 +1,10 @@
 "use client"
 
+import Link from "next/link"
+
 import { SidebarLinks } from "@/lib/lists"
 import { cn } from "@/lib/utils"
 import { useTranslations } from "next-intl"
-import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 export const SidebarItems = () => {

@@ -7,6 +7,7 @@ import { AuthProvider, ReactQueryClientProvider } from "@/providers"
 import { NextIntlClientProvider } from "next-intl"
 import { ToastContainer } from "react-toastify"
 import { Metadata } from "next"
+import { getUser } from "@/actions/auth"
 
 export const metadata: Metadata = {
   title: "TRide",
@@ -17,7 +18,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const locale = await getLocale()
   const messages = await getMessages()
 
-  const user = null
+  const user = await getUser()
 
   return (
     <html lang={locale} dir={loadPageDirection(locale)}>

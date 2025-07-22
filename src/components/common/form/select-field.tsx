@@ -1,5 +1,5 @@
 import React from "react"
-import { Control, FieldValues, Path } from "react-hook-form"
+import { Control, FieldError, FieldValues, Path } from "react-hook-form"
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../ui/form"
 import { Select, SelectContent, SelectTrigger, SelectValue } from "@/components/ui/select"
 
@@ -12,9 +12,10 @@ type SelectFieldProps<TFieldValues extends FieldValues = FieldValues> = {
   disabled?: boolean
   children: React.ReactNode
   valueAsNumber?: boolean
+  error?: FieldError | undefined
 }
 
-export function SelectField<TFieldValues extends FieldValues = FieldValues>({ valueAsNumber, name, disabled = false, label, control, placeholder, children, defaultValue }: SelectFieldProps<TFieldValues>) {
+export function SelectField<TFieldValues extends FieldValues = FieldValues>({ valueAsNumber, name, error, disabled = false, label, control, placeholder, children, defaultValue }: SelectFieldProps<TFieldValues>) {
   return (
     <FormField
       control={control}
@@ -30,7 +31,7 @@ export function SelectField<TFieldValues extends FieldValues = FieldValues>({ va
               <SelectContent>{children}</SelectContent>
             </Select>
           </FormControl>
-          <FormMessage />
+          <FormMessage>{error?.message}</FormMessage>
         </FormItem>
       )}
     />

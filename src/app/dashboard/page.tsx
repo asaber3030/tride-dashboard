@@ -7,6 +7,7 @@ import { StatsCard } from "@/components/dashboard/stats-card"
 import { PageHeader } from "@/components/dashboard/page-header"
 import { getTranslations } from "next-intl/server"
 import { formatToEGP } from "@/lib/utils"
+import { getUser } from "@/actions/auth"
 
 const initialFilters = [
   { id: "today", label: "today" },
