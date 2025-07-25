@@ -7,7 +7,7 @@ import { AUTH_COOKIE } from "./lib/constants"
 import { getUser } from "./actions/auth"
 
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
+  /* const { pathname } = request.nextUrl
 
   if (pathname === routes.login) {
     return NextResponse.next()
@@ -23,7 +23,7 @@ export async function middleware(request: NextRequest) {
 
   if (!user) {
     return NextResponse.redirect(new URL(routes.login, request.url))
-  }
+  } */
 
   return NextResponse.next()
 }
