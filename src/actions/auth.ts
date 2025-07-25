@@ -57,11 +57,7 @@ export async function loginAction({ data, rememberMe = true, deviceToken = " ", 
 }
 
 export async function logoutAction(): Promise<void> {
-  try {
-    const cookieStore = await cookies()
-    cookieStore.delete(AUTH_COOKIE)
-    return redirect(routes.login)
-  } catch (error: any) {
-    throw new Error(error?.message || "An error occurred during logout")
-  }
+  const cookieStore = await cookies()
+  cookieStore.delete(AUTH_COOKIE)
+  return redirect(routes.login)
 }

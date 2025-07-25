@@ -252,5 +252,59 @@
   "deleteDescription": "Are you sure that you want to delete this item? Once you delete it you can't restore it again.",
   "latitude": "Latitude",
   "longitude": "Longitude",
-  "paymentsDescription": "Manage available Payments and control actions & filter."
+  "paymentsDescription": "Manage available Payments and control actions & filter.",
+  "loading": "Loading...",
+  "paymentDetails": {
+    "title": "Payment Details",
+    "paymentId": "Payment ID: #{id}"
+  },
+  "paymentOverview": {
+    "title": "Payment Overview",
+    "description": "Subscription payment details and status",
+    "totalAmount": "Total Amount",
+    "seatsTaken": "Seats Taken",
+    "pickupDays": "Pickup Days",
+    "remainingDays": "Remaining Days",
+    "startedAt": "Started At",
+    "validUntil": "Valid Until"
+  },
+  "parentInformation": {
+    "title": "Parent Information",
+    "viewLocation": "View Location"
+  },
+  "rideGroup": {
+    "title": "Ride Group Details",
+    "group": "group",
+    "currentSeatsTaken": "Current Seats Taken"
+  },
+  "planInformation": {
+    "title": "Plan Information",
+    "planId": "Plan ID",
+    "duration": "Duration",
+    "monthsCount": "Months Count",
+    "months": "months"
+  },
+  "paymentHistory": {
+    "title": "Payment History",
+    "description": "All transactions related to this subscription",
+    "receiptId": "Receipt ID",
+    "date": "Date",
+    "amount": "Amount",
+    "subscriptionId": "Subscription ID"
+  },
+  "address": "Address",
+  "joined": "Joined",
+  "disapprove": "Disapprove",
+  "approve": "Approve",
+  "save": "Save",
+  "saveChanges": "Save Changes",
+  "rideGroups": "Ride Groups",
+  "rideGroupsDescription": "Manage and view the details of ride groups",
+  "drivers": "Drivers",
+  "driversDescription": "Manage available Drivers and control actions & filter.",
+  "updateDriversPaperStatusTitle": "Update Driver's Paper Status",
+  "updateDriversPaperStatusDescription": "Select the new paper status for this driver.",
+  "parent": "Parent",
+  "driver": "Driver",
+  "admin": "Admin"
 }

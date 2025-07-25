@@ -1,9 +1,16 @@
 import { DriverDocuments } from "../_components/driver-details"
 
-export default function DriverDocumentsPage({ params }: { params: { id: string } }) {
+type Props = {
+  params: Promise<{ driverId: string }>
+}
+
+export default async function DriverDocumentsPage({ params }: Props) {
+  const { driverId } = await params
+  const id = +driverId
+
   return (
     <div className='p-6'>
-      <DriverDocuments driverId={params.id} />
+      <DriverDocuments driverId={id} />
     </div>
   )
 }

@@ -1,6 +1,11 @@
-import { AdminRolesTable } from "../_components/roles-table"
-import { SettingsHeader } from "../_components/settings-header"
+import { unauthorized } from "next/navigation"
+import { getUser } from "@/actions/auth"
 
-export default function AdminRolesPage() {
+import { AdminRolesTable } from "../_components/roles-table"
+
+export default async function AdminRolesPage() {
+  const user = await getUser()
+  if (!user || user.role?.role_name != "super admin") return unauthorized()
+
   return <AdminRolesTable />
 }

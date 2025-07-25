@@ -1,6 +1,8 @@
 import { PageHeader } from "@/components/dashboard/page-header"
 import { CitiesTable } from "./_components/table"
 import { getTranslations } from "next-intl/server"
+import { getUser } from "@/actions/auth"
+import { unauthorized } from "next/navigation"
 
 type Props = {
   searchParams: TSearchParams
@@ -9,6 +11,9 @@ type Props = {
 export default async function CitiesPage({ searchParams }: Props) {
   const t = await getTranslations()
   const sp = await searchParams
+
+  const user = await getUser()
+  if (!user || user.role?.role_name != "super admin") return unauthorized()
 
   return (
     <div className='p-6'>

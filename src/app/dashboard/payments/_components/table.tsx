@@ -2,12 +2,12 @@
 
 import { usePaginatedPayments } from "../_helpers/hooks"
 
+import { SimplePagination } from "@/components/common/simple-pagination"
+import { PaymentsColumns } from "./columns"
+import { PaymentsFilters } from "./filters"
 import { TableSkeleton } from "@/components/common/skeletons/table"
 import { DisplayError } from "@/components/common/error"
 import { DataTable } from "@/components/common/data-table"
-import { PaymentsColumns } from "./columns"
-import { SimplePagination } from "@/components/common/simple-pagination"
-import { TableAction } from "@/components/common/table-action"
 
 type Props = {
   sp: TObject
@@ -21,6 +21,7 @@ export const PaymentsTable = ({ sp = {} }: Props) => {
 
   return (
     <div className='space-y-4'>
+      <PaymentsFilters />
       <DataTable data={payments?.payments!} columns={PaymentsColumns} />
       <SimplePagination hasNextPage={!!payments?.pagination.nextPage} hasPrevPage={!!payments?.pagination?.lastPage} />
     </div>

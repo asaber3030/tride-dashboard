@@ -2,6 +2,8 @@ import { PageHeader } from "@/components/dashboard/page-header"
 import { RequestsTable } from "./_components/table"
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
+import { hasAccessTo } from "@/actions/roles"
+import { unauthorized } from "next/navigation"
 
 export const metadata: Metadata = {
   title: "Requests | Dashboard",
@@ -10,6 +12,9 @@ export const metadata: Metadata = {
 
 export default async function RequestsPage() {
   const t = await getTranslations()
+
+  const hasAccess = await hasAccessTo("Requests")
+  if (!hasAccess) return unauthorized()
 
   return (
     <div className='p-6'>

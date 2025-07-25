@@ -33,12 +33,12 @@ export function formatDate(date: Date, format: string = "YYYY-MM-DD") {
   return moment(date).format(format)
 }
 
-export function formatToEGP(amount: number): string {
+export function formatToEGP(amount: string): string {
   return new Intl.NumberFormat("en-EG", {
     style: "currency",
     currency: "EGP",
     minimumFractionDigits: 2
-  }).format(amount)
+  }).format(+amount)
 }
 
 export function capitalize(str: string): string {

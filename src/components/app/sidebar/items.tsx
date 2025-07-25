@@ -2,8 +2,8 @@
 
 import Link from "next/link"
 
-import { SidebarLinks } from "@/lib/lists"
 import { cn } from "@/lib/utils"
+import { SidebarLinks } from "@/lib/lists"
 import { useTranslations } from "next-intl"
 import { usePathname } from "next/navigation"
 

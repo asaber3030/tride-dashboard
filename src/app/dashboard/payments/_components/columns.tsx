@@ -1,5 +1,12 @@
-import { Payment } from "@/types/models"
+import { capitalize, formatToEGP } from "@/lib/utils"
+
+import { ParentPaymentsStatus } from "@/lib/lists"
 import { ColumnDef } from "@tanstack/react-table"
+import { Payment } from "@/types/models"
+import { Badge } from "@/components/ui/badge"
+import { LinkBtn } from "@/components/common/link-button"
+import { Eye } from "lucide-react"
+import routes from "@/lib/routes"
 
 export const PaymentsColumns: ColumnDef<Payment>[] = [
   {
@@ -12,7 +19,10 @@ export const PaymentsColumns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: "total_amount",
-    header: "Total Amount"
+    header: "Total Amount",
+    cell: ({ row }) => {
+      return <div className='text-right'>{formatToEGP(row.original.total_amount)}</div>
+    }
   },
   {
     accessorKey: "current_seats_taken",
@@ -39,34 +49,21 @@ export const PaymentsColumns: ColumnDef<Payment>[] = [
     header: "Plan Montions"
   },
   {
-    accessorKey: "plan.months_count",
-    header: "Plan Montions"
-  },
-  {
-    accessorKey: "plan.months_count",
-    header: "Plan Montions"
-  },
-  {
-    accessorKey: "plan.months_count",
-    header: "Plan Montions"
-  },
-  {
-    accessorKey: "plan.months_count",
-    header: "Plan Montions"
-  },
-  {
-    accessorKey: "remaining_months",
-    header: "Remaining Months"
-  },
-  {
-    accessorKey: "months_paid_done",
-    header: "Months Paid"
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => {
+      return <Badge variant={ParentPaymentsStatus[row.original.status as keyof typeof ParentPaymentsStatus] || ("outlineGray" as any)}>{capitalize(row.original.status || "unknown")}</Badge>
+    }
   },
   {
     accessorKey: "actions",
     header: "Actions",
     cell: ({ row }) => {
-      return <div className='flex items-center gap-2'></div>
+      return (
+        <div className='flex items-center gap-2'>
+          <LinkBtn icon={Eye} size='icon' variant='outline' href={routes.viewPayment(row.original.id)} />
+        </div>
+      )
     }
   }
 ]

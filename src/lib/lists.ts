@@ -9,6 +9,13 @@ export const Languages = [
 ]
 export const LanguagesList = ["en", "ar"]
 
+export const ParentPaymentsStatus = {
+  new: "outlineGray",
+  pending: "outlineYellow",
+  paid: "outlineGreen",
+  expired: "outlineRed"
+}
+
 export const SettingsTabs = [
   { name: "accountSettings", href: routes.settings("account") },
   { name: "adminRoles", href: routes.settings("roles") }
@@ -22,22 +29,22 @@ export const SidebarLinks = [
   },
   {
     name: "trips",
-    href: "/dashboard/trips",
+    href: "/dashboard/ride-groups",
     icon: Car
   },
   {
     name: "requests",
-    href: "/dashboard/requests",
+    href: "/dashboard/drivers",
     icon: FileText
   },
-  {
+  /*   {
     name: "liveTracking",
     href: "/dashboard/live-tracking",
     icon: MapPin
-  },
+  }, */
   {
     name: "chats",
-    href: "/dashboard/chats",
+    href: "/dashboard/chats/customer_support",
     icon: MessageSquare
   },
   {
@@ -66,3 +73,12 @@ export const SidebarLinks = [
     icon: LockIcon
   }
 ]
+
+export const messageTypes = {
+  TEXT: "text",
+  IMAGE: "image",
+  VIDEO: "video",
+  AUDIO: "audio",
+  DOCUMENT: "document",
+  LOCATION: "location"
+}

@@ -184,5 +184,127 @@
   "schoolsDescription": "إدارة المدارس المتاحة والتحكم في الإجراءات والفلاتر.",
   "tripsDescription": "إدارة الرحلات المتاحة والتحكم في الإجراءات والفلاتر.",
   "accountSettings": "إعدادات الحساب",
-  "adminRoles": "أدوار الإدارة"
+  "adminRoles": "أدوار الإدارة",
+
+  "forgotPassword": "نسيت كلمة المرور؟",
+  "signIn": "تسجيل الدخول",
+  "loginWelcomeText": "مرحبًا بك في لوحة تحكم TRide",
+  "welcomeBackText": "مرحبًا بعودتك! الرجاء إدخال بياناتك لتسجيل الدخول.",
+  "passwordLabel": "كلمة المرور",
+  "sendLink": "إرسال الرابط",
+  "backToLogin": "العودة لتسجيل الدخول",
+  "forgotPasswordDescription": "لا تقلق، سنرسل لك تعليمات إعادة التعيين.",
+  "verifyEmailAddress": "تحقق من عنوان البريد الإلكتروني",
+  "weHaveSent": "لقد أرسلنا رابط التحقق إلى عنوان بريدك الإلكتروني.",
+  "verify": "تحقق",
+  "verificationCode": "رمز التحقق",
+  "didNotReceiveCode": "لم تستلم الرمز؟",
+  "resend": "إعادة إرسال",
+  "code": "الرمز",
+  "back": "رجوع",
+  "enterYourEmail": "أدخل بريدك الإلكتروني",
+  "enterYourPassword": "أدخل كلمة المرور",
+  "todaysTrip": "رحلة اليوم",
+  "pendingRequests": "طلبات معلقة",
+  "pendingPayments": "مدفوعات معلقة",
+
+  "admins": {
+    "admins": "المشرفون",
+    "admin": "مشرف",
+    "create": "إنشاء مشرف",
+    "createTitle": "إنشاء مشرف ببياناته",
+    "createDescription": "املأ التفاصيل أدناه لإنشاء حساب مشرف جديد.",
+    "updateRoleTitle": "تحديث دور المشرف",
+    "updateRoleDescription": "حدد الدور الجديد لهذا المشرف."
+  },
+  "firstName": "الاسم الأول",
+  "lastName": "الاسم الأخير",
+  "email": "البريد الإلكتروني",
+  "language": "اللغة",
+  "cities": "المدن",
+  "citiesDescription": "إدارة المدن المتاحة والتحكم في الإجراءات والتصفية.",
+  "governorateName": "اسم المحافظة",
+  "create": "إنشاء",
+  "delete": "حذف",
+  "close": "إغلاق",
+  "update": "تحديث",
+  "name": "الاسم",
+  "citiesSchema": {
+    "createTitle": "إنشاء مدينة جديدة",
+    "createDescription": "املأ التفاصيل أدناه لإنشاء مدينة جديدة.",
+    "updateTitle": "تحديث المدينة",
+    "updateDescription": "قم بتحديث التفاصيل أدناه لتعديل المدينة."
+  },
+  "governoratesSchema": {
+    "createTitle": "إنشاء محافظة جديدة",
+    "createDescription": "املأ التفاصيل أدناه لإنشاء محافظة جديدة."
+  },
+  "schoolsSchema": {
+    "createTitle": "إنشاء مدرسة جديدة",
+    "createDescription": "املأ التفاصيل أدناه لإنشاء مدرسة جديدة.",
+    "updateTitle": "تحديث المدرسة",
+    "updateDescription": "قم بتحديث التفاصيل أدناه لتعديل المدرسة."
+  },
+  "city": "المدينة",
+  "governoratesDescription": "إدارة المحافظات المتاحة والتحكم في الإجراءات والتصفية.",
+  "governorates": "المحافظات",
+  "deleteTitle": "حذف هذا العنصر",
+  "deleteDescription": "هل أنت متأكد أنك تريد حذف هذا العنصر؟ بمجرد حذفه لا يمكنك استعادته مرة أخرى.",
+  "latitude": "خط العرض",
+  "longitude": "خط الطول",
+  "paymentsDescription": "إدارة المدفوعات المتاحة والتحكم في الإجراءات والتصفية.",
+  "loading": "جاري التحميل...",
+  "paymentDetails": {
+    "title": "تفاصيل الدفع",
+    "paymentId": "معرف الدفع: #{id}"
+  },
+  "paymentOverview": {
+    "title": "نظرة عامة على الدفع",
+    "description": "تفاصيل حالة الدفع للاشتراك",
+    "totalAmount": "المبلغ الإجمالي",
+    "seatsTaken": "المقاعد المشغولة",
+    "pickupDays": "أيام الاستلام",
+    "remainingDays": "الأيام المتبقية",
+    "startedAt": "بدأ في",
+    "validUntil": "صالح حتى"
+  },
+  "parentInformation": {
+    "title": "معلومات ولي الأمر",
+    "viewLocation": "عرض الموقع"
+  },
+  "rideGroup": {
+    "title": "تفاصيل مجموعة الرحلة",
+    "group": "مجموعة",
+    "currentSeatsTaken": "المقاعد المشغولة حاليًا"
+  },
+  "planInformation": {
+    "title": "معلومات الخطة",
+    "planId": "معرف الخطة",
+    "duration": "المدة",
+    "monthsCount": "عدد الأشهر",
+    "months": "أشهر"
+  },
+  "paymentHistory": {
+    "title": "سجل الدفع",
+    "description": "جميع المعاملات المتعلقة بهذا الاشتراك",
+    "receiptId": "معرف الإيصال",
+    "date": "التاريخ",
+    "amount": "المبلغ",
+    "subscriptionId": "معرف الاشتراك"
+  },
+  "address": "العنوان",
+  "joined": "انضم في",
+  "disapprove": "رفض",
+  "approve": "موافقة",
+  "save": "حفظ",
+  "saveChanges": "حفظ التغييرات",
+  "rideGroups": "مجموعات الرحلة",
+  "rideGroupsDescription": "إدارة وعرض تفاصيل مجموعات الرحلة",
+  "drivers": "السائقون",
+  "driversDescription": "إدارة السائقين المتاحين والتحكم في الإجراءات والتصفية.",
+  "updateDriversPaperStatusTitle": "تحديث حالة أوراق السائق",
+  "updateDriversPaperStatusDescription": "حدد حالة الأوراق الجديدة لهذا السائق.",
+  "parent": "ولي أمر",
+  "driver": "سائق",
+  "admin": "مشرف"
 }

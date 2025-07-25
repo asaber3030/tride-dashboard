@@ -18,17 +18,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const locale = await getLocale()
   const messages = await getMessages()
 
-  const user = await getUser()
-
   return (
     <html lang={locale} dir={loadPageDirection(locale)}>
       <body className={loadFont(locale)}>
         <NextIntlClientProvider messages={messages} locale={locale}>
           <ReactQueryClientProvider>
-            <AuthProvider value={user}>
-              {children}
-              <ToastContainer />
-            </AuthProvider>
+            {children}
+            <ToastContainer />
           </ReactQueryClientProvider>
         </NextIntlClientProvider>
       </body>

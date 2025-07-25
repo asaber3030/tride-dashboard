@@ -24,7 +24,7 @@ export const PageHeader = ({ title, description, actions, hasSearch = true, clas
         <div className='flex items-center gap-2'>
           <UserMenu />
           <LanguageSwitcher />
-          <NavigationMenu />
+          {/*           <NavigationMenu /> */}
           {actions}
         </div>
       </div>

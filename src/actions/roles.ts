@@ -3,6 +3,7 @@
 import { Permission, Role } from "@/types/models"
 
 import { api } from "@/services/axios"
+import { getUser } from "./auth"
 
 export async function getRoles() {
   try {
@@ -23,6 +24,21 @@ export async function getRolePermissions(roleId: number) {
     const err = error as ApiResponse<any>
     throw new Error(err?.data?.data?.message || "Failed to fetch roles")
   }
+}
+
+export async function getCurrentRolePermissions() {
+  const user = await getUser()
+  if (!user) throw new Error("Unauthenticated")
+
+  const roleId = user.role.id
+  const permissions = await getRolePermissions(roleId)
+
+  return permissions
+}
+
+export async function hasAccessTo(resource: string): Promise<boolean> {
+  const permissions = await getCurrentRolePermissions()
+  return !!permissions.find((item) => item.role_permission_group == resource)
 }
 
 export async function getPermissions() {

@@ -21,6 +21,19 @@ type PaginatedData<T> = {
   hasPrevPage: boolean
 }
 
+type PaginationItems = {
+  page: number
+  nextPage: number | null
+  lastPage: number | null
+  itemCount: number
+  totalPages: number
+  totalItems: number
+}
+
 type TSettingsURL = "account" | "roles"
 type TAccountType = "admin" | "parent" | "driver"
+type TRoleType = "super admin" | "operations manager" | "support admin" | "basic admin"
 type TSearchParams = Promise<TObject>
+type TChatRoomType = "ride_group" | "private" | "customer_support"
+type TChatMessageStatus = "sent" | "delivered" | "read"
+type TChatMessageSender = "parent" | "driver" | "admin"
