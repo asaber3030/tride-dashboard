@@ -77,7 +77,7 @@ export const DriversColumns: ColumnDef<Driver>[] = [
     cell: ({ row }) => {
       return (
         <div className='flex items-center gap-2'>
-          <UpdateDriverStatusModal currentStatus={!!row.original.papers?.approved} driverId={row.original.id} />
+          {row.original.papers && <UpdateDriverStatusModal currentStatus={!!row.original.papers?.approved} driverId={row.original.id} />}
           <LinkBtn icon={Eye} href={routes.viewDriver(row.original.id)} size='icon' variant='outline' />
         </div>
       )

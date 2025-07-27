@@ -2,19 +2,22 @@
 
 import { useRideGroup } from "../_helpers/hooks"
 
-import { Users, MapPin, Phone, Calendar, Clock, CreditCard, School, Car, UserCheck, Baby, Timer, CheckCircle, XCircle } from "lucide-react"
+import { Users, MapPin, Phone, Calendar, Clock, CreditCard, School, Car, UserCheck, Baby, Timer, CheckCircle, XCircle, CopyIcon, MapIcon } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { RideGroupLoading } from "./ride-group-details-loader"
 import { DisplayError } from "@/components/common/error"
 import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
+import { capitalize } from "@/lib/utils"
+import { useTranslations } from "next-intl"
 
 interface RideGroupProps {
   rideGroupId: number
 }
 
 export function RideGroupDetails({ rideGroupId }: RideGroupProps) {
+  const t = useTranslations()
   const { data: rideGroup, isLoading, error, isError } = useRideGroup(rideGroupId)
 
   const getStatusColor = (status: string) => {
@@ -58,19 +61,21 @@ export function RideGroupDetails({ rideGroupId }: RideGroupProps) {
             <div className='space-y-2'>
               <CardTitle className='text-2xl font-bold text-gray-900'>{rideGroup?.group_name}</CardTitle>
               <div className='flex items-center gap-4'>
-                <Badge className={getStatusColor(rideGroup?.status)}>{rideGroup?.status}</Badge>
                 <Badge variant='outline' className='text-sm'>
-                  {rideGroup?.group_type}
+                  {capitalize(rideGroup?.group_type)}
                 </Badge>
-                <span className='text-sm text-gray-500'>Code: {rideGroup?.invite_code}</span>
+                <a className='text-sm flex gap-2 items-center text-blue-500 hover:underline' href='#'>
+                  <CopyIcon className='size-4' />
+                  {t("invitationLink")}
+                </a>
               </div>
             </div>
             <div className='text-right'>
               <div className='flex items-center gap-2 text-lg font-semibold'>
                 <Users className='w-5 h-5' />
-                {rideGroup?.current_seats_taken} seats taken
+                {t("seatsTaken", { number: rideGroup?.current_seats_taken })}
               </div>
-              <p className='text-sm text-gray-500'>Created {formatDate(rideGroup?.created_at)}</p>
+              <p className='text-sm text-gray-500'>{t("createdAt", { date: formatDate(rideGroup?.created_at) })}</p>
             </div>
           </div>
         </CardHeader>
@@ -81,7 +86,7 @@ export function RideGroupDetails({ rideGroupId }: RideGroupProps) {
           <CardHeader>
             <CardTitle className='flex items-center gap-2'>
               <Car className='w-5 h-5' />
-              Driver Information
+              {t("driverInformation")}
             </CardTitle>
           </CardHeader>
           <CardContent className='space-y-4'>
@@ -96,7 +101,7 @@ export function RideGroupDetails({ rideGroupId }: RideGroupProps) {
                   <Phone className='w-4 h-4' />
                   {rideGroup?.driver?.phone}
                 </div>
-                <div className='text-sm text-gray-600'>License: {rideGroup?.driver?.license_number}</div>
+                <div className='text-sm text-gray-600'>{t("driverLicense", { license: rideGroup?.driver?.license_number })}</div>
               </div>
             </div>
             <div className='flex items-start gap-2 text-sm'>
@@ -106,11 +111,11 @@ export function RideGroupDetails({ rideGroupId }: RideGroupProps) {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className='h-fit'>
           <CardHeader>
             <CardTitle className='flex items-center gap-2'>
               <School className='w-5 h-5' />
-              School Information
+              {t("schoolInformation")}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -118,8 +123,11 @@ export function RideGroupDetails({ rideGroupId }: RideGroupProps) {
               <h3 className='font-semibold text-lg'>{rideGroup?.school?.school_name}</h3>
               <div className='flex items-start gap-2 text-sm'>
                 <MapPin className='w-4 h-4 mt-0.5 text-gray-500' />
-                <span className='text-gray-600'>
-                  Coordinates: {rideGroup?.school?.lat}, {rideGroup?.school?.lng}
+                <span className='text-gray-600 flex gap-2 items-center'>
+                  {t("viewLocation")}:{" "}
+                  <a href='#' className='flex gap-2'>
+                    <MapIcon className='size-4' /> {t("googleMaps")}
+                  </a>
                 </span>
               </div>
             </div>
@@ -132,7 +140,7 @@ export function RideGroupDetails({ rideGroupId }: RideGroupProps) {
           <CardHeader>
             <CardTitle className='flex items-center gap-2'>
               <CreditCard className='w-5 h-5' />
-              Active Subscriptions
+              {t("activeSubscriptions")}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -146,11 +154,11 @@ export function RideGroupDetails({ rideGroupId }: RideGroupProps) {
                   <div className='space-y-2 text-sm'>
                     <div className='flex items-center gap-2'>
                       <Users className='w-4 h-4' />
-                      {subscription.current_seats_taken} seats
+                      {t("seatsTaken", { number: subscription.current_seats_taken })}
                     </div>
                     <div className='flex items-center gap-2'>
                       <Calendar className='w-4 h-4' />
-                      {subscription.pickup_days_count} pickup days
+                      {t("seatsTaken", { number: subscription.pickup_days_count })}
                     </div>
                     <div className='flex items-center gap-2'>
                       <Timer className='w-4 h-4' />
@@ -172,7 +180,7 @@ export function RideGroupDetails({ rideGroupId }: RideGroupProps) {
           <CardHeader>
             <CardTitle className='flex items-center gap-2'>
               <UserCheck className='w-5 h-5' />
-              Parent Groups & Children
+              {t("parentGroupsAndChildren")}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -191,11 +199,11 @@ export function RideGroupDetails({ rideGroupId }: RideGroupProps) {
                           {parentGroup.parent?.face_auth_complete ? <CheckCircle className='w-4 h-4 text-green-500' /> : <XCircle className='w-4 h-4 text-red-500' />}
                           {parentGroup.parent?.documents_approved ? (
                             <Badge variant='outline' className='text-xs bg-green-50 text-green-700'>
-                              Verified
+                              {t("verified")}
                             </Badge>
                           ) : (
                             <Badge variant='outline' className='text-xs bg-yellow-50 text-yellow-700'>
-                              Pending
+                              {t("pending")}
                             </Badge>
                           )}
                         </div>
@@ -220,7 +228,7 @@ export function RideGroupDetails({ rideGroupId }: RideGroupProps) {
                       <div className='space-y-3'>
                         <h5 className='font-medium flex items-center gap-2'>
                           <Baby className='w-4 h-4' />
-                          Children ({parentGroup?.childDetails?.length})
+                          {t("children")} ({parentGroup?.childDetails?.length})
                         </h5>
                         <div className='grid grid-cols-1 sm:grid-cols-2 gap-3'>
                           {parentGroup?.childDetails?.map((childDetail) => (
@@ -246,26 +254,6 @@ export function RideGroupDetails({ rideGroupId }: RideGroupProps) {
                     </>
                   )}
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {rideGroup?.dayDates.length > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle className='flex items-center gap-2'>
-              <Calendar className='w-5 h-5' />
-              Schedule Days
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className='flex flex-wrap gap-2'>
-              {rideGroup?.dayDates?.map((dayDate) => (
-                <Badge key={dayDate.id} variant='outline' className='px-3 py-1'>
-                  {dayDate.date_day}
-                </Badge>
               ))}
             </div>
           </CardContent>

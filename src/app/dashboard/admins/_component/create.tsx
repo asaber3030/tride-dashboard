@@ -77,8 +77,8 @@ export const CreateAdminModal = () => {
           <form onSubmit={form.handleSubmit(handleAction)} className='space-y-4'>
             <InputField name='email' label={t("email")} field={form.register("email")} error={form.formState?.errors?.email} />
             <InputField name='first_name' label={t("firstName")} field={form.register("first_name")} error={form.formState?.errors?.first_name} />
-            <InputField name='last_name' label={t("firstName")} field={form.register("last_name")} error={form.formState?.errors?.last_name} />
-            <InputField name='password' label={t("password")} field={form.register("password")} error={form.formState?.errors?.password} />
+            <InputField name='last_name' label={t("lastName")} field={form.register("last_name")} error={form.formState?.errors?.last_name} />
+            <InputField name='password' type='password' label={t("password")} field={form.register("password")} error={form.formState?.errors?.password} />
             <SelectField name='language' control={form.control} label={t("language")} defaultValue='en' error={form.formState?.errors?.language}>
               {Languages.map((item) => (
                 <SelectItem value={item.code}>{t(item.name)}</SelectItem>

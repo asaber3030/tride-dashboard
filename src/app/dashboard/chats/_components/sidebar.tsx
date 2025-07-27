@@ -19,7 +19,6 @@ interface ChatSidebarProps {
 export function ChatSidebar({ type, sp }: ChatSidebarProps) {
   const router = useRouter()
   const t = useTranslations()
-  const locale = useLocale()
 
   const [search, setSearch] = useState("")
   const [state, setState] = useState<TObject>({})

@@ -39,3 +39,17 @@ export async function getRideGroup(id: number) {
     throw new Error(err?.data?.data?.message || "Failed to fetch group")
   }
 }
+
+export async function mergeRideGroupAction(groupId: number, destinationId: number) {
+  try {
+    const url = `/manage/ride/group/merge`
+    const req = await api("PUT", url, {
+      group_src: groupId,
+      group_dest: destinationId
+    })
+    return req
+  } catch (error) {
+    const err = error as ApiResponse<any>
+    throw new Error(err?.data?.data?.message || "Failed to merge groups")
+  }
+}

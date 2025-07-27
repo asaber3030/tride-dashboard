@@ -27,6 +27,8 @@ export const ChatBubbles = ({ type, chats, isError, isLoading, isRefetching, err
   const locale = useLocale()
   const t = useTranslations()
 
+  if (isError) return error?.message ? <div className='text-red-500 text-center p-4'>{t(error.message)}</div> : null
+
   return (
     <div>
       {isLoading || isRefetching ? (
@@ -45,7 +47,7 @@ export const ChatBubbles = ({ type, chats, isError, isLoading, isRefetching, err
                   </div>
                   <div className='flex-1 min-w-0'>
                     <div className={cn("flex justify-between items-center", locale === "en" ? "flex-row" : "flex-row-reverse")}>
-                      <h3 className='text-sm font-medium truncate'>{item.name}</h3>
+                      <h3 className='text-sm font-medium truncate max-w-32'>{item.name}</h3>
                       {item?.last_message && item?.last_message?.created_at && <span className='text-xs text-gray-500'>{diffForHumans(item?.last_message?.created_at)}</span>}
                     </div>
                     <div className={cn("flex items-center", locale === "en" ? "flex-row" : "flex-row-reverse")}>

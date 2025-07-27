@@ -5,11 +5,9 @@ import qk from "@/lib/query-keys"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
-import { useForm } from "react-hook-form"
 
 import { handleError, showResponse } from "@/lib/utils"
 import { updateDriverPapersStatusAction } from "../_helpers/actions"
-import { zodResolver } from "@hookform/resolvers/zod"
 
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { LoadingButton } from "@/components/common/loading-button"
@@ -37,7 +35,7 @@ export const UpdateDriverStatusModal = ({ driverId, currentStatus }: Props) => {
         qc.invalidateQueries({ queryKey: qk.drivers.paginated() })
         setOpen(false)
       }),
-    onError: (error: Error) => handleError(error)
+    onError: (error) => handleError(error)
   })
 
   const handleAction = () => {

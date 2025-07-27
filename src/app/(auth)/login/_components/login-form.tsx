@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { LoginSchema } from "@/schema/auth"
 import { useLogin } from "@/hooks/auth/use-login"
+import { LoadingButton } from "@/components/common/loading-button"
 
 export const LoginForm = () => {
   const t = useTranslations()
@@ -22,6 +23,7 @@ export const LoginForm = () => {
       password: "admin123"
     }
   })
+
   const login = useLogin()
 
   const handleLogin = () => {
@@ -42,9 +44,9 @@ export const LoginForm = () => {
           </Link>
         </div>
 
-        <Button loading={login.isPending} className='w-full'>
+        <LoadingButton loading={login.isPending} className='w-full'>
           {t("signIn")}
-        </Button>
+        </LoadingButton>
       </form>
     </Form>
   )

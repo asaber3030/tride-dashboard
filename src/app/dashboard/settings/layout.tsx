@@ -6,7 +6,7 @@ export default async function SettingsLayout({ children }: { children: React.Rea
 
   return (
     <div>
-      <PageHeader title={t("settings")} description={t("settings")} />
+      <PageHeader title={t("settings")} description={t("settingsDescription")} />
       {children}
     </div>
   )

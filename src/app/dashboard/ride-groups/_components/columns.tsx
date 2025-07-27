@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { LinkBtn } from "@/components/common/link-button"
 import { Eye } from "lucide-react"
 import routes from "@/lib/routes"
+import { MergeGroupModal } from "./merge-groups-modal"
 
 export const RideGroupColumns: ColumnDef<FullRideGroup>[] = [
   {
@@ -23,21 +24,21 @@ export const RideGroupColumns: ColumnDef<FullRideGroup>[] = [
   },
   {
     accessorKey: "group_type",
-    header: "Group Type"
+    header: "Group Type",
+    cell: ({ row }) => {
+      return capitalize(row.original.group_type)
+    }
   },
   {
     accessorKey: "school.school_name",
     header: "School"
   },
-  {
-    accessorKey: "parent_group_subscription[0].pickup_days_count",
-    header: "Pickup Days"
-  },
+
   {
     accessorKey: "parent_group_subscription[0].total_amount",
     header: "Total Amount",
     cell: ({ row }) => {
-      return <div className='text-right'>{formatToEGP(row.original.parent_group_subscription[0]?.total_amount || "0")}</div>
+      return <div>{formatToEGP(row.original.parent_group_subscription[0]?.total_amount || "0")}</div>
     }
   },
   {
@@ -54,6 +55,7 @@ export const RideGroupColumns: ColumnDef<FullRideGroup>[] = [
       return (
         <div className='flex items-center gap-2'>
           <LinkBtn icon={Eye} size='icon' variant='outline' href={routes.rideGroups.view(row.original.id)} />
+          <MergeGroupModal rideGroup={row.original} />
         </div>
       )
     }

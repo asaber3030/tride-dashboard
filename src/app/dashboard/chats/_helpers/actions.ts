@@ -12,7 +12,7 @@ type GetChatData = {
   data: ChatRoom[]
 }
 
-type GetChatMessagesData = {
+export type GetChatMessagesData = {
   pagination: PaginationItems
   data: ChatMessage[]
 }
@@ -38,6 +38,7 @@ export async function getCustomerSupportChats(sp: TObject = {}) {
     return request.data
   } catch (error) {
     const err = error as ApiResponse<any>
+    console.log(err)
     throw new Error(err?.data?.data?.message || "Failed to fetch customer support chats")
   }
 }
@@ -47,7 +48,7 @@ export async function getRideGroupChatMessages(rideGroupId: string, sp: TObject 
   try {
     const query = build(sp)
     const url = `/admin-view/chats/ride-groups/${rideGroupId}/messages?${query}`
-    const request = await api<any>("GET", url)
+    const request = await api<GetChatMessagesData>("GET", url)
     return request.data
   } catch (error) {
     const err = error as ApiResponse<any>
@@ -85,6 +86,7 @@ export async function sendTextMessageToChatAction(id: string, message: string) {
     return request.data
   } catch (error) {
     const err = error as ApiResponse<any>
+
     throw new Error(err?.data?.data?.message || "Failed to send message to chat")
   }
 }

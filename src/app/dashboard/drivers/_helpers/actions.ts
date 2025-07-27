@@ -49,6 +49,6 @@ export async function updateDriverPapersStatusAction(driverId: number, status: b
     return req
   } catch (error) {
     const err = error as ApiResponse<any>
-    throw new Error(err?.data?.data?.message || "Failed to fetch drivers")
+    throw new Error(err?.data?.message || "Failed to update driver")
   }
 }

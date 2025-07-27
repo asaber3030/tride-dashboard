@@ -1,14 +1,16 @@
 import { DashboardSidebar } from "@/components/app/sidebar"
+import { getLocale } from "next-intl/server"
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const locale = await getLocale()
+  const isArabic = locale === "ar"
+
   return (
-    <div className='grid grid-cols-7 min-h-screen'>
-      <div className='hidden md:block col-span-2 lg:col-span-1 sticky top-0 h-screen border-r border-gray-200 bg-white'>
+    <div className='min-h-screen bg-gray-50'>
+      <div className={`hidden sm:block fixed inset-y-0 ${isArabic ? "right-0" : "left-0"} w-64 z-30 border-r border-gray-200 bg-white`}>
         <DashboardSidebar />
       </div>
-
-      {/* Main Content */}
-      <div className='col-span-7 md:col-span-5 lg:col-span-6 p-4'>{children}</div>
+      <div className={`${isArabic ? "sm:mr-[256px]" : "sm:ml-[256px]"} p-4`}>{children}</div>
     </div>
   )
 }

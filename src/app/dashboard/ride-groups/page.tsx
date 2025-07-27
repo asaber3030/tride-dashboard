@@ -18,6 +18,7 @@ export default async function RideGroupsPage({ searchParams }: Props) {
   return (
     <div className='p-6'>
       <PageHeader title={t("rideGroups")} description={t("rideGroupsDescription")} />
+
       <div className='overflow-x-auto'>
         <RideGroupsTable sp={sp} />
       </div>
