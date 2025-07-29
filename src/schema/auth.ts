@@ -13,3 +13,15 @@ export const RegisterSchema = z.object({
   phone_number: z.string().nonempty("messages.invalidPhoneNumber"),
   address: z.string().nonempty("messages.invalidAddress")
 })
+
+export const UpdateAccountSchema = z.object({
+  email: z.string().email().optional(),
+  first_name: z.string().optional(),
+  last_name: z.string().optional(),
+  language: z.string().optional()
+})
+
+export const UpdatePasswordSchema = z.object({
+  password: z.string().min(8, "messages.invalidPassword"),
+  new_password: z.string().min(8, "messages.invalidNewPassword")
+})

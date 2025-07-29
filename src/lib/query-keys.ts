@@ -1,4 +1,5 @@
 const qk = {
+  currentUser: () => ["currentUser"],
   admins: {
     index: (sp: TObject = {}) => ["admins", sp]
   },

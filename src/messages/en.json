@@ -347,5 +347,7 @@
   "mergeGroupsDescription": "Select the groups you want to merge. The selected groups will be combined into one group.",
   "mergeGroupsButton": "Merge Groups",
   "mergeGroupsLabel": "Merge Groups",
-  "pleaseSelectDestationionGroup": "Please select the destination group"
+  "pleaseSelectDestationionGroup": "Please select the destination group",
+
+  "newPassword": "New Password"
 }

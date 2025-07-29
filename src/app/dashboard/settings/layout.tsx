@@ -5,7 +5,7 @@ export default async function SettingsLayout({ children }: { children: React.Rea
   const t = await getTranslations()
 
   return (
-    <div>
+    <div className='p-6'>
       <PageHeader title={t("settings")} description={t("settingsDescription")} />
       {children}
     </div>

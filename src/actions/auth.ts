@@ -1,7 +1,7 @@
 "use server"
 
-import { AUTH_COOKIE } from "@/lib/constants"
-import { LoginSchema } from "@/schema/auth"
+import { API_URL, AUTH_COOKIE } from "@/lib/constants"
+import { LoginSchema, UpdateAccountSchema, UpdatePasswordSchema } from "@/schema/auth"
 
 import { cookies } from "next/headers"
 import { api } from "@/services/axios"
@@ -10,6 +10,7 @@ import { z } from "zod"
 import { Admin, LoginData, User } from "@/types/models"
 import { redirect } from "next/navigation"
 import routes from "@/lib/routes"
+import axios from "axios"
 
 type LoginResponse = {
   token: string
@@ -60,4 +61,38 @@ export async function logoutAction(): Promise<void> {
   const cookieStore = await cookies()
   cookieStore.delete(AUTH_COOKIE)
   return redirect(routes.login)
+}
+
+export async function updatePersonalInformationAction(data: z.infer<typeof UpdateAccountSchema>) {
+  try {
+    const request = await api<{}>("PATCH", "/admins/me", data)
+    return request
+  } catch (error: any) {
+    throw new Error(error?.message || "An error occurred during personal information update")
+  }
+}
+
+export async function updatePasswordAction(data: z.infer<typeof UpdatePasswordSchema>) {
+  try {
+    const request = await api<{}>("PATCH", "/admins/me", data)
+    return request
+  } catch (error: any) {
+    throw new Error(error?.message || "An error occurred during password update")
+  }
+}
+
+export async function updatePictureAction(file: File | undefined) {
+  try {
+    const formData = new FormData()
+    if (file) formData.append("profile_pic", file)
+    const request = await axios.patch(`${API_URL}/admins/me`, formData, {
+      headers: {
+        Authorization: `Bearer ${(await getToken()) || ""}`,
+        "Content-Type": "multipart/form-data"
+      }
+    })
+    return request.data
+  } catch (error: any) {
+    throw new Error(error?.message || "An error occurred during picture update")
+  }
 }

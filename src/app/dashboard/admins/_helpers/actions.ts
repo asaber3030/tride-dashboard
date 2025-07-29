@@ -7,6 +7,9 @@ import { z } from "zod"
 import { AdminSchema, UpdateAdminRoleSchema } from "@/schema/models"
 import { Admin } from "@/types/models"
 import { objectToFormData } from "@/lib/utils"
+import axios from "axios"
+import { API_URL } from "@/lib/constants"
+import { getToken } from "@/actions/auth"
 
 type GetAdmins = {
   admins: Admin[]
@@ -28,10 +31,13 @@ export async function createAdminAction(data: z.infer<typeof AdminSchema>, file:
   try {
     const formData = objectToFormData(data)
     if (file) formData.append("profile_pic", file)
-    const req = await api<Admin>("POST", "/admins/create", formData, {
-      "Content-Type": "multipart/form-data"
+    const req = await axios.post(`${API_URL}/admins/create`, formData, {
+      headers: {
+        Authorization: `Bearer ${(await getToken()) || ""}`,
+        "Content-Type": "multipart/form-data"
+      }
     })
-    return req
+    return req.data
   } catch (error) {
     const err = error as ApiResponse<any>
     throw new Error(err?.data?.data?.message || "Failed to create admin")
