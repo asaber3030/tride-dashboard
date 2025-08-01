@@ -14,14 +14,12 @@ type User = {
   accountType: TAccountType
 }
 
-type Account = {
-  id: number
-  email: string
-  account_type: string // e.g. "admin"
-  is_verified: boolean
-  auth_method: string // e.g. "email"
-}
-
+id: number
+name: string
+profile_pic: string
+grade: string
+gender: string
+parent_id: number
 type UserDetails = {
   id: number
   account_id: number
@@ -37,19 +35,12 @@ type UserDetails = {
 
 type Admin = {
   id: number
-  account: {
-    id: number
-    email: string
-    is_verified: boolean
-  }
+  account: Account
   first_name: string
   last_name: string
   language: TLanguage
   profile_pic: string | null
-  role: {
-    id: number
-    role_name: TRoleType
-  }
+  role: Role
 }
 
 type Role = {
@@ -100,16 +91,34 @@ type Governorate = {
 
 type Parent = {
   id: number
+  account_id: number
   name: string
-  phone: string
   profile_pic: string
+  phone: string
+  google_place_id: string
   lat: string
   lng: string
-  account: {
-    id: number
-    email: string
-    account_type: string
-  }
+  formatted_address: string
+  city_id: number
+  gender: string
+  front_side_nic: string
+  back_side_nic: string
+  face_auth_complete: boolean
+  documents_approved: boolean
+  documents_approval_date: string | null
+  created_at: string
+  updated_at: string
+  account: Account
+  children: Child[]
+}
+
+type Child = {
+  id: number
+  name: string
+  profile_pic: string
+  grade: string
+  gender: string
+  parent_id: number
 }
 
 type RideGroup = {

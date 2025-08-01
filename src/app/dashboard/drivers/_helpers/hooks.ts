@@ -5,7 +5,8 @@ import { getDriver, getDriversPaginated } from "./actions"
 export function usePaginatedDrivers(searchParams: TObject = {}) {
   return useQuery({
     queryKey: qk.drivers.paginated(searchParams),
-    queryFn: ({ queryKey }) => getDriversPaginated(queryKey[2] as TObject)
+    queryFn: ({ queryKey }) => getDriversPaginated(queryKey[2] as TObject),
+    retry: false
   })
 }
 

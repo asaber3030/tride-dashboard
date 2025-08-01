@@ -9,6 +9,7 @@ type TObject = Record<any, any>
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE"
 type TPaymentStatus = "new" | "pending" | "paid" | "expired"
 
+type Coordinates = { lat: number; lng: number }
 type Timestamps = {
   created_at: Date
   updated_at: Date
@@ -37,3 +38,4 @@ type TSearchParams = Promise<TObject>
 type TChatRoomType = "ride_group" | "private" | "customer_support"
 type TChatMessageStatus = "sent" | "delivered" | "read"
 type TChatMessageSender = "parent" | "driver" | "admin"
+type TGroupType = "premium" | "regular"

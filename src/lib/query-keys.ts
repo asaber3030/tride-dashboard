@@ -16,6 +16,7 @@ const qk = {
   schools: {
     index: (sp: TObject = {}) => ["schools", sp],
     paginated: (sp: TObject = {}) => ["schools", "paginated", sp],
+    all: (sp: TObject = {}) => ["schools", "all", sp],
     single: (schoolId: number) => ["schools", schoolId],
     citySchools: (cityId: number) => ["schools", "city", cityId]
   },
@@ -26,6 +27,11 @@ const qk = {
   drivers: {
     paginated: (sp: TObject = {}) => ["drivers", "paginated", sp],
     single: (driverId: number) => ["drivers", driverId]
+  },
+  parents: {
+    paginated: (sp: TObject = {}) => ["parents", "paginated", sp],
+    single: (driverId: number) => ["parents", driverId],
+    rideGroups: (driverId: number) => ["parents", driverId, "ride-groups"]
   },
   governorates: {
     index: (sp: TObject = {}) => ["governorates", sp],

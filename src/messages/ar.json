@@ -344,5 +344,102 @@
   "mergeGroupsDescription": "حدد المجموعات التي تريد دمجها. سيتم دمج المجموعات المحددة في مجموعة واحدة.",
   "mergeGroupsButton": "دمج المجموعات",
   "mergeGroupsLabel": "دمج المجموعات",
-  "pleaseSelectDestationionGroup": "يرجى تحديد المجموعة المستهدفة"
+  "pleaseSelectDestationionGroup": "يرجى تحديد المجموعة المستهدفة",
+  "newPassword": "كلمة مرور جديدة",
+  "parents": "الأولياء",
+  "parentsDescription": "إدارة الأولياء المتاحين والتحكم في الإجراءات والتصفية.",
+  "updateParentPaperStatusTitle": "تحديث حالة أوراق الولي",
+  "updateParentPaperStatusDescription": "حدد حالة الأوراق الجديدة لهذا الولي.",
+  "parentDetails": {
+    "title": "تفاصيل الولي",
+    "tabs": {
+      "details": "التفاصيل",
+      "children": "الأبناء",
+      "additional": "إضافي",
+      "rideGroups": "مجموعات النقل"
+    },
+    "profile": {
+      "title": "معلومات الملف الشخصي"
+    },
+    "gender": {
+      "male": "ذكر",
+      "female": "أنثى"
+    },
+    "joinedOn": "انضم في",
+    "account": {
+      "title": "معلومات الحساب",
+      "type": "نوع الحساب",
+      "authMethod": "طريقة المصادقة",
+      "verified": "حالة التحقق",
+      "verifiedYes": "تم التحقق",
+      "verifiedNo": "غير محقق"
+    },
+    "documents": {
+      "title": "حالة المستندات",
+      "status": "الحالة",
+      "approved": "موافق عليه",
+      "pending": "قيد الانتظار",
+      "approvalDate": "تاريخ الموافقة",
+      "lastUpdated": "آخر تحديث"
+    },
+    "children": {
+      "title": "الأبناء",
+      "noChildren": "لم يتم العثور على أبناء",
+      "noChildrenDescription": "ليس لهذا الولي أبناء مسجلين في النظام.",
+      "grade": "الصف",
+      "gender": "الجنس"
+    },
+    "rideGroups": {
+      "title": "مجموعات النقل",
+      "noGroups": "لم يتم العثور على مجموعات نقل",
+      "noGroupsDescription": "هذا الولي ليس ضمن أي مجموعة نقل.",
+      "seatsTaken": "عدد المقاعد المحجوزة",
+      "viewDetails": "عرض التفاصيل",
+      "noDriver": "لا يوجد سائق معين",
+      "modal": {
+        "groupOverview": "نظرة عامة على المجموعة",
+        "noDriver": "لا يوجد سائق معين",
+        "noDriverDescription": "هذه المجموعة ليس لديها سائق معين بعد.",
+        "groupId": "معرف المجموعة",
+        "status": "الحالة",
+        "groupType": "نوع المجموعة",
+        "inviteCode": "رمز الدعوة",
+        "currentSeats": "عدد المقاعد المحجوزة حالياً",
+        "createdAt": "تاريخ الإنشاء",
+        "driverInfo": "معلومات السائق",
+        "schoolInfo": "معلومات المدرسة",
+        "parentGroups": "مجموعات الأولياء",
+        "seatsUsed": "المقاعد المستخدمة",
+        "documentsApproved": "المستندات الموافق عليها",
+        "documentsPending": "المستندات قيد الانتظار",
+        "children": "الأبناء",
+        "subscriptions": "الاشتراكات",
+        "subscriptionId": "معرف الاشتراك",
+        "totalAmount": "المبلغ الإجمالي",
+        "validUntil": "صالح حتى",
+        "remainingTime": "الوقت المتبقي",
+        "days": "أيام",
+        "pickupDays": "عدد أيام الاستلام",
+        "subscriptionStatus": "حالة الاشتراك",
+        "scheduledDays": "الأيام المجدولة"
+      }
+    },
+    "additional": {
+      "comingSoon": "قريباً",
+      "description": "سيتم توفير ميزات إضافية هنا قريباً."
+    }
+  },
+  "rideGroupsTracker": "متتبع مجموعات النقل",
+  "fullCar": "السيارة ممتلئة",
+  "seat": "مقعد",
+  "school": "مدرسة",
+  "groupId": "معرف المجموعة",
+  "days": "أيام",
+  "inviteCode": "رمز الدعوة",
+  "allSeatsTaken": "المقاعد المحجوزة",
+  "allRideGroups": "جميع مجموعات النقل",
+  "assignDriver": "تعيين سائق",
+  "loadingRideGroups": "جارٍ تحميل مجموعات النقل...",
+  "youHaveToSelectDriverAndRideGroup": "يجب عليك اختيار السائق ومجموعة النقل بالنقر على كليهما",
+  "noChatsFound": "لم يتم العثور على محادثات"
 }

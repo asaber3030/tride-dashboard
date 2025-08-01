@@ -11,10 +11,10 @@ type Props = {
   height?: number
 }
 
-export default function AppLogo({ href = "/", className, width = 50, height = 50 }: Props) {
+export default function AppLogo({ href = "/", className, width = 1000, height = 1000 }: Props) {
   return (
     <Link href={href}>
-      <Image src={LOGO_PATH} alt='Logo' className={cn("w-auto", className)} width={width} height={height} />
+      <Image src={LOGO_PATH} alt='Logo' className={cn("w-32", className)} width={width} height={height} />
     </Link>
   )
 }

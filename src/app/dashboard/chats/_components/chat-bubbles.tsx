@@ -36,7 +36,7 @@ export const ChatBubbles = ({ type, chats, isError, isLoading, isRefetching, err
       ) : (
         <Fragment>
           {chats?.length === 0 ? (
-            "No Chats Available"
+            <div className='text-center p-4 text-yellow-800'>{t("noChatsFound")}</div>
           ) : (
             <Fragment>
               {isError && error ? <div className='text-red-500 text-center p-4'>{t(error.message)}</div> : null}

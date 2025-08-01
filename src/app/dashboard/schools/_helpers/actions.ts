@@ -21,6 +21,18 @@ export async function getSchoolsPaginated(searchParams: TObject = {}) {
   }
 }
 
+export async function getAllSchools(searchParams: TObject = {}): Promise<School[]> {
+  try {
+    const sp = build(searchParams)
+    const url = `/school/all?${sp}`
+    const req = await api<{ data: School[] }>("GET", url)
+    return req.data.data
+  } catch (error) {
+    const err = error as ApiResponse<any>
+    throw new Error(err?.data?.data?.message || "Failed to fetch schools")
+  }
+}
+
 export async function createSchoolAction(data: z.infer<typeof SchoolSchema>) {
   try {
     const url = `/school?city_id=${data.city_id}`

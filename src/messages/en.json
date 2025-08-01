@@ -349,5 +349,101 @@
   "mergeGroupsLabel": "Merge Groups",
   "pleaseSelectDestationionGroup": "Please select the destination group",
 
-  "newPassword": "New Password"
+  "newPassword": "New Password",
+  "parents": "Parents",
+  "parentsDescription": "Manage available Parents and control actions & filter.",
+  "updateParentPaperStatusTitle": "Update Parent's Paper Status",
+  "updateParentPaperStatusDescription": "Select the new paper status for this parent.",
+  "parentDetails": {
+    "title": "Parent Details",
+    "tabs": {
+      "details": "Details",
+      "children": "Children",
+      "additional": "Additional",
+      "rideGroups": "Ride Groups"
+    },
+    "profile": {
+      "title": "Profile Information"
+    },
+    "gender": {
+      "male": "Male",
+      "female": "Female"
+    },
+    "joinedOn": "Joined on",
+    "account": {
+      "title": "Account Information",
+      "type": "Account Type",
+      "authMethod": "Authentication Method",
+      "verified": "Verified Status",
+      "verifiedYes": "Verified",
+      "verifiedNo": "Not Verified"
+    },
+    "documents": {
+      "title": "Documents Status",
+      "status": "Status",
+      "approved": "Approved",
+      "pending": "Pending",
+      "approvalDate": "Approval Date",
+      "lastUpdated": "Last Updated"
+    },
+    "children": {
+      "title": "Children",
+      "noChildren": "No Children Found",
+      "noChildrenDescription": "This parent has no children registered in the system.",
+      "grade": "Grade",
+      "gender": "Gender"
+    },
+    "rideGroups": {
+      "title": "Ride Groups",
+      "noGroups": "No Ride Groups Found",
+      "noGroupsDescription": "This parent is not part of any ride groups.",
+      "seatsTaken": "seats taken",
+      "viewDetails": "View Details",
+      "noDriver": "No Driver Assigned",
+      "modal": {
+        "groupOverview": "Group Overview",
+        "noDriver": "No Driver Assigned",
+        "noDriverDescription": "This group does not have a driver assigned yet.",
+        "groupId": "Group ID",
+        "status": "Status",
+        "groupType": "Group Type",
+        "inviteCode": "Invite Code",
+        "currentSeats": "Current Seats Taken",
+        "createdAt": "Created At",
+        "driverInfo": "Driver Information",
+        "schoolInfo": "School Information",
+        "parentGroups": "Parent Groups",
+        "seatsUsed": "Seats Used",
+        "documentsApproved": "Documents Approved",
+        "documentsPending": "Documents Pending",
+        "children": "Children",
+        "subscriptions": "Subscriptions",
+        "subscriptionId": "Subscription ID",
+        "totalAmount": "Total Amount",
+        "validUntil": "Valid Until",
+        "remainingTime": "Remaining Time",
+        "days": "days",
+        "pickupDays": "Pickup Days Count",
+        "subscriptionStatus": "Subscription Status",
+        "scheduledDays": "Scheduled Days"
+      }
+    },
+    "additional": {
+      "comingSoon": "Coming Soon",
+      "description": "Additional features will be available here soon."
+    }
+  },
+  "rideGroupsTracker": "Ride Groups Tracker",
+  "fullCar": "Full Car",
+  "seat": "Seat",
+  "school": "School",
+  "groupId": "Group ID",
+  "days": "Days",
+  "inviteCode": "Invite Code",
+  "allSeatsTaken": "Seats taken",
+  "allRideGroups": "All Ride Groups",
+  "assignDriver": "Assign Driver",
+  "loadingRideGroups": "Loading Ride Groups...",
+  "youHaveToSelectDriverAndRideGroup": "You have to select driver and ride group by clicking on both",
+  "noChatsFound": "No Chats Found"
 }

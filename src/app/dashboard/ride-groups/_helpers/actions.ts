@@ -53,3 +53,16 @@ export async function mergeRideGroupAction(groupId: number, destinationId: numbe
     throw new Error(err?.data?.data?.message || "Failed to merge groups")
   }
 }
+
+export async function assignDriverToRideGroupAction(groupId: number, driverId: number) {
+  try {
+    const req = await api("PATCH", `/manage/ride/groups/${groupId}/assign-driver`, {
+      driverId
+    })
+    return req
+  } catch (error) {
+    const err = error as ApiResponse<any>
+    console.log(error)
+    throw new Error(err?.message || "Failed to assign driver to group")
+  }
+}

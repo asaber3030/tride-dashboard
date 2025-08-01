@@ -1,5 +1,5 @@
 import routes from "./routes"
-import { BarChart2, Car, FileText, MapPin, MessageSquare, CreditCard, School, LockIcon, BuildingIcon } from "lucide-react"
+import { BarChart2, Car, UsersRound, FileText, MapPin, MessageSquare, CreditCard, School, LockIcon, BuildingIcon, ClipboardIcon, CarTaxiFront, TrainTrack } from "lucide-react"
 
 export const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
@@ -33,9 +33,14 @@ export const SidebarLinks = [
     icon: Car
   },
   {
-    name: "requests",
+    name: "drivers",
     href: "/dashboard/drivers",
-    icon: FileText
+    icon: CarTaxiFront
+  },
+  {
+    name: "parents",
+    href: "/dashboard/parents",
+    icon: UsersRound
   },
   /*   {
     name: "liveTracking",
@@ -51,6 +56,11 @@ export const SidebarLinks = [
     name: "payments",
     href: "/dashboard/payments",
     icon: CreditCard
+  },
+  {
+    name: "rideGroupsTracker",
+    href: "/dashboard/ride-groups/tracker",
+    icon: TrainTrack
   },
   {
     name: "admins.admins",
@@ -82,3 +92,29 @@ export const messageTypes = {
   DOCUMENT: "document",
   LOCATION: "location"
 }
+
+export const chatGroupsList = [
+  {
+    key: "customer_support",
+    label: "customerServicesTab"
+  },
+  {
+    key: "ride_group",
+    label: "rideGroups"
+  }
+]
+
+export const chatTypeList = [
+  {
+    key: "all",
+    label: "allTab"
+  },
+  {
+    key: "parent",
+    label: "parentsTab"
+  },
+  {
+    key: "driver",
+    label: "driversTab"
+  }
+]

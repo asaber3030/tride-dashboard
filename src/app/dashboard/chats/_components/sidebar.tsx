@@ -1,9 +1,8 @@
 "use client"
 
-import { useChats } from "../_helpers/hooks"
-import { useLocale, useTranslations } from "next-intl"
+import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-
+import { useChats } from "../_helpers/hooks"
 import { FormEvent, useEffect, useMemo, useState } from "react"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { ChatBubbles } from "./chat-bubbles"
@@ -16,15 +15,24 @@ interface ChatSidebarProps {
   type: TChatRoomType
 }
 
+// Only translation keys outside the component
+const GROUPS = [
+  { key: "customer_support", labelKey: "customerServicesTab" },
+  { key: "ride_group", labelKey: "rideGroups" }
+]
+
+const SUBTABS = [
+  { key: "all", labelKey: "allTab" },
+  { key: "parent", labelKey: "parentsTab" },
+  { key: "driver", labelKey: "driversTab" }
+]
+
 export function ChatSidebar({ type, sp }: ChatSidebarProps) {
   const router = useRouter()
   const t = useTranslations()
-
   const [search, setSearch] = useState("")
   const [state, setState] = useState<TObject>({})
-
   const stateMemo = useMemo(() => state, [state])
-
   const { data: chats, refetch: refetchCustomerSupport, isLoading: isChatsLoading, isError: isChatsHasError, error: chatsError } = useChats(state, type)
 
   const submitSearch = (e: FormEvent<HTMLFormElement>) => {
@@ -35,18 +43,16 @@ export function ChatSidebar({ type, sp }: ChatSidebarProps) {
     }))
   }
 
-  const handleTypeChange = (type: string) => {
+  const handleTypeChange = (tabType: string) => {
     setState((prev) => ({
       ...prev,
-      account_type: type
+      account_type: tabType
     }))
   }
 
-  const handleRoutingChats = (type: TChatRoomType) => {
-    router.push(routes.chats.viewChatsOfType(type))
+  const handleRoutingChats = (groupType: TChatRoomType) => {
+    router.push(routes.chats.viewChatsOfType(groupType))
   }
-
-  console.log({ chats })
 
   useEffect(() => {
     refetchCustomerSupport()
@@ -63,53 +69,31 @@ export function ChatSidebar({ type, sp }: ChatSidebarProps) {
         <div className='flex flex-col mt-4 space-x-2 mb-4'>
           <Tabs defaultValue={type} className='flex-1 flex flex-col'>
             <TabsList className='grid rounded-none grid-cols-2 p-0 h-auto bg-transparent border-b border-gray-200 w-full'>
-              <TabsTrigger value='customer_support' className='data-[state=active]:border-b-2 data-[state=active]:border-b-blue-500 data-[state=active]:shadow-none rounded-none py-2' onClick={() => handleRoutingChats("customer_support")}>
-                {t("customerServicesTab")}
-              </TabsTrigger>
-              <TabsTrigger value='ride_group' className='data-[state=active]:border-b-2 data-[state=active]:border-b-blue-500 data-[state=active]:shadow-none rounded-none py-2' onClick={() => handleRoutingChats("ride_group")}>
-                {t("rideGroups")}
-              </TabsTrigger>
+              {GROUPS.map((g) => (
+                <TabsTrigger key={g.key} value={g.key} className='data-[state=active]:border-b-2 data-[state=active]:border-b-blue-500 data-[state=active]:shadow-none rounded-none py-2' onClick={() => handleRoutingChats(g.key as TChatRoomType)}>
+                  {t(g.labelKey)}
+                </TabsTrigger>
+              ))}
             </TabsList>
 
-            <TabsContent value='customer_support'>
-              <Tabs defaultValue='all' className='flex-1 flex flex-col'>
-                <TabsList className='grid rounded-none grid-cols-4 p-0 h-auto bg-transparent border-b border-gray-200 w-full'>
-                  <TabsTrigger onClick={() => handleTypeChange("all")} value='all' className='data-[state=active]:border-b-2 data-[state=active]:border-b-blue-500 data-[state=active]:shadow-none rounded-none py-2'>
-                    {t("allTab")}
-                  </TabsTrigger>
-                  <TabsTrigger onClick={() => handleTypeChange("parent")} value='parent' className='data-[state=active]:border-b-2 data-[state=active]:border-b-blue-500 data-[state=active]:shadow-none rounded-none py-2'>
-                    {t("parentsTab")}
-                  </TabsTrigger>
-                </TabsList>
-
-                <TabsContent value='all' className='flex-1 overflow-y-auto mt-0 p-0'>
-                  <ChatBubbles type='customer_support' isError={isChatsHasError} error={chatsError} isLoading={isChatsLoading} isRefetching={false} chats={chats?.data} />
-                </TabsContent>
-                <TabsContent value='parent' className='flex-1 overflow-y-auto mt-0 p-0'>
-                  <ChatBubbles type='customer_support' isError={isChatsHasError} error={chatsError} isLoading={isChatsLoading} isRefetching={false} chats={chats?.data} />
-                </TabsContent>
-              </Tabs>
-            </TabsContent>
-
-            <TabsContent value='ride_group'>
-              <Tabs defaultValue={"all"} className='flex-1 flex flex-col'>
-                <TabsList className='grid rounded-none grid-cols-4 p-0 h-auto bg-transparent border-b border-gray-200 w-full'>
-                  <TabsTrigger onClick={() => handleTypeChange("all")} value='all' className='data-[state=active]:border-b-2 data-[state=active]:border-b-blue-500 data-[state=active]:shadow-none rounded-none py-2'>
-                    {t("allTab")}
-                  </TabsTrigger>
-                  <TabsTrigger onClick={() => handleTypeChange("parent")} value='parent' className='data-[state=active]:border-b-2 data-[state=active]:border-b-blue-500 data-[state=active]:shadow-none rounded-none py-2'>
-                    {t("parentsTab")}
-                  </TabsTrigger>
-                </TabsList>
-
-                <TabsContent value='all' className='flex-1 overflow-y-auto mt-0 p-0'>
-                  <ChatBubbles type='ride_group' isError={isChatsHasError} error={chatsError} isLoading={isChatsLoading} isRefetching={false} chats={chats?.data} />
-                </TabsContent>
-                <TabsContent value='parent' className='flex-1 overflow-y-auto mt-0 p-0'>
-                  <ChatBubbles type='ride_group' isError={isChatsHasError} error={chatsError} isLoading={isChatsLoading} isRefetching={false} chats={chats?.data} />
-                </TabsContent>
-              </Tabs>
-            </TabsContent>
+            {GROUPS.map((g) => (
+              <TabsContent key={g.key} value={g.key}>
+                <Tabs defaultValue='all' className='flex-1 flex flex-col'>
+                  <TabsList className='grid rounded-none grid-cols-4 p-0 h-auto bg-transparent border-b border-gray-200 w-full'>
+                    {SUBTABS.map((sub) => (
+                      <TabsTrigger key={sub.key} onClick={() => handleTypeChange(sub.key)} value={sub.key} className='data-[state=active]:border-b-2 data-[state=active]:border-b-blue-500 data-[state=active]:shadow-none rounded-none py-2'>
+                        {t(sub.labelKey)}
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
+                  {SUBTABS.map((sub) => (
+                    <TabsContent key={sub.key} value={sub.key} className='flex-1 overflow-y-auto mt-0 p-0'>
+                      <ChatBubbles type={g.key as TChatRoomType} isError={isChatsHasError} error={chatsError} isLoading={isChatsLoading} isRefetching={false} chats={chats?.data} />
+                    </TabsContent>
+                  ))}
+                </Tabs>
+              </TabsContent>
+            ))}
           </Tabs>
         </div>
       </div>

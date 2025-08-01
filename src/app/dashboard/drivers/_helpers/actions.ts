@@ -25,6 +25,7 @@ export async function getDriversPaginated(searchParams: TObject = {}): Promise<G
     return req.data
   } catch (error) {
     const err = error as ApiResponse<any>
+    console.error("Error fetching drivers:", err)
     throw new Error(err?.data?.data?.message || "Failed to fetch drivers")
   }
 }
