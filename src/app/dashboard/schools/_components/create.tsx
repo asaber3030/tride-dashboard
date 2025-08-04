@@ -70,10 +70,10 @@ export const CreateSchoolModal = () => {
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleAction)} className='space-y-4'>
+          <form onSubmit={form.handleSubmit(handleAction)} className='space-y-4' noValidate>
             <InputField name='school_name' label={t("name")} field={form.register("school_name")} error={form.formState?.errors?.school_name} />
-            <InputField name='lat' label={t("latitude")} field={form.register("lat")} error={form.formState?.errors?.lat} />
-            <InputField name='lng' label={t("longitude")} field={form.register("lng")} error={form.formState?.errors?.lng} />
+            <InputField name='lat' label={t("latitude")} field={form.register("lat")} error={form.formState?.errors?.lat} type='number' step='any' />
+            <InputField name='lng' label={t("longitude")} field={form.register("lng")} error={form.formState?.errors?.lng} type='number' step='any' />
 
             {isCitiesLoading ? (
               <InputSkeleton />

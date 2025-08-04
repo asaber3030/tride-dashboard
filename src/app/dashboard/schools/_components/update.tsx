@@ -81,13 +81,13 @@ export const UpdateSchoolModal = ({ school }: Props) => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleAction)} className='space-y-4'>
             <InputField name='school_name' label={t("name")} field={form.register("school_name")} error={form.formState?.errors?.school_name} />
-            <InputField name='lat' label={t("latitude")} field={form.register("lat")} error={form.formState?.errors?.lat} />
-            <InputField name='lng' label={t("longitude")} field={form.register("lng")} error={form.formState?.errors?.lng} />
+            <InputField name='lat' label={t("latitude")} field={form.register("lat")} error={form.formState?.errors?.lat} type='number' step='any' />
+            <InputField name='lng' label={t("longitude")} field={form.register("lng")} error={form.formState?.errors?.lng} type='number' step='any' />
 
             {isCitiesLoading ? (
               <InputSkeleton />
             ) : (
-              <SelectField control={form.control} name='city_id' label={t("city")} valueAsNumber>
+              <SelectField control={form.control} name='city_id' label={t("city")} defaultValue={school.city_id.toString()} valueAsNumber>
                 {cities?.map((item) => (
                   <SelectItem value={item.id.toString()}>{item.name}</SelectItem>
                 ))}

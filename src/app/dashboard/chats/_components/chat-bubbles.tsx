@@ -51,7 +51,6 @@ export const ChatBubbles = ({ type, chats, isError, isLoading, isRefetching, err
                       {item?.last_message && item?.last_message?.created_at && <span className='text-xs text-gray-500'>{diffForHumans(item?.last_message?.created_at)}</span>}
                     </div>
                     <div className={cn("flex items-center", locale === "en" ? "flex-row" : "flex-row-reverse")}>
-                      <span className={`text-xs px-1.5 py-0.5 rounded mr-2 ${item?.last_message?.sender_type === "driver" ? "bg-orange-100 text-orange-800" : "bg-blue-100 text-blue-800"}`}>{item?.last_message?.sender_type === "driver" ? t("driverRole") : t("parentRole")}</span>
                       <p className='text-xs text-gray-500 truncate'>{item?.last_message?.message}</p>
                     </div>
                   </div>
