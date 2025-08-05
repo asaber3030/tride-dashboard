@@ -445,5 +445,6 @@
   "assignDriver": "Assign Driver",
   "loadingRideGroups": "Loading Ride Groups...",
   "youHaveToSelectDriverAndRideGroup": "You have to select driver and ride group by clicking on both",
-  "noChatsFound": "No Chats Found"
+  "noChatsFound": "No Chats Found",
+  "role": "Role"
 }

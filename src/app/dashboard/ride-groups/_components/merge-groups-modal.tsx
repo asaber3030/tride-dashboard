@@ -13,11 +13,12 @@ import { Form } from "@/components/ui/form"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { mergeRideGroupAction } from "../_helpers/actions"
 import { handleError, showResponse } from "@/lib/utils"
 import { toast } from "react-toastify"
 import { LoadingButton } from "@/components/common/loading-button"
+import qk from "@/lib/query-keys"
 
 type Props = {
   rideGroup: FullRideGroup
@@ -29,12 +30,13 @@ type Mutation = {
 }
 
 export const MergeGroupModal = ({ rideGroup }: Props) => {
+  const qc = useQueryClient()
   const t = useTranslations()
 
   const [search, setSearch] = useState<string>("")
   const [open, setOpen] = useState<boolean>(false)
 
-  const { data, isLoading, isError, error, isRefetching } = usePaginatedRideGroups({
+  const { data, isLoading, isRefetching } = usePaginatedRideGroups({
     name: search.trim()
   })
 
@@ -49,10 +51,12 @@ export const MergeGroupModal = ({ rideGroup }: Props) => {
   const mutation = useMutation({
     mutationFn: ({ groupId, destinationId }: Mutation) => mergeRideGroupAction(groupId, destinationId),
     onSuccess: (data) => {
+      qc.invalidateQueries({ queryKey: qk.rideGroups.paginated() })
       showResponse(data)
       setOpen(false)
     },
     onError: (error) => {
+      console.log(error)
       handleError(error)
     }
   })

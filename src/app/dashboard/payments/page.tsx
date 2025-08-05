@@ -2,7 +2,7 @@ import { PageHeader } from "@/components/dashboard/page-header"
 import { PaymentsTable } from "./_components/table"
 import { getTranslations } from "next-intl/server"
 import { hasAccessTo } from "@/actions/roles"
-import { unauthorized } from "next/navigation"
+import { notFound } from "next/navigation"
 
 type Props = {
   searchParams: TSearchParams
@@ -13,7 +13,7 @@ export default async function PaymentsPage({ searchParams }: Props) {
   const sp = await searchParams
 
   const hasAccess = await hasAccessTo("Payments")
-  if (!hasAccess) return unauthorized()
+  if (!hasAccess) return notFound()
 
   return (
     <div className='p-6'>

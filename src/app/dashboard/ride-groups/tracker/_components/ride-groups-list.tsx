@@ -45,7 +45,9 @@ export const RideGroupTrackerRGList = ({ searchParams }: Props) => {
               <span className='text-gray-700 font-semibold text-sm'>{t("days")}</span>
               <span className='text-gray-700 font-semibold text-sm flex gap-2 truncate'>
                 {rg.dayDates.map((item) => (
-                  <span className='text-xs'>{item.date_day}</span>
+                  <span className='text-xs' key={`ride_group_day_${item.id}`}>
+                    {item.date_day}
+                  </span>
                 ))}
               </span>
             </li>

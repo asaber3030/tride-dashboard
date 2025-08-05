@@ -15,8 +15,8 @@ export const UpdateAdminRoleSchema = z.object({
 export const SchoolSchema = z.object({
   school_name: z.string().min(1, "School name is required"),
   city_id: z.number().min(1, "City is required"),
-  lat: z.string().min(1, "Latitude is required"),
-  lng: z.string().min(1, "Longitude is required")
+  lat: z.number(),
+  lng: z.number()
 })
 
 export const GovernorateSchema = z.object({

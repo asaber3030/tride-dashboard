@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server"
-import { unauthorized } from "next/navigation"
+import { notFound } from "next/navigation"
 import { getUser } from "@/actions/auth"
 
 import { DriversTable } from "./_components/table"
@@ -19,7 +19,7 @@ export default async function DriversPage({ searchParams }: Props) {
   const sp = await searchParams
 
   const user = await getUser()
-  if (!user || user.role?.role_name != "super admin") return unauthorized()
+  if (!user || user.role?.role_name != "super admin") return notFound()
 
   return (
     <div className='p-6'>

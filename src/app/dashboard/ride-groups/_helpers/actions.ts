@@ -3,7 +3,7 @@
 import { build } from "search-params"
 import { api } from "@/services/axios"
 
-import { FullRideGroup, Payment } from "@/types/models"
+import { FullRideGroup, Payment, RideGroupLocation } from "@/types/models"
 
 type GetRideGroups = {
   pagination: {
@@ -40,6 +40,17 @@ export async function getRideGroup(id: number) {
   }
 }
 
+export async function getRideGroupLocations(id: number) {
+  try {
+    const url = `/manage/ride/groups/${id}/locations`
+    const req = await api<{ locations: RideGroupLocation[] }>("GET", url)
+    return req.data.locations
+  } catch (error) {
+    const err = error as ApiResponse<any>
+    throw new Error(err?.data?.data?.message || "Failed to fetch group")
+  }
+}
+
 export async function mergeRideGroupAction(groupId: number, destinationId: number) {
   try {
     const url = `/manage/ride/group/merge`
@@ -50,7 +61,7 @@ export async function mergeRideGroupAction(groupId: number, destinationId: numbe
     return req
   } catch (error) {
     const err = error as ApiResponse<any>
-    throw new Error(err?.data?.data?.message || "Failed to merge groups")
+    throw new Error(err?.message || "Failed to merge groups")
   }
 }
 

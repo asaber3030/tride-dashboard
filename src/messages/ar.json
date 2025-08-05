@@ -441,5 +441,8 @@
   "assignDriver": "تعيين سائق",
   "loadingRideGroups": "جارٍ تحميل مجموعات النقل...",
   "youHaveToSelectDriverAndRideGroup": "يجب عليك اختيار السائق ومجموعة النقل بالنقر على كليهما",
-  "noChatsFound": "لم يتم العثور على محادثات"
+  "noChatsFound": "لم يتم العثور على محادثات",
+  "settingsDescription": "إدارة إعدادات النظام والتحكم في الإجراءات والفلاتر.",
+  "password": "كلمة المرور",
+  "role": "الدور"
 }

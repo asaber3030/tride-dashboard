@@ -3,7 +3,7 @@ import { RequestsTable } from "./_components/table"
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import { hasAccessTo } from "@/actions/roles"
-import { unauthorized } from "next/navigation"
+import { notFound } from "next/navigation"
 
 export const metadata: Metadata = {
   title: "Requests | Dashboard",
@@ -14,7 +14,7 @@ export default async function RequestsPage() {
   const t = await getTranslations()
 
   const hasAccess = await hasAccessTo("Requests")
-  if (!hasAccess) return unauthorized()
+  if (!hasAccess) return notFound()
 
   return (
     <div className='p-6'>

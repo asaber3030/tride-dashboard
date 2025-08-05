@@ -43,7 +43,8 @@ const qk = {
   },
   rideGroups: {
     paginated: (sp: TObject = {}) => ["ride-groups", "paginated", sp],
-    single: (paymentId: number) => ["ride-groups", paymentId]
+    single: (id: number) => ["ride-groups", id],
+    rideGroupLocations: (id: number) => ["ride-groups", id, "locations"]
   },
   chats: {
     all: (sp: TObject = {}, type: TChatRoomType = "customer_support") => ["chats", "customer-support", "all", sp, type],

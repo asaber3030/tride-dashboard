@@ -4,7 +4,7 @@ import { PageHeader } from "@/components/dashboard/page-header"
 import { GovernoratesTable } from "./_components/table"
 import { Metadata } from "next"
 import { getUser } from "@/actions/auth"
-import { unauthorized } from "next/navigation"
+import { notFound } from "next/navigation"
 
 type Props = {
   searchParams: TSearchParams
@@ -19,7 +19,7 @@ export default async function CitiesPage({ searchParams }: Props) {
   const sp = await searchParams
 
   const user = await getUser()
-  if (!user || user.role?.role_name != "super admin") return unauthorized()
+  if (!user || user.role?.role_name != "super admin") return notFound()
 
   return (
     <div className='p-6'>

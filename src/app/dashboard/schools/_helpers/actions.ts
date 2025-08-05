@@ -6,6 +6,8 @@ import { api } from "@/services/axios"
 import { SchoolSchema } from "@/schema/models"
 import { School } from "@/types/models"
 import { z } from "zod"
+import { revalidatePath } from "next/cache"
+import routes from "@/lib/routes"
 
 type GetSchools = PaginatedData<School>
 
@@ -33,6 +35,16 @@ export async function getAllSchools(searchParams: TObject = {}): Promise<School[
   }
 }
 
+export async function getSchool(id: number): Promise<School> {
+  try {
+    const req = await api<School>("GET", `/school/${id}`)
+    return req.data
+  } catch (error) {
+    const err = error as ApiResponse<any>
+    throw new Error(err?.data?.data?.message || "Failed to fetch school")
+  }
+}
+
 export async function createSchoolAction(data: z.infer<typeof SchoolSchema>) {
   try {
     const url = `/school?city_id=${data.city_id}`
@@ -48,6 +60,7 @@ export async function updateSchoolAction(id: number, data: z.infer<typeof School
   try {
     const url = `/school/${id}`
     const req = await api<School>("PUT", url, data)
+    revalidatePath(routes.updateSchool(id))
     return req
   } catch (error) {
     const err = error as ApiResponse<any>

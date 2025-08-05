@@ -3,10 +3,10 @@
 import { build } from "search-params"
 import { api } from "@/services/axios"
 
-import { FullRideGroup, Parent } from "@/types/models"
+import { FullRideGroup, Parent, ParentWithGroups } from "@/types/models"
 
 type GetParents = {
-  rows: Parent[]
+  rows: ParentWithGroups[]
   count: number
   hasNextPage: boolean
   hasPreviousPage: boolean

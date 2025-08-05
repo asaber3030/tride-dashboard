@@ -5,7 +5,6 @@ import qk from "@/lib/query-keys"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
 import { useCities } from "../../cities/_helpers/hooks"
-import { useState } from "react"
 import { useForm } from "react-hook-form"
 
 import { handleError, showResponse } from "@/lib/utils"
@@ -13,42 +12,38 @@ import { updateSchoolAction } from "../_helpers/actions"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { GOOGLE_MAPS_API_KEY } from "@/lib/constants"
+
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api"
+import { InputSkeleton } from "@/components/common/skeletons/input"
 import { LoadingButton } from "@/components/common/loading-button"
 import { SchoolSchema } from "@/schema/models"
-import { InputField } from "@/components/common/form/input-field"
-import { Button } from "@/components/ui/button"
-import { Form } from "@/components/ui/form"
-import { Edit, Plus } from "lucide-react"
-import { School } from "@/types/models"
 import { SelectField } from "@/components/common/form/select-field"
+import { InputField } from "@/components/common/form/input-field"
 import { SelectItem } from "@/components/ui/select"
-import { InputSkeleton } from "@/components/common/skeletons/input"
+import { School } from "@/types/models"
+import { Form } from "@/components/ui/form"
+import { Edit } from "lucide-react"
 
 type TMut = {
   data: z.infer<typeof SchoolSchema>
 }
-type Props = {
-  school: School
-}
 
-export const UpdateSchoolModal = ({ school }: Props) => {
-  const t = useTranslations()
+export const UpdateSchoolForm = ({ school }: { school: School }) => {
+  const { data: cities, isLoading: isCitiesLoading } = useCities()
+
   const qc = useQueryClient()
-
-  const [open, setOpen] = useState(false)
+  const t = useTranslations()
 
   const form = useForm({
     resolver: zodResolver(SchoolSchema),
     defaultValues: {
       school_name: school.school_name,
-      lat: school.lat,
-      lng: school.lng,
-      city_id: school.city_id
+      city_id: school.city_id,
+      lat: parseFloat(`${school.lat}`),
+      lng: parseFloat(`${school.lng}`)
     }
   })
-
-  const { data: cities, isError: isCitiesHasError, isLoading: isCitiesLoading, error: citiesError } = useCities()
 
   const mutation = useMutation({
     mutationFn: ({ data }: TMut) => updateSchoolAction(school.id, data),
@@ -56,7 +51,6 @@ export const UpdateSchoolModal = ({ school }: Props) => {
       showResponse(data, () => {
         qc.invalidateQueries({ queryKey: qk.schools.paginated() })
         form.reset()
-        setOpen(false)
       }),
     onError: (error: Error) => handleError(error)
   })
@@ -67,38 +61,53 @@ export const UpdateSchoolModal = ({ school }: Props) => {
     })
   }
 
+  const handleMapClick = (e: google.maps.MapMouseEvent) => {
+    if (e.latLng) {
+      form.setValue("lat", parseFloat(e.latLng.lat().toFixed(6)))
+      form.setValue("lng", parseFloat(e.latLng.lng().toFixed(6)))
+    }
+  }
+
+  const currentLat = form.watch("lat")
+  const currentLng = form.watch("lng")
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button icon={Edit} size='icon' variant='outline' />
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>{t("schoolsSchema.updateTitle")}</DialogTitle>
-          <DialogDescription>{t("schoolsSchema.updateDescription")}</DialogDescription>
-        </DialogHeader>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleAction)} className='space-y-4' noValidate>
+        <InputField name='school_name' label={t("name")} field={form.register("school_name")} error={form.formState?.errors?.school_name} />
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleAction)} className='space-y-4'>
-            <InputField name='school_name' label={t("name")} field={form.register("school_name")} error={form.formState?.errors?.school_name} />
-            <InputField name='lat' label={t("latitude")} field={form.register("lat")} error={form.formState?.errors?.lat} type='number' step='any' />
-            <InputField name='lng' label={t("longitude")} field={form.register("lng")} error={form.formState?.errors?.lng} type='number' step='any' />
+        <div className='grid xl:grid-cols-2 grid-cols-1 gap-2'>
+          <InputField disabled name='lat' label={t("latitude")} field={form.register("lat")} error={form.formState?.errors?.lat} type='number' step='any' />
+          <InputField disabled name='lng' label={t("longitude")} field={form.register("lng")} error={form.formState?.errors?.lng} type='number' step='any' />
+        </div>
 
-            {isCitiesLoading ? (
-              <InputSkeleton />
-            ) : (
-              <SelectField control={form.control} name='city_id' label={t("city")} defaultValue={school.city_id.toString()} valueAsNumber>
-                {cities?.map((item) => (
-                  <SelectItem value={item.id.toString()}>{item.name}</SelectItem>
-                ))}
-              </SelectField>
-            )}
-            <LoadingButton loading={mutation.isPending} icon={Plus}>
-              {t("update")}
-            </LoadingButton>
-          </form>
-        </Form>
-      </DialogContent>
-    </Dialog>
+        <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY}>
+          <GoogleMap
+            mapContainerStyle={{
+              width: "100%",
+              height: "500px"
+            }}
+            center={{ lat: parseFloat(`${school.lat}`), lng: parseFloat(`${school.lng}`) }}
+            zoom={13}
+            onClick={handleMapClick}
+          >
+            {currentLat && currentLng && <Marker position={{ lat: currentLat, lng: currentLng }} />}
+          </GoogleMap>
+        </LoadScript>
+
+        {isCitiesLoading ? (
+          <InputSkeleton />
+        ) : (
+          <SelectField control={form.control} name='city_id' label={t("city")} defaultValue={school.city_id.toString()} valueAsNumber error={form.formState?.errors?.city_id}>
+            {cities?.map((item) => (
+              <SelectItem value={item.id.toString()}>{item.name}</SelectItem>
+            ))}
+          </SelectField>
+        )}
+        <LoadingButton loading={mutation.isPending} icon={Edit}>
+          {t("update")}
+        </LoadingButton>
+      </form>
+    </Form>
   )
 }

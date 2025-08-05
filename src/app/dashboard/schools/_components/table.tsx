@@ -7,8 +7,11 @@ import { DisplayError } from "@/components/common/error"
 import { DataTable } from "@/components/common/data-table"
 import { SchoolsColumns } from "./columns"
 import { SimplePagination } from "@/components/common/simple-pagination"
-import { CreateSchoolModal } from "./create"
 import { TableAction } from "@/components/common/table-action"
+import { LinkBtn } from "@/components/common/link-button"
+import { Plus } from "lucide-react"
+
+import routes from "@/lib/routes"
 
 type Props = {
   sp: TObject
@@ -23,7 +26,9 @@ export const SchoolsTable = ({ sp = {} }: Props) => {
   return (
     <div className='space-y-4'>
       <TableAction>
-        <CreateSchoolModal />
+        <LinkBtn href={routes.createSchool} icon={Plus}>
+          Create
+        </LinkBtn>
       </TableAction>
       <DataTable data={schools?.rows!} columns={SchoolsColumns} />
       <SimplePagination hasNextPage={schools?.hasNextPage!} hasPrevPage={schools?.hasPrevPage!} />

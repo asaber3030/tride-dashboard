@@ -1,6 +1,6 @@
 import { PageHeader } from "@/components/dashboard/page-header"
 import { getTranslations } from "next-intl/server"
-import { unauthorized } from "next/navigation"
+import { notFound } from "next/navigation"
 import { hasAccessTo } from "@/actions/roles"
 import { RideGroupDetails } from "../_components/ride-group-details"
 
@@ -17,7 +17,7 @@ export default async function RideGroupsPage({ params, searchParams }: Props) {
   const { rideGroupId } = await params
 
   const hasAccess = await hasAccessTo("Trips")
-  if (!hasAccess) return unauthorized()
+  if (!hasAccess) return notFound()
 
   return (
     <div className='p-6'>

@@ -1,15 +1,18 @@
+import { diffForHumans } from "@/lib/utils"
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { IMAGES } from "@/lib/constants"
-import { capitalize, diffForHumans } from "@/lib/utils"
-import { Parent } from "@/types/models"
-import { ColumnDef } from "@tanstack/react-table"
 import { UpdateParentStatusModal } from "./change-status-modal"
+import { ParentWithGroups } from "@/types/models"
+import { ColumnDef } from "@tanstack/react-table"
 import { LinkBtn } from "@/components/common/link-button"
+import { Badge } from "@/components/ui/badge"
 import { Eye } from "lucide-react"
+
+import { IMAGES } from "@/lib/constants"
+
 import routes from "@/lib/routes"
 
-export const ParentColumns: ColumnDef<Parent>[] = [
+export const ParentColumns: ColumnDef<ParentWithGroups>[] = [
   {
     accessorKey: "id",
     header: "ID"
@@ -38,8 +41,15 @@ export const ParentColumns: ColumnDef<Parent>[] = [
     header: "Phone"
   },
   {
+    accessorKey: "groups",
+    header: "School",
+    cell: ({ row }) => {
+      return <p className='capitalize max-w-32 truncate'>{row.original.groups?.length ? row.original.groups.map((group) => group.group.school.school_name).join(", ") : "No School"}</p>
+    }
+  },
+  {
     accessorKey: "children.length",
-    header: "children",
+    header: "Children",
     cell: ({ row }) => {
       return (
         <Badge className='capitalize'>

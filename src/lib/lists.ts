@@ -28,7 +28,7 @@ export const SidebarLinks = [
     icon: BarChart2
   },
   {
-    name: "trips",
+    name: "rideGroups",
     href: "/dashboard/ride-groups",
     icon: Car
   },

@@ -1,8 +1,10 @@
 import { School } from "@/types/models"
 import { ColumnDef } from "@tanstack/react-table"
-import { UpdateSchoolModal } from "./update"
 import { DeleteModal } from "@/components/common/delete-modal"
 import { deleteSchoolAction } from "../_helpers/actions"
+import { LinkBtn } from "@/components/common/link-button"
+import { Edit } from "lucide-react"
+import routes from "@/lib/routes"
 
 export const SchoolsColumns: ColumnDef<School>[] = [
   {
@@ -29,7 +31,7 @@ export const SchoolsColumns: ColumnDef<School>[] = [
     cell: ({ row }) => {
       return (
         <div className='flex items-center gap-2'>
-          <UpdateSchoolModal school={row.original} />
+          <LinkBtn icon={Edit} href={routes.updateSchool(row.original.id)} size='icon' />
           <DeleteModal deletedId={row.original.id} forceAction={deleteSchoolAction} />
         </div>
       )

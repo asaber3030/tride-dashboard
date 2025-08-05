@@ -1,37 +1,27 @@
 import { useRideGroupTrackerStore } from "@/store/ride-group-store"
-import { useAllSchools } from "@/app/dashboard/schools/_helpers/hooks"
 import { useTranslations } from "next-intl"
+import { useAllSchools } from "@/app/dashboard/schools/_helpers/hooks"
 import { useRouter } from "next/navigation"
 
 import { build } from "search-params"
 
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Label } from "@/components/ui/label"
 import { DefaultLoading } from "@/components/common/loader"
+import { Label } from "@/components/ui/label"
 
 export const RideGroupTrackerSchoolFilter = ({ searchParams }: { searchParams: TObject }) => {
   const router = useRouter()
   const t = useTranslations()
 
-  const {
-    data: schools,
-    isLoading: isSchoolsLoading,
-    isError: isSchoolsHasError,
-    error: schoolsError
-  } = useAllSchools({
-    ...searchParams,
-    search: ""
-  })
-  const { schoolId, setSchoolId, setSchoolCoordinates } = useRideGroupTrackerStore()
+  const { data: schools, isLoading: isSchoolsLoading, isError: isSchoolsHasError, error: schoolsError } = useAllSchools({ ...searchParams, search: "" })
+  const { schoolId, setSchoolId, setSchoolCoordinates, setRideGroupId } = useRideGroupTrackerStore()
 
   const handleSchoolChange = (value: string) => {
-    const query = build({
-      ...searchParams,
-      school_id: value
-    })
+    const query = build({ ...searchParams, school_id: value })
+    const school = schools?.find((i) => i.id == +value)
 
     setSchoolId(+value)
-    const school = schools?.find((i) => i.id == +value)
+    setRideGroupId(null)
 
     if (school) {
       setSchoolCoordinates({

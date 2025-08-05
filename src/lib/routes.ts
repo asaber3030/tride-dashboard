@@ -9,6 +9,8 @@ const routes = {
   requests: "/dashboard/requests",
   tracking: "/dashboard/live-tracking",
   schools: "/dashboard/schools",
+  createSchool: "/dashboard/schools/create",
+  updateSchool: (id: number): string => `/dashboard/schools/${id}`,
   drivers: "/dashboard/drivers",
   viewDriver: (id: number) => `/dashboard/drivers/${id}`,
   rideGroups: {

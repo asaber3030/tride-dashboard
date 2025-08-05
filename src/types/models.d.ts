@@ -72,8 +72,8 @@ type School = {
   id: number
   school_name: string
   city_id: number
-  lat: string
-  lng: string
+  lat: number
+  lng: number
   city: City
 }
 
@@ -261,6 +261,15 @@ export type FullRideGroup = {
   }[]
 }
 
+type RideGroupLocation = {
+  parentGroups: {
+    parent_id: number
+    home_lat: number
+    home_lng: number
+    parent: { account_id: number; name: string }
+  }[]
+}
+
 type DriverPapers = {
   id: number
   driver_id: number
@@ -347,5 +356,17 @@ type ChatRoom = {
     driver?: {
       profile_pic: string
     } | null
+  }[]
+}
+
+type ParentWithGroups = Parent & {
+  groups: {
+    id: number
+    group: {
+      school_id: number
+      school: {
+        school_name: string
+      }
+    }
   }[]
 }

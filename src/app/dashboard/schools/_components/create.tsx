@@ -5,7 +5,6 @@ import qk from "@/lib/query-keys"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
 import { useCities } from "../../cities/_helpers/hooks"
-import { useState } from "react"
 import { useForm } from "react-hook-form"
 
 import { handleError, showResponse } from "@/lib/utils"
@@ -13,32 +12,31 @@ import { createSchoolAction } from "../_helpers/actions"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { DEFAULT_COORDINATES, GOOGLE_MAPS_API_KEY } from "@/lib/constants"
+
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api"
+import { InputSkeleton } from "@/components/common/skeletons/input"
 import { LoadingButton } from "@/components/common/loading-button"
 import { SchoolSchema } from "@/schema/models"
-import { InputField } from "@/components/common/form/input-field"
-import { Button } from "@/components/ui/button"
-import { Form } from "@/components/ui/form"
-import { Plus } from "lucide-react"
-import { InputSkeleton } from "@/components/common/skeletons/input"
 import { SelectField } from "@/components/common/form/select-field"
 import { SelectItem } from "@/components/ui/select"
+import { InputField } from "@/components/common/form/input-field"
+import { Form } from "@/components/ui/form"
+import { Plus } from "lucide-react"
 
 type TMut = {
   data: z.infer<typeof SchoolSchema>
 }
 
-export const CreateSchoolModal = () => {
-  const [open, setOpen] = useState(false)
+export const CreateSchoolForm = () => {
+  const { data: cities, isLoading: isCitiesLoading } = useCities()
+
+  const qc = useQueryClient()
+  const t = useTranslations()
 
   const form = useForm({
     resolver: zodResolver(SchoolSchema)
   })
-
-  const { data: cities, isError: isCitiesHasError, isLoading: isCitiesLoading, error: citiesError } = useCities()
-
-  const qc = useQueryClient()
-  const t = useTranslations()
 
   const mutation = useMutation({
     mutationFn: ({ data }: TMut) => createSchoolAction(data),
@@ -46,7 +44,6 @@ export const CreateSchoolModal = () => {
       showResponse(data, () => {
         qc.invalidateQueries({ queryKey: qk.schools.paginated() })
         form.reset()
-        setOpen(false)
       }),
     onError: (error: Error) => handleError(error)
   })
@@ -58,38 +55,54 @@ export const CreateSchoolModal = () => {
     })
   }
 
+  const handleMapClick = (e: google.maps.MapMouseEvent) => {
+    if (e.latLng) {
+      form.setValue("lat", parseFloat(e.latLng.lat().toFixed(6)))
+      form.setValue("lng", parseFloat(e.latLng.lng().toFixed(6)))
+    }
+  }
+
+  const currentLat = form.watch("lat")
+  const currentLng = form.watch("lng")
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button icon={Plus}>{t("create")}</Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>{t("schoolsSchema.createTitle")}</DialogTitle>
-          <DialogDescription>{t("schoolsSchema.createDescription")}</DialogDescription>
-        </DialogHeader>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleAction)} className='space-y-4' noValidate>
+        <InputField name='school_name' label={t("name")} field={form.register("school_name")} error={form.formState?.errors?.school_name} />
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleAction)} className='space-y-4' noValidate>
-            <InputField name='school_name' label={t("name")} field={form.register("school_name")} error={form.formState?.errors?.school_name} />
-            <InputField name='lat' label={t("latitude")} field={form.register("lat")} error={form.formState?.errors?.lat} type='number' step='any' />
-            <InputField name='lng' label={t("longitude")} field={form.register("lng")} error={form.formState?.errors?.lng} type='number' step='any' />
+        <div className='grid xl:grid-cols-2 grid-cols-1 gap-2'>
+          <InputField disabled name='lat' label={t("latitude")} field={form.register("lat")} error={form.formState?.errors?.lat} type='number' step='any' />
+          <InputField disabled name='lng' label={t("longitude")} field={form.register("lng")} error={form.formState?.errors?.lng} type='number' step='any' />
+        </div>
 
-            {isCitiesLoading ? (
-              <InputSkeleton />
-            ) : (
-              <SelectField control={form.control} name='city_id' label={t("city")} valueAsNumber>
-                {cities?.map((item) => (
-                  <SelectItem value={item.id.toString()}>{item.name}</SelectItem>
-                ))}
-              </SelectField>
-            )}
-            <LoadingButton loading={mutation.isPending} icon={Plus}>
-              {t("create")}
-            </LoadingButton>
-          </form>
-        </Form>
-      </DialogContent>
-    </Dialog>
+        <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY}>
+          <GoogleMap
+            mapContainerStyle={{
+              width: "100%",
+              height: "500px"
+            }}
+            center={currentLat && currentLng ? { lat: currentLat, lng: currentLng } : DEFAULT_COORDINATES}
+            zoom={13}
+            onClick={handleMapClick}
+          >
+            {currentLat && currentLng && <Marker position={{ lat: currentLat, lng: currentLng }} />}
+          </GoogleMap>
+        </LoadScript>
+
+        {isCitiesLoading ? (
+          <InputSkeleton />
+        ) : (
+          <SelectField control={form.control} name='city_id' label={t("city")} valueAsNumber>
+            {cities?.map((item) => (
+              <SelectItem value={item.id.toString()}>{item.name}</SelectItem>
+            ))}
+          </SelectField>
+        )}
+
+        <LoadingButton loading={mutation.isPending} icon={Plus}>
+          {t("create")}
+        </LoadingButton>
+      </form>
+    </Form>
   )
 }

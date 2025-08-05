@@ -86,9 +86,11 @@ export const UpdateAdminRoleModal = ({ admin }: Props) => {
                   <DisplayError error={rolesError} />
                 ) : (
                   <SelectField name='role_id' control={form.control} label={t("role")} error={form.formState?.errors?.role_id} valueAsNumber defaultValue={admin.role?.id.toString()}>
-                    {roles?.map((item) => (
-                      <SelectItem value={item.id.toString()}>{capitalize(item.role_name)}</SelectItem>
-                    ))}
+                    {roles
+                      ?.filter((item) => item.role_name != "super admin")
+                      ?.map((item) => (
+                        <SelectItem value={item.id.toString()}>{capitalize(item.role_name)}</SelectItem>
+                      ))}
                   </SelectField>
                 )}
               </Fragment>

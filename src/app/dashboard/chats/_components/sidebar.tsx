@@ -15,7 +15,6 @@ interface ChatSidebarProps {
   type: TChatRoomType
 }
 
-// Only translation keys outside the component
 const GROUPS = [
   { key: "customer_support", labelKey: "customerServicesTab" },
   { key: "ride_group", labelKey: "rideGroups" }
@@ -30,9 +29,12 @@ const SUBTABS = [
 export function ChatSidebar({ type, sp }: ChatSidebarProps) {
   const router = useRouter()
   const t = useTranslations()
+
   const [search, setSearch] = useState("")
   const [state, setState] = useState<TObject>({})
+
   const stateMemo = useMemo(() => state, [state])
+
   const { data: chats, refetch: refetchCustomerSupport, isLoading: isChatsLoading, isError: isChatsHasError, error: chatsError } = useChats(state, type)
 
   const submitSearch = (e: FormEvent<HTMLFormElement>) => {
@@ -70,7 +72,7 @@ export function ChatSidebar({ type, sp }: ChatSidebarProps) {
           <Tabs defaultValue={type} className='flex-1 flex flex-col'>
             <TabsList className='grid rounded-none grid-cols-2 p-0 h-auto bg-transparent border-b border-gray-200 w-full'>
               {GROUPS.map((g) => (
-                <TabsTrigger key={g.key} value={g.key} className='data-[state=active]:border-b-2 data-[state=active]:border-b-blue-500 data-[state=active]:shadow-none rounded-none py-2' onClick={() => handleRoutingChats(g.key as TChatRoomType)}>
+                <TabsTrigger key={g.key} value={g.key} className='data-[state=active]:border-b-2 data-[state=active]:border-b-blue-500 data-[state=active]:shadow-none rounded-none py-2 cursor-pointer' onClick={() => handleRoutingChats(g.key as TChatRoomType)}>
                   {t(g.labelKey)}
                 </TabsTrigger>
               ))}

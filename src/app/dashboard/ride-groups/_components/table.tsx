@@ -14,18 +14,16 @@ type Props = {
   sp: TObject
 }
 
-export const RideGroupsTable = ({ sp = {} }: Props) => {
+export const RideGroupsTable = ({ sp }: Props) => {
   const { data: rideGroups, isLoading, isError, error } = usePaginatedRideGroups(sp)
-
-  console.log({ rideGroups, isLoading, isError, error })
 
   if (isLoading) return <TableSkeleton />
   if (isError) return <DisplayError error={error} />
 
   return (
     <div className='space-y-4'>
-      <TableAction className='justify-end w-full'>
-        <RideGroupFilters />
+      <TableAction className='justify-end w-full block'>
+        <RideGroupFilters sp={sp} />
       </TableAction>
       <DataTable data={rideGroups?.rideGroups!} columns={RideGroupColumns} />
       <SimplePagination hasNextPage={!!rideGroups?.pagination?.nextPage} hasPrevPage={!!rideGroups?.pagination?.lastPage} />
