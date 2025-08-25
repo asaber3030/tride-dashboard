@@ -84,3 +84,21 @@ export function objectToFormData(obj: Record<string, any>): FormData {
 
   return formData
 }
+
+const statusColors: Record<TParentGroupStatus, string> = {
+  new: "bg-blue-500 text-white",
+  pending: "bg-yellow-500 text-black",
+  expired: "bg-gray-500 text-white",
+  ready: "bg-green-500 text-white",
+  active: "bg-emerald-600 text-white",
+  inactive: "bg-red-400 text-white",
+  removed: "bg-red-600 text-white"
+}
+
+interface StatusBadgeProps {
+  status: TParentGroupStatus
+}
+
+export function parentGroupStatusColor(status: TParentGroupStatus) {
+  return statusColors[status]
+}

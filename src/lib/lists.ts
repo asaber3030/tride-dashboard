@@ -129,3 +129,53 @@ export const chatTypeList = [
     label: "driversTab"
   }
 ]
+
+export const parentGroupStatusList = [
+  {
+    key: "new",
+    label: "New"
+  },
+  {
+    key: "active",
+    label: "Active"
+  },
+  {
+    key: "inactive",
+    label: "Inactive"
+  },
+  {
+    key: "expired",
+    label: "Expired"
+  },
+  {
+    key: "pending",
+    label: "Pending"
+  },
+  {
+    key: "ready",
+    label: "Ready"
+  },
+  {
+    key: "removed",
+    label: "Removed"
+  }
+]
+
+export const parentGroupSubscriptionStatusList = [
+  {
+    key: "new",
+    label: "New"
+  },
+  {
+    key: "pending",
+    label: "Pending"
+  },
+  {
+    key: "paid",
+    label: "Paid"
+  },
+  {
+    key: "expired",
+    label: "Expired"
+  }
+]

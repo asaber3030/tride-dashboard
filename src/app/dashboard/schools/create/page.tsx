@@ -2,7 +2,7 @@ import { PageHeader } from "@/components/dashboard/page-header"
 import { CreateSchoolForm } from "../_components/create"
 
 import { getTranslations } from "next-intl/server"
-import { notFound, unauthorized } from "next/navigation"
+import { notFound } from "next/navigation"
 import { hasAccessTo } from "@/actions/roles"
 
 export default async function CreateSchoolPage() {

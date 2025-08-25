@@ -3,7 +3,7 @@
 import { build } from "search-params"
 import { api } from "@/services/axios"
 
-import { ChatRoom, FullRideGroup, InstanceLocation, Payment, RideGroup, RideGroupInstance, RideGroupLocation } from "@/types/models"
+import { ChatRoom, FullRideGroup, InstanceLocation, ParentGroup, ParentGroupSubscription, Payment, RideGroup, RideGroupInstance, RideGroupLocation } from "@/types/models"
 
 type GetRideGroups = {
   pagination: {
@@ -27,6 +27,57 @@ export async function getRideGroupsPaginated(searchParams: TObject = {}) {
     console.error("Error fetching ride groups:", error)
     const err = error as ApiResponse<any>
     throw new Error(err?.data?.data?.message || "Failed to fetch ride groups")
+  }
+}
+
+export async function getParentGroups(id: number, searchParams: TObject = {}) {
+  try {
+    const sp = build(searchParams)
+    const url = `/manage/ride/groups/${id}/parent-groups`
+    const req = await api<{ data: ParentGroup[] }>("GET", url)
+    console.dir(req.data, { depth: null })
+    return req.data
+  } catch (error) {
+    console.error("Error fetching ride groups:", error)
+    const err = error as ApiResponse<any>
+    throw new Error(err?.data?.data?.message || "Failed to fetch ride groups")
+  }
+}
+
+export async function getParentGroupSubscription(groupId: number, parentId: number) {
+  try {
+    const url = `/manage/ride/groups/${groupId}/parent-groups/${parentId}/subscription`
+    const req = await api<ParentGroupSubscription>("GET", url)
+    return req.data
+  } catch (error) {
+    console.error("Error fetching ride groups:", error)
+    const err = error as ApiResponse<any>
+    throw new Error(err?.data?.data?.message || "Failed to fetch ride groups")
+  }
+}
+
+export async function updateParentGroupStatus(groupId: number, parentId: number, status: TParentGroupStatus) {
+  try {
+    const url = `/manage/ride/groups/${groupId}/parent-groups/${parentId}`
+    const req = await api<any>("PATCH", url, { status })
+    console.dir(req.data, { depth: null })
+    return req
+  } catch (error) {
+    console.error("Error updating parent group status", error)
+    const err = error as ApiResponse<any>
+    throw new Error(err?.data?.message || "failed to updated")
+  }
+}
+
+export async function updateParentGroupSubscriptionStatus(groupId: number, parentId: number, status: TParentGroupSubscriptionStatus) {
+  try {
+    const url = `/manage/ride/groups/${groupId}/parent-groups/${parentId}/subscription`
+    const req = await api<any>("PATCH", url, { status })
+    return req.data
+  } catch (error) {
+    console.error("Error updating parent group subscription status", error)
+    const err = error as ApiResponse<any>
+    throw new Error(err?.data?.message || "Error updating parent group subscription status")
   }
 }
 

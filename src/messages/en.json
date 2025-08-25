@@ -486,5 +486,6 @@
   "Parents & Children": "Parents & Children",
   "Subscriptions": "Subscriptions",
   "Parent ID": "Parent ID",
-  "Valid Until": "Valid Until"
+  "Valid Until": "Valid Until",
+  "parentGroupsOfRideGroupId": "Parent Groups of Ride Group ID: #{id}"
 }

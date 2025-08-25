@@ -33,3 +33,8 @@ export const CreateParentSubscriptionSchema = z.object({
   ride_group_id: z.number().min(1, "Ride group ID is required"),
   plan_id: z.number().min(1, "Plan ID is required")
 })
+
+export const UpdateParentGroupStatus = z.object({
+  groupStatus: z.enum(["new", "pending", "expired", "ready", "active", "inactive", "removed"]),
+  subscriptionStatus: z.enum(["new", "pending", "paid", "expired"])
+})

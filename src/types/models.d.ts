@@ -285,6 +285,35 @@ type RideGroupLocation = {
   }[]
 }
 
+type ParentGroupSubscription = {
+  id: number
+  parent_id: number
+  ride_group_id: number
+  current_seats_taken: number
+  pickup_days_count: number
+  started_at: string
+  valid_until: string
+  remaining_time: number
+  plan_id: number
+  total_amount: string
+  status: string
+  parent: Parent
+  plan: Plan
+  rideGroup: RideGroup
+}
+
+type ParentGroup = {
+  id: number
+  parent_id: number
+  group_id: number
+  home_lat: number
+  home_lng: number
+  current_seats_taken: number
+  status: string
+  parent: Parent
+  group: RideGroup
+}
+
 type DriverPapers = {
   id: number
   driver_id: number

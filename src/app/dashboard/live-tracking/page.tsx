@@ -25,7 +25,7 @@ export default async function Page({ searchParams }: Props) {
   const rideGroups = await getRideGroupsPaginated(sp)
 
   return (
-    <div className='flex h-screen bg-gray-50'>
+    <div className='flex h-screen bg-gray-50 gap-4'>
       <FiltersSidebar rideGroupsLength={rideGroups.rideGroups.length} sp={sp} />
       <LiveTrackingRideGroupsList rideGroups={rideGroups.rideGroups} sp={sp} />
     </div>

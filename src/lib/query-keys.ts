@@ -47,6 +47,8 @@ const qk = {
   rideGroups: {
     paginated: (sp: TObject = {}) => ["ride-groups", "paginated", sp],
     single: (id: number) => ["ride-groups", id],
+    singleParentGroups: (id: number) => ["ride-groups", id, "parent-groups"],
+    singleParentGroupSubscription: (groupId: number, parentId: number) => ["ride-groups", groupId, "parent-groups", parentId],
     singleChat: (id: number) => ["ride-groups", id, "chat"],
     rideGroupLocations: (id: number) => ["ride-groups", id, "locations"]
   },

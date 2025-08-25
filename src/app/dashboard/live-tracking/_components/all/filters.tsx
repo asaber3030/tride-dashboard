@@ -58,7 +58,7 @@ export function FiltersSidebar({ sp, rideGroupsLength }: Props) {
   }
 
   return (
-    <div className='w-80 bg-white border-r border-gray-200 p-6 overflow-y-auto'>
+    <div className='w-80 bg-white border shadow-sm rounded-md border-gray-200 p-6 overflow-y-auto'>
       <div className='flex items-center gap-2 mb-6'>
         <Filter className='w-5 h-5' />
         <h2 className='text-lg font-semibold'>Filters</h2>

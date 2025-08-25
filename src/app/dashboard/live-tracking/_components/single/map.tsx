@@ -10,21 +10,26 @@ import { FullRideGroup } from "@/types/models"
 import { ErrorLabel } from "@/components/common/error-label"
 import { MapWrapper } from "@/components/common/map-wrapper"
 import { MapIcons } from "@/lib/lists"
+import { Button } from "@/components/ui/button"
 
 type Props = {
   rideId: string
   group: FullRideGroup
 }
 
+// ✅ helper to ensure valid coords
+const isValidLatLng = (lat?: number, lng?: number) => typeof lat === "number" && typeof lng === "number" && !isNaN(lat) && !isNaN(lng)
+
 export const SingleRideGroupTrackingMap = ({ rideId, group }: Props) => {
-  const schoolPosition = { lat: Number(group.school.lat), lng: Number(group.school.lng) }
+  const schoolPosition = {
+    lat: Number(group.school?.lat ?? 0),
+    lng: Number(group.school?.lng ?? 0)
+  }
 
   const { socket } = useSocketContext()
 
-  const [hadError, setHadError] = useState({
-    has: false,
-    message: ""
-  })
+  const [isInitialized, setIsInitialized] = useState(false)
+  const [hadError, setHadError] = useState({ has: false, message: "" })
   const [ackData, setAckData] = useState<TAdminWatchRide>()
   const [driverPosition, setDriverPosition] = useState<{ lat: number; lng: number }>()
   const [checkpoints, setCheckpoints] = useState<
@@ -58,10 +63,7 @@ export const SingleRideGroupTrackingMap = ({ rideId, group }: Props) => {
         setCheckpoints(Object.values(data.data.checkpointOrder))
       }
     } else {
-      setHadError({
-        has: true,
-        message: data.message
-      })
+      setHadError({ has: true, message: data.message })
     }
   }, [])
 
@@ -69,8 +71,9 @@ export const SingleRideGroupTrackingMap = ({ rideId, group }: Props) => {
     console.error("❌ Socket error:", err.message || err)
   }, [])
 
+  // socket listeners
   useEffect(() => {
-    if (!socket) return
+    if (!socket || !isInitialized) return
 
     socket.on("connect", joinRideRoom)
     socket.on("connect_error", onError)
@@ -88,26 +91,29 @@ export const SingleRideGroupTrackingMap = ({ rideId, group }: Props) => {
       socket.off("ack", onAck)
       socket.off("location_update", onLocationUpdate)
     }
-  }, [socket, rideId, onAck, onError, onLocationUpdate])
+  }, [socket, rideId, isInitialized, onAck, onError, onLocationUpdate])
 
+  // directions calculation
   useEffect(() => {
-    if (!driverPosition || !checkpoints || checkpoints.length === 0) {
+    if (!isInitialized || !isValidLatLng(driverPosition?.lat, driverPosition?.lng) || !checkpoints || checkpoints.length === 0) {
       setDirections(null)
       return
     }
 
-    const waypoints = checkpoints.map((cp) => ({
-      location: { lat: cp.lat, lng: cp.lng },
-      stopover: true
-    }))
+    const waypoints = checkpoints
+      .filter((cp) => isValidLatLng(cp.lat, cp.lng))
+      .map((cp) => ({
+        location: { lat: cp.lat, lng: cp.lng },
+        stopover: true
+      }))
 
     const directionsService = new google.maps.DirectionsService()
 
     directionsService.route(
       {
-        origin: driverPosition,
+        origin: driverPosition!,
         destination: schoolPosition,
-        waypoints: waypoints,
+        waypoints,
         travelMode: google.maps.TravelMode.DRIVING
       },
       (result, status) => {
@@ -118,7 +124,16 @@ export const SingleRideGroupTrackingMap = ({ rideId, group }: Props) => {
         }
       }
     )
-  }, [driverPosition, checkpoints, schoolPosition])
+  }, [isInitialized, driverPosition, checkpoints, schoolPosition])
+
+  // show button before initialization
+  if (!isInitialized) {
+    return (
+      <div className='px-2 w-full h-screen flex flex-col items-center justify-center'>
+        <Button onClick={() => setIsInitialized(true)}>Start Live Tracking</Button>
+      </div>
+    )
+  }
 
   if (hadError.has) {
     return (
@@ -128,54 +143,38 @@ export const SingleRideGroupTrackingMap = ({ rideId, group }: Props) => {
     )
   }
 
-  if (group.driver === null)
+  if (group.driver === null) {
     return (
       <div className='px-2 w-full h-screen items-center flex justify-center'>
-        <ErrorLabel>Driver not assigned to this group. Waiting for driver to be assigned </ErrorLabel>
+        <ErrorLabel>Driver not assigned to this group. Waiting for driver to be assigned</ErrorLabel>
       </div>
     )
+  }
 
   return (
     <MapWrapper>
-      <GoogleMap center={driverPosition || schoolPosition || DEFAULT_COORDINATES} mapContainerStyle={{ width: "100%", height: "100vh" }} zoom={8}>
+      <GoogleMap center={isValidLatLng(driverPosition?.lat, driverPosition?.lng) ? driverPosition! : isValidLatLng(schoolPosition.lat, schoolPosition.lng) ? schoolPosition : DEFAULT_COORDINATES} mapContainerStyle={{ width: "100%", height: "100vh" }} zoom={8}>
         {directions && <DirectionsRenderer directions={directions} options={{ polylineOptions: { strokeColor: "blue", strokeWeight: 5 } }} />}
 
-        {driverPosition && (
-          <Marker
-            icon={{
-              url: MapIcons.driver,
-              scaledSize: { width: 60, height: 60 } as any
-            }}
-            position={driverPosition}
-            label={group.driver.name}
-          />
-        )}
+        {isValidLatLng(driverPosition?.lat, driverPosition?.lng) && <Marker icon={{ url: MapIcons.driver, scaledSize: { width: 60, height: 60 } as any }} position={driverPosition!} label={group.driver.name} />}
 
-        {checkpoints?.map((checkpoint, idx) => (
-          <Marker
-            key={`checkpoint_${checkpoint.id}_${idx}`}
-            position={{ lat: checkpoint.lat, lng: checkpoint.lng }}
-            icon={{
-              url: MapIcons.checkpoint,
-              scaledSize: { width: 30, height: 30 } as any
-            }}
-            label={{
-              text: checkpoint.type,
-              color: "blue",
-              fontWeight: "bold",
-              fontSize: "16px"
-            }}
-          />
-        ))}
+        {checkpoints
+          ?.filter((cp) => isValidLatLng(cp.lat, cp.lng))
+          .map((checkpoint, idx) => (
+            <Marker
+              key={`checkpoint_${checkpoint.id}_${idx}`}
+              position={{ lat: checkpoint.lat, lng: checkpoint.lng }}
+              icon={{ url: MapIcons.checkpoint, scaledSize: { width: 30, height: 30 } as any }}
+              label={{
+                text: checkpoint.type,
+                color: "blue",
+                fontWeight: "bold",
+                fontSize: "16px"
+              }}
+            />
+          ))}
 
-        <Marker
-          icon={{
-            url: MapIcons.school,
-            scaledSize: { width: 60, height: 60 } as any
-          }}
-          position={schoolPosition}
-          label={group.school.school_name}
-        />
+        {isValidLatLng(schoolPosition.lat, schoolPosition.lng) && <Marker icon={{ url: MapIcons.school, scaledSize: { width: 60, height: 60 } as any }} position={schoolPosition} label={group.school.school_name} />}
       </GoogleMap>
     </MapWrapper>
   )

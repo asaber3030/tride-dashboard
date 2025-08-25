@@ -23,7 +23,9 @@ const routes = {
     index: "/dashboard/ride-groups",
     tracker: "/dashboard/ride-groups/tracker",
     merge: "/dashboard/ride-groups/merge",
-    view: (id: number): string => `/dashboard/ride-groups/${id}`
+    view: (id: number): string => `/dashboard/ride-groups/${id}`,
+    viewParentGroups: (id: number): string => `/dashboard/ride-groups/${id}/parent-groups`,
+    viewParentGroup: (id: number, parentGroupId: number): string => `/dashboard/ride-groups/${id}/parent-groups/${parentGroupId}`,
   },
   payments: (path?: string): string => (path ? `/dashboard/payments/${path}` : "/dashboard/payments"),
   viewPayment: (id: number): string => `/dashboard/payments/${id}`,

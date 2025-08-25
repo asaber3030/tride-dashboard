@@ -41,6 +41,8 @@ type TChatMessageSender = "parent" | "driver" | "admin"
 type TGroupType = "premium" | "regular"
 type TRideGroupInstanceStatus = "active" | "started" | "ended"
 type TRideGroupInstanceType = "to_home" | "to_school"
+type TParentGroupStatus = "new" | "pending" | "expired" | "ready" | "active" | "inactive" | "removed"
+type TParentGroupSubscriptionStatus = "new" | "pending" | "paid" | "expired"
 
 type SocketAck<T, P = string> = {
   type: P
