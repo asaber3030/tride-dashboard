@@ -1,8 +1,8 @@
 "use client"
 
 import { useGroupSubscriptionOfParent } from "../../_helpers/hooks"
-import { useMutation } from "@tanstack/react-query"
-import { useEffect } from "react"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 
 import { updateParentGroupStatus, updateParentGroupSubscriptionStatus } from "../../_helpers/actions"
@@ -21,12 +21,16 @@ import { SubscriptionDisplay } from "./subscription-details"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Rotate3D } from "lucide-react"
+import qk from "@/lib/query-keys"
 
 type Props = {
   parentGroup: ParentGroup
 }
 
 export const ChangeParentGroupStatus = ({ parentGroup }: Props) => {
+  const [open, setOpen] = useState(false)
+
+  const qc = useQueryClient()
   const sub = useGroupSubscriptionOfParent(parentGroup.group.id, parentGroup.parent.id)
 
   const form = useForm({
@@ -38,7 +42,12 @@ export const ChangeParentGroupStatus = ({ parentGroup }: Props) => {
 
   const groupMutation = useMutation({
     mutationFn: (status: any) => updateParentGroupStatus(parentGroup.group.id, parentGroup.parent.id, status),
-    onSuccess: (data) => showResponse(data),
+    onSuccess: (data) =>
+      showResponse(data, () => {
+        qc.invalidateQueries({ queryKey: qk.rideGroups.singleParentGroupSubscription(parentGroup.group.id, parentGroup.parent.id) })
+        qc.invalidateQueries({ queryKey: qk.rideGroups.singleParentGroups(parentGroup.group.id) })
+        setOpen(false)
+      }),
     onError: (error) => handleError(error)
   })
 

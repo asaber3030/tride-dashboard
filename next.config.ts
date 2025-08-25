@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true
   },
   images: {
-    remotePatterns: [{ hostname: "loremflickr.com" }, { hostname: "avatars.githubusercontent.com" }, { hostname: "147.93.123.109" }, { hostname: "cdn.jsdelivr.net" }, { hostname: "images.pexels.com" }]
+    remotePatterns: [{ hostname: "loremflickr.com" }, { hostname: "res.cloudinary.com" }, { hostname: "avatars.githubusercontent.com" }, { hostname: "147.93.123.109" }, { hostname: "cdn.jsdelivr.net" }, { hostname: "images.pexels.com" }]
   }
 }
 

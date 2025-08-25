@@ -57,7 +57,7 @@ export const RideGroupColumns: ColumnDef<FullRideGroup>[] = [
         <div className='flex items-center gap-2'>
           <LinkBtn icon={Eye} size='icon' variant='outline' href={routes.rideGroups.view(row.original.id)} />
           <LinkBtn icon={Users2} size='icon' variant='outline' href={routes.rideGroups.viewParentGroups(row.original.id)} />
-          {row.original.current_seats_taken !== 5 && <MergeGroupModal rideGroup={row.original} />}
+          {row.original.group_type == "regular" && <>{row.original.current_seats_taken !== 5 && <MergeGroupModal rideGroup={row.original} />}</>}
           <CreateChatForRideGroupModal group={row.original} />
         </div>
       )

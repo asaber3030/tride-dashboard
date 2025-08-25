@@ -5,6 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
 import { ErrorLabel } from "@/components/common/error-label"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { cn, parentGroupStatusColor } from "@/lib/utils"
 
 type Props = {
   rideGroup: FullRideGroup
@@ -48,7 +50,10 @@ export const RideDetailsForInstance = ({ rideGroup }: Props) => {
           <section>
             <h3 className='text-base font-semibold mb-2 text-gray-700'>Driver</h3>
             <div className='flex items-center gap-4'>
-              <Image src={rideGroup.driver?.profile_pic || "/images/default-avatar.png"} alt={rideGroup.driver?.name || "Driver"} width={64} height={64} className='rounded-full object-cover border shadow-sm' />
+              <Avatar className='size-14'>
+                <AvatarFallback>{rideGroup.driver?.name?.[0]}</AvatarFallback>
+                <AvatarImage src={rideGroup.driver?.profile_pic || "/images/default-avatar.png"} alt={rideGroup.driver?.name || "Driver"} width={48} height={48} className='rounded-full border' />
+              </Avatar>
               <div>
                 <p className='font-medium'>{rideGroup.driver?.name}</p>
                 <p className='text-sm text-gray-500'>{rideGroup.driver?.phone}</p>
@@ -78,7 +83,10 @@ export const RideDetailsForInstance = ({ rideGroup }: Props) => {
             {rideGroup.parentGroups.map((pg) => (
               <div key={pg.id} className='border-b pb-3 last:border-0 last:pb-0'>
                 <div className='flex items-center gap-3'>
-                  <Image src={pg.parent?.profile_pic || "/images/default-avatar.png"} alt={pg.parent?.name || "Parent"} width={48} height={48} className='rounded-full border' />
+                  <Avatar className='size-14'>
+                    <AvatarFallback>{pg.parent?.name?.[0] || "Parent"}</AvatarFallback>
+                    <AvatarImage src={pg.parent?.profile_pic || "/images/default-avatar.png"} alt={pg.parent?.profile_pic || "Parent"} width={48} height={48} className='rounded-full border' />
+                  </Avatar>
                   <div>
                     <p className='font-medium'>{pg.parent?.name}</p>
                     <p className='text-sm text-gray-500'>{pg.parent?.phone}</p>
@@ -87,9 +95,9 @@ export const RideDetailsForInstance = ({ rideGroup }: Props) => {
                 </div>
 
                 {/* Children */}
-                <div className='ml-12 mt-2 space-y-1'>
+                <div className='ml-17 mt-2 space-y-1 flex gap-1 items-center'>
                   {pg.childDetails.map((childDetail) => (
-                    <div key={childDetail.id} className='flex items-center justify-between bg-gray-50 p-2 rounded-md'>
+                    <div key={childDetail.id} className='flex items-center justify-between bg-gray-100 shadow-sm border p-2 rounded-md w-fit gap-2'>
                       <span className='font-medium'>{childDetail.child.name}</span>
                       <span className='text-sm text-gray-500'>
                         {childDetail.child.grade} ({childDetail.child.gender})
@@ -114,7 +122,7 @@ export const RideDetailsForInstance = ({ rideGroup }: Props) => {
                   <p className='font-medium'>Parent ID: {sub.parent_id}</p>
                   <p className='text-sm text-gray-500'>Valid Until: {new Date(sub.valid_until).toLocaleDateString()}</p>
                 </div>
-                <Badge className={`px-2 py-1 rounded capitalize ${sub.status === "active" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>{sub.status}</Badge>
+                <Badge className={cn(`px-2 py-1 rounded capitalize`, parentGroupStatusColor(sub.status as any))}>{sub.status}</Badge>
               </div>
             ))}
           </div>
