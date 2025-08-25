@@ -1,11 +1,12 @@
-import { Fragment, useState } from "react"
-import { useAllSchools } from "../../schools/_helpers/hooks"
+import { usePaginatedSchools } from "../../schools/_helpers/hooks"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 
 import { build } from "search-params"
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { InputSkeleton } from "@/components/common/skeletons/input"
+import { ExportParentsButton } from "./export-button"
+import { SearchableData } from "@/components/common/form/searchable-data"
+import { SearchIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 type Props = {
@@ -16,35 +17,46 @@ export const ParentsTableFilters = ({ sp }: Props) => {
   const router = useRouter()
 
   const [schoolId, setSchoolId] = useState<string>(sp.school_id || "")
+  const [search, setSearch] = useState<string>(sp.search || "")
 
-  const { data: schools, isLoading: isSchoolsLoading, isError: isSchoolsHasError, error: schoolsError } = useAllSchools(sp)
+  const {
+    data: schools,
+    isLoading: isSchoolsLoading,
+    isRefetching: isSchoolsRefetching
+  } = usePaginatedSchools({
+    name: search
+  })
 
   const handleFilter = () => {
     router.push(`?${build({ ...sp, search: "", school_id: schoolId })}`)
   }
 
   return (
-    <Fragment>
-      {isSchoolsLoading ? (
-        <InputSkeleton />
-      ) : (
-        <Select onValueChange={(value) => setSchoolId(value)} value={schoolId}>
-          <SelectTrigger className='min-w-[400px]'>
-            <SelectValue placeholder='School' />
-          </SelectTrigger>
-          <SelectContent className='max-h-60'>
-            {schools?.map((school) => (
-              <SelectItem value={school.id.toString()}>{school.school_name}</SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      )}
-      <Button onClick={handleFilter}>Filter</Button>
+    <div className='flex items-end gap-2'>
+      <div className='w-[450px]'>
+        <SearchableData
+          data={schools?.rows?.map((item) => ({
+            label: item.school_name,
+            id: item.id
+          }))}
+          search={search}
+          setSearch={setSearch}
+          loading={isSchoolsLoading || isSchoolsRefetching}
+          setValue={setSchoolId}
+          label='School'
+        />
+      </div>
+
+      <Button icon={SearchIcon} onClick={handleFilter}>
+        Filter
+      </Button>
+
       {sp.school_id && (
         <Button variant='secondary' onClick={() => router.push("/dashboard/parents")}>
           Clear Filter
         </Button>
       )}
-    </Fragment>
+      <ExportParentsButton />
+    </div>
   )
 }

@@ -1,7 +1,6 @@
 import { DisplayError } from "@/components/common/error"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
-import { useUser } from "@/hooks/auth/use-user"
 import { IMAGES } from "@/lib/constants"
 import { ChatParticipant } from "@/types/models"
 
@@ -16,9 +15,8 @@ export const ChatHeader = ({ isLoading, isError, error, participants }: Props) =
   if (isLoading) return <ChatHeaderLoading />
   if (isError) return <DisplayError error={error} />
 
-  const { user } = useUser()
-
-  const mainParticipant = participants?.find((p) => p.user_id !== user?.id)
+  const names = participants?.map((part) => part.name).join(", ")
+  const types = participants?.map((part) => part.user_type).join(", ")
 
   return (
     <div className='flex items-center justify-between p-4 border-b border-gray-200'>
@@ -31,9 +29,9 @@ export const ChatHeader = ({ isLoading, isError, error, participants }: Props) =
             <AvatarFallback>AH</AvatarFallback>
           </Avatar>
           <div>
-            <h2 className='text-sm font-medium'>{mainParticipant?.name}</h2>
+            <h2 className='text-sm font-medium'>{names}</h2>
             <div className='flex items-center'>
-              <span className='text-xs px-1.5 py-0.5 rounded bg-orange-100 text-orange-800 capitalize'>{mainParticipant?.user_type}</span>
+              <span className='text-xs px-1.5 py-0.5 rounded bg-orange-100 text-orange-800 capitalize'>{types}</span>
             </div>
           </div>
         </div>

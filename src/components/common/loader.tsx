@@ -3,11 +3,11 @@ import { Spinner } from "../kibo/spinner"
 import { ClassValue } from "class-variance-authority/types"
 
 type Props = {
-  variant: any
+  variant?: any
   className?: ClassValue
 }
 
-export const DefaultLoading = ({ variant, className }: Props) => {
+export const DefaultLoading = ({ variant = "pinwheel", className }: Props) => {
   return (
     <div className={cn("flex flex-col items-center justify-center", className)}>
       <Spinner variant={variant} />

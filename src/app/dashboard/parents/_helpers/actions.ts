@@ -4,6 +4,9 @@ import { build } from "search-params"
 import { api } from "@/services/axios"
 
 import { FullRideGroup, Parent, ParentWithGroups } from "@/types/models"
+import { API_URL } from "@/lib/constants"
+import { getToken } from "@/actions/auth"
+import axios from "axios"
 
 type GetParents = {
   rows: ParentWithGroups[]
@@ -61,5 +64,23 @@ export async function updateParentPapersStatusAction(parentId: number, status: b
     console.error("Error updating parent papers status:", error)
     const err = error as ApiResponse<any>
     throw new Error(err?.data?.message || "Failed to update parent status")
+  }
+}
+
+export async function exportParents() {
+  try {
+    const url = `${API_URL}/admins/parents/export`
+    const req = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${(await getToken()) || ""}`
+      }
+    })
+    const data = await req.blob()
+    return data
+  } catch (error) {
+    console.error("Error exporting parents:", error)
+    const err = error as ApiResponse<any>
+    throw new Error(err?.message || "Failed to export parents")
   }
 }

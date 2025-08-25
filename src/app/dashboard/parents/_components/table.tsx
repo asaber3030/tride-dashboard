@@ -9,6 +9,7 @@ import { ParentColumns } from "./columns"
 import { TableAction } from "@/components/common/table-action"
 import { SimplePagination } from "@/components/common/simple-pagination"
 import { ParentsTableFilters } from "./filters"
+import { ExportParentsButton } from "./export-button"
 
 type Props = {
   sp: TObject

@@ -44,7 +44,7 @@ export const ParentColumns: ColumnDef<ParentWithGroups>[] = [
     accessorKey: "groups",
     header: "School",
     cell: ({ row }) => {
-      return <p className='capitalize max-w-32 truncate'>{row.original.groups?.length ? row.original.groups.map((group) => group.group.school.school_name).join(", ") : "No School"}</p>
+      return <p className='capitalize max-w-64 max-h-24 truncate text-wrap'>{row.original.groups?.length ? row.original.groups.map((group) => group.group.school.school_name).join(", ") : "No School"}</p>
     }
   },
   {

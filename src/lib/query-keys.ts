@@ -10,6 +10,9 @@ const qk = {
   users: {
     details: (id: number, type: string) => ["users", id, type]
   },
+  plans: {
+    index: () => ["plans"]
+  },
   permissions: {
     index: () => ["permissions"]
   },
@@ -44,6 +47,7 @@ const qk = {
   rideGroups: {
     paginated: (sp: TObject = {}) => ["ride-groups", "paginated", sp],
     single: (id: number) => ["ride-groups", id],
+    singleChat: (id: number) => ["ride-groups", id, "chat"],
     rideGroupLocations: (id: number) => ["ride-groups", id, "locations"]
   },
   chats: {

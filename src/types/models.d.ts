@@ -14,12 +14,6 @@ type User = {
   accountType: TAccountType
 }
 
-id: number
-name: string
-profile_pic: string
-grade: string
-gender: string
-parent_id: number
 type UserDetails = {
   id: number
   account_id: number
@@ -130,6 +124,27 @@ type RideGroup = {
     id: number
     school_name: string
   }
+}
+
+type RideGroupInstance = {
+  id: number
+  group_id: number
+  driver_id: number
+  status: TRideGroupInstanceStatus
+  ended_at: Date
+  started_at: Date
+  type: TRideGroupInstanceType
+  driver: Driver
+  group: RideGroup
+}
+
+type InstanceLocation = {
+  id: number
+  ride_instance_id: number
+  lat: number
+  lng: number
+  created_at: string
+  updated_at: string
 }
 
 type Plan = {
@@ -369,4 +384,12 @@ type ParentWithGroups = Parent & {
       }
     }
   }[]
+}
+
+type Plan = {
+  id: number
+  range: string
+  discount_percentage: number
+  pay_every_n_months: number
+  months_count: number
 }

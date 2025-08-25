@@ -59,6 +59,12 @@ export const RideGroupTrackerRGList = ({ searchParams }: Props) => {
               <span className='text-gray-700 font-semibold text-sm'>{t("inviteCode")}</span>
               <span className='text-gray-700 font-semibold text-sm'>{rg.invite_code || "N/A"}</span>
             </li>
+            {rg.driver && (
+              <li className='flex items-center justify-between'>
+                <span className='text-gray-700 font-semibold text-sm'>{t("driver")}</span>
+                <span className='text-gray-700 font-semibold text-sm'>{rg.driver?.name || "N/A"}</span>
+              </li>
+            )}
           </ul>
         </div>
       ))}

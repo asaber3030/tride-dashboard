@@ -49,7 +49,8 @@ export function ChatMessages({ chatRoomId, type }: ChatMessagesProps) {
     onSuccess: () => {
       if (messageRef?.current) messageRef.current.value = ""
     },
-    onError: () => {
+    onError: (error) => {
+      toast.error(error?.message || "Failed to send message")
       console.error("Failed to send message")
     }
   })

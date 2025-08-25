@@ -1,6 +1,7 @@
 import { Button } from "../ui/button"
 
 type Props = {}
+
 export const Pagination = ({}: Props) => {
   return (
     <div className='flex items-center justify-between'>

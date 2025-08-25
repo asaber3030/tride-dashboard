@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react"
 import { Socket } from "socket.io-client"
-import { getSocket } from "@/lib/socket"
+import { initializeSocket, disconnectSocket } from "@/lib/socket"
 
 type SocketContextType = {
   socket: Socket | null
@@ -17,35 +17,37 @@ const SocketContext = createContext<SocketContextType>({
 export const useSocketContext = () => useContext(SocketContext)
 
 export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [socket] = useState(() => getSocket())
-  const [isConnected, setIsConnected] = useState(socket.connected)
+  const [socket, setSocket] = useState<Socket | null>(null)
+  const [isConnected, setIsConnected] = useState(false)
 
   useEffect(() => {
-    socket.connect()
+    const newSocket = initializeSocket()
+    setSocket(newSocket)
+
+    newSocket.connect()
 
     const onConnect = () => {
       setIsConnected(true)
-      console.log("Socket connected: ", socket.id)
+      console.log("✅ Socket connected: ", newSocket.id)
     }
+
     const onDisconnect = () => {
       setIsConnected(false)
-      console.log("Socket disconnected")
+      console.log("🔌 Socket disconnected")
     }
 
-    socket.on("connect", onConnect)
-    socket.on("disconnect", onDisconnect)
-
-    socket.on("ack", (data) => {
-      console.log("Acknowledgment received: ", data)
-    })
-
-    console.log({ socket, isConnected })
+    newSocket.on("connect", onConnect)
+    newSocket.on("disconnect", onDisconnect)
 
     return () => {
-      socket.off("connect", onConnect)
-      socket.off("disconnect", onDisconnect)
+      console.log("🧹 Cleaning up socket.")
+      newSocket.off("connect", onConnect)
+      newSocket.off("disconnect", onDisconnect)
+      disconnectSocket()
+      setSocket(null)
+      setIsConnected(false)
     }
-  }, [socket])
+  }, [])
 
   return <SocketContext.Provider value={{ socket, isConnected }}>{children}</SocketContext.Provider>
 }

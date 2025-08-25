@@ -49,7 +49,7 @@ export function ChatInfo({ chatRoomId }: { chatRoomId: string }) {
             </>
           )}
           <div className=''>
-            <h3 className='text-sm font-medium'>{t("status")}</h3>
+            <h3 className='text-sm font-medium'>{t("active")}</h3>
             <p className='text-gray-700'>
               <Badge variant={data.is_active ? "success" : "destructive"}>{t(data.is_active ? "yes" : "no")}</Badge>
             </p>

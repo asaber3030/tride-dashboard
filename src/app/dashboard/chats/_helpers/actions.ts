@@ -81,19 +81,19 @@ export async function getChatRoomDetails(chatId: string): Promise<ChatRoom> {
 
 export async function sendTextMessageToChatAction(id: string, message: string) {
   try {
-    const url = `/messages/${id}/message`
+    const url = `/chat/messages/${id}/message`
     const request = await api<ChatMessage>("POST", url, { type: "text", message })
     return request.data
   } catch (error) {
     const err = error as ApiResponse<any>
-
-    throw new Error(err?.data?.data?.message || "Failed to send message to chat")
+    console.log(err)
+    throw new Error(err?.data?.message || "Failed to send message to chat")
   }
 }
 
 export async function sendMediaMessageToChatAction(id: string, media: FormData) {
   try {
-    const url = `${API_URL}/messages/${id}/media`
+    const url = `${API_URL}/chat/messages/${id}/media`
     const token = await getToken()
     const request = await axios.post(url, media, {
       headers: {

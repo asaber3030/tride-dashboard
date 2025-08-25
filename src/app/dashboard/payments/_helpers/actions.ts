@@ -3,7 +3,7 @@
 import { build } from "search-params"
 import { api } from "@/services/axios"
 
-import { SchoolSchema } from "@/schema/models"
+import { CreateParentSubscriptionSchema, SchoolSchema } from "@/schema/models"
 import { Payment, School } from "@/types/models"
 import { z } from "zod"
 import { formatDate } from "@/lib/utils"
@@ -65,5 +65,17 @@ export async function exportPaymentsToExcel(startDate: Date, endDate: Date) {
     console.error("Error exporting payments:", error)
     const err = error as ApiResponse<any>
     throw new Error(err?.data?.data?.message || "Failed to export payments")
+  }
+}
+
+export async function createParentCashAction(data: z.infer<typeof CreateParentSubscriptionSchema>) {
+  try {
+    const req = await api<any>("POST", `/payments/parents/create-cash`, data)
+    console.log(req)
+    return req
+  } catch (error) {
+    const err = error as ApiResponse<any>
+    console.error("Error creating cash payment:", error)
+    throw new Error(err?.data?.data?.message || "Failed to create cash payment")
   }
 }

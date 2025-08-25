@@ -27,3 +27,9 @@ export const CitySchema = z.object({
   name: z.string().min(1, "City name is required"),
   governorate_id: z.number().min(1, "Governorate is required")
 })
+
+export const CreateParentSubscriptionSchema = z.object({
+  parent_id: z.number().min(1, "Parent ID is required"),
+  ride_group_id: z.number().min(1, "Ride group ID is required"),
+  plan_id: z.number().min(1, "Plan ID is required")
+})

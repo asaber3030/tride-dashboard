@@ -3,7 +3,7 @@
 import { build } from "search-params"
 import { api } from "@/services/axios"
 
-import { FullRideGroup, Payment, RideGroupLocation } from "@/types/models"
+import { ChatRoom, FullRideGroup, InstanceLocation, Payment, RideGroup, RideGroupInstance, RideGroupLocation } from "@/types/models"
 
 type GetRideGroups = {
   pagination: {
@@ -24,6 +24,7 @@ export async function getRideGroupsPaginated(searchParams: TObject = {}) {
     const req = await api<GetRideGroups>("GET", url)
     return req.data
   } catch (error) {
+    console.error("Error fetching ride groups:", error)
     const err = error as ApiResponse<any>
     throw new Error(err?.data?.data?.message || "Failed to fetch ride groups")
   }
@@ -40,12 +41,48 @@ export async function getRideGroup(id: number) {
   }
 }
 
+export async function getRideGroupChat(id: number) {
+  try {
+    const url = `/manage/ride/groups/${id}/chat`
+    const req = await api<ChatRoom>("GET", url)
+    return req.data
+  } catch (error) {
+    console.error("Error fetching ride group chat:", error)
+    const err = error as ApiResponse<any>
+    throw new Error(err?.data?.message || "Failed to get group chat")
+  }
+}
+
 export async function getRideGroupLocations(id: number) {
   try {
     const url = `/manage/ride/groups/${id}/locations`
     const req = await api<{ locations: RideGroupLocation[] }>("GET", url)
     return req.data.locations
   } catch (error) {
+    const err = error as ApiResponse<any>
+    throw new Error(err?.data?.data?.message || "Failed to fetch group")
+  }
+}
+
+export async function getRideGroupInstances(id: number) {
+  try {
+    const url = `/manage/ride/groups/${id}/instances`
+    const req = await api<PaginatedData<RideGroupInstance>>("GET", url)
+    return req.data
+  } catch (error) {
+    console.error("Error fetching ride group instances:", error)
+    const err = error as ApiResponse<any>
+    throw new Error(err?.data?.data?.message || "Failed to fetch group")
+  }
+}
+
+export async function getRideGroupInstanceHistory(id: number, instanceId: number) {
+  try {
+    const url = `/manage/ride/groups/${id}/instances/${instanceId}`
+    const req = await api<{ instance: RideGroupInstance; locations: InstanceLocation[] }>("GET", url)
+    return req.data
+  } catch (error) {
+    console.error("Error fetching ride group instance history:", error)
     const err = error as ApiResponse<any>
     throw new Error(err?.data?.data?.message || "Failed to fetch group")
   }
@@ -75,5 +112,31 @@ export async function assignDriverToRideGroupAction(groupId: number, driverId: n
     const err = error as ApiResponse<any>
     console.log(error)
     throw new Error(err?.message || "Failed to assign driver to group")
+  }
+}
+
+export async function mergeManyRideGroups(ids: number[], destinationId: number) {
+  try {
+    const req = await api("PUT", `/manage/ride/group/merge/many`, {
+      group_src_list: ids,
+      group_dest: destinationId
+    })
+    return req
+  } catch (error) {
+    console.log(error)
+    const err = error as ApiResponse<any>
+    throw new Error(err?.message || "Failed to merge")
+  }
+}
+
+export async function createRideGroupChatAction(id: number) {
+  try {
+    const url = `/manage/ride/groups/${id}/chat`
+    const req = await api<ChatRoom>("POST", url)
+    return req
+  } catch (error) {
+    const err = error as ApiResponse<any>
+    console.error("Error creating ride group chat:", error)
+    throw new Error(err?.data?.message || "Failed to create group chat")
   }
 }

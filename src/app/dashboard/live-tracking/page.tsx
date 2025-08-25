@@ -1,21 +1,33 @@
+import { getRideGroupsPaginated } from "../ride-groups/_helpers/actions"
 import { hasAccessTo } from "@/actions/roles"
-import BusTrackingDashboard from "./_components/live-tracking-interface"
-
-import { Metadata } from "next"
 import { notFound } from "next/navigation"
+
+import { LiveTrackingRideGroupsList } from "./_components/all/list-ride-groups"
+import { SocketProvider } from "@/providers/ws.provider"
+import { FiltersSidebar } from "./_components/all/filters"
+import { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Live Tracking",
   description: "Live tracking of vehicles and assets"
 }
 
-export default async function Page() {
+type Props = {
+  searchParams: TSearchParams
+}
+
+export default async function Page({ searchParams }: Props) {
+  const sp = await searchParams
+
   const hasAccess = await hasAccessTo("Live Tracking")
   if (!hasAccess) return notFound()
 
+  const rideGroups = await getRideGroupsPaginated(sp)
+
   return (
-    <div className='min-h-screen bg-gray-50'>
-      <BusTrackingDashboard />
+    <div className='flex h-screen bg-gray-50'>
+      <FiltersSidebar rideGroupsLength={rideGroups.rideGroups.length} sp={sp} />
+      <LiveTrackingRideGroupsList rideGroups={rideGroups.rideGroups} sp={sp} />
     </div>
   )
 }

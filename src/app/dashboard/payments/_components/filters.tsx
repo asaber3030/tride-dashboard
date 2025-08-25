@@ -8,6 +8,7 @@ import { LoadingButton } from "@/components/common/loading-button"
 import { TableAction } from "@/components/common/table-action"
 import { DatePicker } from "@/components/common/date-picker"
 import { FileIcon } from "lucide-react"
+import { CreateParentSubscriptionForm } from "./create-subscription"
 
 export const PaymentsFilters = () => {
   const [startDate, setStartDate] = useState<Date | undefined>(undefined)
@@ -57,9 +58,12 @@ export const PaymentsFilters = () => {
       }
       className='mb-4'
     >
-      <LoadingButton icon={FileIcon} loading={mutation.isPending} onClick={handleExport}>
-        Export
-      </LoadingButton>
+      <div className='flex items-center gap-2'>
+        <LoadingButton icon={FileIcon} loading={mutation.isPending} onClick={handleExport}>
+          Export
+        </LoadingButton>
+        <CreateParentSubscriptionForm />
+      </div>
     </TableAction>
   )
 }

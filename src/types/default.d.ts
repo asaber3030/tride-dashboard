@@ -39,3 +39,11 @@ type TChatRoomType = "ride_group" | "private" | "customer_support"
 type TChatMessageStatus = "sent" | "delivered" | "read"
 type TChatMessageSender = "parent" | "driver" | "admin"
 type TGroupType = "premium" | "regular"
+type TRideGroupInstanceStatus = "active" | "started" | "ended"
+type TRideGroupInstanceType = "to_home" | "to_school"
+
+type SocketAck<T, P = string> = {
+  type: P
+  message: string
+  data: T
+}

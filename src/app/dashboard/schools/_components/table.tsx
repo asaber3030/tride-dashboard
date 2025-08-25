@@ -2,12 +2,13 @@
 
 import { usePaginatedSchools } from "../_helpers/hooks"
 
+import { SimplePagination } from "@/components/common/simple-pagination"
+import { SchoolsColumns } from "./columns"
 import { TableSkeleton } from "@/components/common/skeletons/table"
 import { DisplayError } from "@/components/common/error"
-import { DataTable } from "@/components/common/data-table"
-import { SchoolsColumns } from "./columns"
-import { SimplePagination } from "@/components/common/simple-pagination"
+import { ExportButton } from "@/components/common/export-button"
 import { TableAction } from "@/components/common/table-action"
+import { DataTable } from "@/components/common/data-table"
 import { LinkBtn } from "@/components/common/link-button"
 import { Plus } from "lucide-react"
 
@@ -29,6 +30,7 @@ export const SchoolsTable = ({ sp = {} }: Props) => {
         <LinkBtn href={routes.createSchool} icon={Plus}>
           Create
         </LinkBtn>
+        <ExportButton url='/school/export' fileName='schools' />
       </TableAction>
       <DataTable data={schools?.rows!} columns={SchoolsColumns} />
       <SimplePagination hasNextPage={schools?.hasNextPage!} hasPrevPage={schools?.hasPrevPage!} />

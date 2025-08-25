@@ -1,5 +1,5 @@
 import routes from "./routes"
-import { BarChart2, Car, UsersRound, FileText, MapPin, MessageSquare, CreditCard, School, LockIcon, BuildingIcon, ClipboardIcon, CarTaxiFront, TrainTrack } from "lucide-react"
+import { BarChart2, Car, UsersRound, FileText, MapPin, MessageSquare, CreditCard, School, LockIcon, BuildingIcon, ClipboardIcon, CarTaxiFront, TrainTrack, RotateCwIcon } from "lucide-react"
 
 export const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
@@ -14,6 +14,12 @@ export const ParentPaymentsStatus = {
   pending: "outlineYellow",
   paid: "outlineGreen",
   expired: "outlineRed"
+}
+
+export const MapIcons = {
+  driver: "/defaults/icons/driver.svg",
+  school: "/defaults/icons/school.svg",
+  checkpoint: "/defaults/icons/checkpoint.svg"
 }
 
 export const SettingsTabs = [
@@ -61,6 +67,11 @@ export const SidebarLinks = [
     name: "rideGroupsTracker",
     href: "/dashboard/ride-groups/tracker",
     icon: TrainTrack
+  },
+  {
+    name: "liveTracking",
+    href: "/dashboard/live-tracking",
+    icon: RotateCwIcon
   },
   {
     name: "admins.admins",

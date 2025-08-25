@@ -13,9 +13,16 @@ const routes = {
   updateSchool: (id: number): string => `/dashboard/schools/${id}`,
   drivers: "/dashboard/drivers",
   viewDriver: (id: number) => `/dashboard/drivers/${id}`,
+  liveTracking: {
+    index: "/dashboard/live-tracking",
+    single: (id: number): string => `/dashboard/live-tracking/${id}`,
+    singleHistory: (id: number): string => `/dashboard/live-tracking/${id}/history`,
+    instanceLocations: (id: number, instanceId: number): string => `/dashboard/live-tracking/${id}/history/${instanceId}`
+  },
   rideGroups: {
     index: "/dashboard/ride-groups",
     tracker: "/dashboard/ride-groups/tracker",
+    merge: "/dashboard/ride-groups/merge",
     view: (id: number): string => `/dashboard/ride-groups/${id}`
   },
   payments: (path?: string): string => (path ? `/dashboard/payments/${path}` : "/dashboard/payments"),
