@@ -64,10 +64,6 @@ export function RideGroupDetails({ rideGroupId }: RideGroupProps) {
                 <Badge variant='outline' className='text-sm'>
                   {capitalize(rideGroup?.group_type)}
                 </Badge>
-                <a className='text-sm flex gap-2 items-center text-blue-500 hover:underline' href='#'>
-                  <CopyIcon className='size-4' />
-                  {t("invitationLink")}
-                </a>
               </div>
             </div>
             <div className='text-right'>

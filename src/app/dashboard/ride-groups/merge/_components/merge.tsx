@@ -7,7 +7,7 @@ import { usePaginatedRideGroups } from "../../_helpers/hooks"
 import { useSearchParams } from "next/navigation"
 import { useState } from "react"
 
-import { cn, handleError, showResponse } from "@/lib/utils"
+import { handleError, showResponse } from "@/lib/utils"
 import { mergeManyRideGroups } from "../../_helpers/actions"
 import { toast } from "react-toastify"
 
@@ -63,6 +63,8 @@ export const MergeManyRideGroupsList = ({}: Props) => {
       showResponse(data, () => {
         qc.invalidateQueries({ queryKey: qk.rideGroups.paginated() })
         setOpen(false)
+        setSelectedIds([])
+        setDestinationId(undefined)
       }),
     onError: (error) => handleError(error)
   })
@@ -104,9 +106,12 @@ export const MergeManyRideGroupsList = ({}: Props) => {
                 <div className='flex items-center justify-between mb-4'>No ride groups found. Please adjust your filters.</div>
               ) : (
                 <div className='grid xl:grid-cols-4 grid-cols-1 gap-2'>
-                  {rideGroups?.rideGroups.map((item) => (
-                    <MergeSingleRideGroup group={item} selectedIds={selectedIds} onSelectId={onSelectId} key={`ride-group-item-${item.id}`} />
-                  ))}
+                  {rideGroups?.rideGroups
+                    .filter((t) => t.group_type == "regular")
+                    .filter((t) => t.current_seats_taken < 5)
+                    .map((item) => (
+                      <MergeSingleRideGroup group={item} selectedIds={selectedIds} onSelectId={onSelectId} key={`ride-group-item-${item.id}`} />
+                    ))}
                 </div>
               )}
             </div>
@@ -143,9 +148,12 @@ export const MergeManyRideGroupsList = ({}: Props) => {
                 <div className='flex items-center justify-between mb-4'>No ride groups found. Please adjust your filters.</div>
               ) : (
                 <div className='grid xl:grid-cols-4 grid-cols-1 gap-2'>
-                  {destinationRideGroups?.rideGroups.map((item) => (
-                    <MergeSingleDestinationRideGroup group={item} destinationId={destinationId} setDestinationId={setDestinationId} key={`ride-group-destination-${item.id}`} />
-                  ))}
+                  {destinationRideGroups?.rideGroups
+                    .filter((t) => t.group_type == "regular")
+                    .filter((t) => t.current_seats_taken < 5)
+                    .map((item) => (
+                      <MergeSingleDestinationRideGroup group={item} destinationId={destinationId} setDestinationId={setDestinationId} key={`ride-group-destination-${item.id}`} />
+                    ))}
                 </div>
               )}
             </div>
