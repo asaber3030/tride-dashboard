@@ -148,8 +148,7 @@ export async function mergeRideGroupAction(groupId: number, destinationId: numbe
     })
     return req
   } catch (error) {
-    const err = error as ApiResponse<any>
-    throw new Error(err?.message || "Failed to merge groups")
+    return error as ApiResponse<any>
   }
 }
 
@@ -174,9 +173,7 @@ export async function mergeManyRideGroups(ids: number[], destinationId: number) 
     })
     return req
   } catch (error) {
-    console.log(error)
-    const err = error as ApiResponse<any>
-    throw new Error(err?.message || "Failed to merge")
+    return error
   }
 }
 
