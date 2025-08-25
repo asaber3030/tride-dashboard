@@ -33,6 +33,8 @@ export const ChangeParentGroupStatus = ({ parentGroup }: Props) => {
   const qc = useQueryClient()
   const sub = useGroupSubscriptionOfParent(parentGroup.group.id, parentGroup.parent.id)
 
+  console.log({ sub })
+
   const form = useForm({
     resolver: zodResolver(UpdateParentGroupStatus),
     defaultValues: {

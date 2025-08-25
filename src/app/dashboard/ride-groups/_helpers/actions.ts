@@ -48,6 +48,7 @@ export async function getParentGroupSubscription(groupId: number, parentId: numb
   try {
     const url = `/manage/ride/groups/${groupId}/parent-groups/${parentId}/subscription`
     const req = await api<ParentGroupSubscription>("GET", url)
+    console.log(req.data)
     return req.data
   } catch (error) {
     console.error("Error fetching ride groups:", error)

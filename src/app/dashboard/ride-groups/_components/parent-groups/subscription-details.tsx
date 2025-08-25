@@ -39,6 +39,8 @@ export function SubscriptionDisplay({ parentGroup, sub }: SubscriptionDisplayPro
     return `${days} day${days > 1 ? "s" : ""}`
   }
 
+  if (!sub) return null
+
   return (
     <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
       {/* Subscription Status Card */}
@@ -92,38 +94,40 @@ export function SubscriptionDisplay({ parentGroup, sub }: SubscriptionDisplayPro
       </Card>
 
       {/* Plan & Timeline Card */}
-      <Card className='col-span-full md:col-span-2 lg:col-span-1 h-fit'>
-        <CardHeader>
-          <CardTitle className='flex items-center gap-2 text-lg'>
-            <CalendarDays className='h-5 w-5 text-primary' />
-            Plan & Timeline
-          </CardTitle>
-        </CardHeader>
-        <CardContent className='space-y-4'>
-          <div>
-            <span className='text-sm font-medium text-muted-foreground'>Parent Name</span>
-            <p className='font-semibold'>{sub.parent.name}</p>
-          </div>
-          <div>
-            <span className='text-sm font-medium text-muted-foreground'>Plan Duration</span>
-            <p className='font-semibold'>{sub.plan.months_count} months</p>
-          </div>
-          <div className='grid grid-cols-2 gap-4 pt-2'>
+      {sub.plan && (
+        <Card className='col-span-full md:col-span-2 lg:col-span-1 h-fit'>
+          <CardHeader>
+            <CardTitle className='flex items-center gap-2 text-lg'>
+              <CalendarDays className='h-5 w-5 text-primary' />
+              Plan & Timeline
+            </CardTitle>
+          </CardHeader>
+          <CardContent className='space-y-4'>
             <div>
-              <span className='text-xs text-muted-foreground'>Started</span>
-              <p className='text-sm font-medium'>{formatDate(sub.started_at)}</p>
+              <span className='text-sm font-medium text-muted-foreground'>Parent Name</span>
+              <p className='font-semibold'>{sub.parent.name}</p>
             </div>
             <div>
-              <span className='text-xs text-muted-foreground'>Valid Until</span>
-              <p className='text-sm font-medium'>{formatDate(sub.valid_until)}</p>
+              <span className='text-sm font-medium text-muted-foreground'>Plan Duration</span>
+              <p className='font-semibold'>{sub.plan.months_count} months</p>
             </div>
-          </div>
-          <div className='flex items-center gap-2 pt-2'>
-            <MapPin className='h-4 w-4 text-muted-foreground' />
-            <span className='text-sm'>{sub.pickup_days_count} pickup days</span>
-          </div>
-        </CardContent>
-      </Card>
+            <div className='grid grid-cols-2 gap-4 pt-2'>
+              <div>
+                <span className='text-xs text-muted-foreground'>Started</span>
+                <p className='text-sm font-medium'>{formatDate(sub.started_at)}</p>
+              </div>
+              <div>
+                <span className='text-xs text-muted-foreground'>Valid Until</span>
+                <p className='text-sm font-medium'>{formatDate(sub.valid_until)}</p>
+              </div>
+            </div>
+            <div className='flex items-center gap-2 pt-2'>
+              <MapPin className='h-4 w-4 text-muted-foreground' />
+              <span className='text-sm'>{sub.pickup_days_count} pickup days</span>
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   )
 }
