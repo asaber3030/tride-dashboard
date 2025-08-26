@@ -2,7 +2,7 @@
 set -e
 
 APP_NAME="tride_dashboard"
-CONTAINER_NAME="dashbord"
+CONTAINER_NAME="dashboard"
 BRANCH="main"
 
 echo "🔄 Pulling latest changes from GitHub..."
