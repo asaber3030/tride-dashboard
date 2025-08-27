@@ -53,7 +53,7 @@ export async function loginAction({ data, rememberMe = true, deviceToken = " ", 
     })
     return request
   } catch (error: any) {
-    throw new Error(error?.message || "An error occurred during login")
+    return error as ApiResponse<any>
   }
 }
 
@@ -68,7 +68,7 @@ export async function updatePersonalInformationAction(data: z.infer<typeof Updat
     const request = await api<{}>("PATCH", "/admins/me", data)
     return request
   } catch (error: any) {
-    throw new Error(error?.message || "An error occurred during personal information update")
+    return error as ApiResponse<any>
   }
 }
 
@@ -77,7 +77,7 @@ export async function updatePasswordAction(data: z.infer<typeof UpdatePasswordSc
     const request = await api<{}>("PATCH", "/admins/me", data)
     return request
   } catch (error: any) {
-    throw new Error(error?.message || "An error occurred during password update")
+    return error as ApiResponse<any>
   }
 }
 
@@ -93,6 +93,6 @@ export async function updatePictureAction(file: File | undefined) {
     })
     return request.data
   } catch (error: any) {
-    throw new Error(error?.message || "An error occurred during picture update")
+    return error as ApiResponse<any>
   }
 }
