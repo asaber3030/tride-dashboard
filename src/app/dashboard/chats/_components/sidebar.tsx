@@ -61,7 +61,7 @@ export function ChatSidebar({ type, sp }: ChatSidebarProps) {
   }, [stateMemo])
 
   return (
-    <div className='flex flex-col h-full'>
+    <div className='flex-col h-full hidden xl:flex'>
       <div className='border-gray-200'>
         <form className='relative' onSubmit={submitSearch}>
           <Search className='absolute left-2.5 top-2.5 h-4 w-4 text-gray-400' />

@@ -34,34 +34,14 @@ export const SidebarLinks = [
     icon: BarChart2
   },
   {
+    name: "admins.admins",
+    href: "/dashboard/admins",
+    icon: LockIcon
+  },
+  {
     name: "rideGroups",
     href: "/dashboard/ride-groups",
     icon: Car
-  },
-  {
-    name: "drivers",
-    href: "/dashboard/drivers",
-    icon: CarTaxiFront
-  },
-  {
-    name: "parents",
-    href: "/dashboard/parents",
-    icon: UsersRound
-  },
-  /*   {
-    name: "liveTracking",
-    href: "/dashboard/live-tracking",
-    icon: MapPin
-  }, */
-  {
-    name: "chats",
-    href: "/dashboard/chats/customer_support",
-    icon: MessageSquare
-  },
-  {
-    name: "payments",
-    href: "/dashboard/payments",
-    icon: CreditCard
   },
   {
     name: "rideGroupsTracker",
@@ -74,24 +54,42 @@ export const SidebarLinks = [
     icon: RotateCwIcon
   },
   {
-    name: "admins.admins",
-    href: "/dashboard/admins",
-    icon: LockIcon
+    name: "drivers",
+    href: "/dashboard/drivers",
+    icon: CarTaxiFront
   },
   {
-    name: "schools",
-    href: "/dashboard/schools",
-    icon: School
+    name: "parents",
+    href: "/dashboard/parents",
+    icon: UsersRound
+  },
+
+  {
+    name: "chats",
+    href: "/dashboard/chats/customer_support",
+    icon: MessageSquare
+  },
+  {
+    name: "payments",
+    href: "/dashboard/payments",
+    icon: CreditCard
+  },
+
+  {
+    name: "governorates",
+    href: "/dashboard/governorates",
+    icon: LockIcon
   },
   {
     name: "cities",
     href: "/dashboard/cities",
     icon: BuildingIcon
   },
+
   {
-    name: "governorates",
-    href: "/dashboard/governorates",
-    icon: LockIcon
+    name: "schools",
+    href: "/dashboard/schools",
+    icon: School
   }
 ]
 

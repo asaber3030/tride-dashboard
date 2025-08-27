@@ -17,6 +17,8 @@ type Props = {
 export const RideGroupsTable = ({ sp }: Props) => {
   const { data: rideGroups, isLoading, isError, error } = usePaginatedRideGroups(sp)
 
+  console.log(rideGroups)
+
   if (isLoading) return <TableSkeleton />
   if (isError) return <DisplayError error={error} />
 
@@ -25,8 +27,8 @@ export const RideGroupsTable = ({ sp }: Props) => {
       <TableAction className='justify-end w-full block'>
         <RideGroupFilters sp={sp} />
       </TableAction>
-      <DataTable data={rideGroups?.rideGroups!} columns={RideGroupColumns} />
-      <SimplePagination hasNextPage={!!rideGroups?.pagination?.nextPage} hasPrevPage={!!rideGroups?.pagination?.lastPage} />
+      <DataTable data={rideGroups?.rows!} columns={RideGroupColumns} />
+      <SimplePagination hasNextPage={rideGroups?.hasNextPage} hasPrevPage={rideGroups?.hasPrevPage} />
     </div>
   )
 }

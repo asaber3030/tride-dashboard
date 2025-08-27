@@ -22,12 +22,12 @@ export const RideGroupTrackerRGList = ({ searchParams }: Props) => {
 
   if (isLoading || isRefetching) return <LoadingState />
   if (isError) return <ErrorState error={error} />
-  if (!rideGroups || rideGroups?.rideGroups?.length === 0) return <EmptyState />
+  if (!rideGroups || rideGroups?.rows?.length === 0) return <EmptyState />
 
   return (
     <div className='space-y-2'>
       <Label>{t("allRideGroups")}</Label>
-      {rideGroups?.rideGroups?.map((rg) => (
+      {rideGroups?.rows?.map((rg) => (
         <div onClick={() => setRideGroupId(rg.id)} key={`ride_group_${rg.id}`} className={cn("p-2 bg-white rounded-lg cursor-pointer space-y-4 hover:bg-gray-50 select-none border-2 border-transparent", rideGroupId == rg.id && "border-2 border-blue-300")}>
           <div className='flex gap-2 items-center'>
             <div className='bg-yellow-50 size-12 rounded-full flex items-center justify-center'>

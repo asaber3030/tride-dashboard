@@ -27,7 +27,6 @@ export async function getUserDetails(id: number, type: string) {
     throw new Error(err?.data?.data?.message || "Failed to fetch user details")
   }
 }
-
 export async function exportToExcel(url: string) {
   try {
     const req = await fetch(`${API_URL}/${url}`, {
@@ -36,11 +35,23 @@ export async function exportToExcel(url: string) {
         Authorization: `Bearer ${(await getToken()) || ""}`
       }
     })
+
+    if (!req.ok) {
+      let errorMessage = "Failed to export data"
+      try {
+        const errJson = await req.json()
+        errorMessage = errJson?.data?.message || errorMessage
+      } catch {
+        errorMessage = req.statusText || errorMessage
+      }
+      throw new Error(errorMessage)
+    }
+
     const data = await req.blob()
     return data
   } catch (error) {
     console.error("Error exporting data:", error)
-    const err = error as ApiResponse<any>
+    const err = error as Error
     throw new Error(err?.message || "Failed to export data")
   }
 }

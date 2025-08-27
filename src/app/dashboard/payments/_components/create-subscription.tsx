@@ -1,47 +1,47 @@
 "use client"
 
 import { CreateParentSubscriptionSchema } from "@/schema/models"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { useForm } from "react-hook-form"
-import { createParentCashAction } from "../_helpers/actions"
-import { z } from "zod"
-import { handleError, showResponse } from "@/lib/utils"
-
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button"
+import { usePaginatedRideGroups } from "../../ride-groups/_helpers/hooks"
+import { usePaginatedParents } from "../../parents/_helpers/hooks"
 import { useTranslations } from "next-intl"
-import { Plus } from "lucide-react"
-import { Form } from "@/components/ui/form"
-import { SelectField } from "@/components/common/form/select-field"
-import { SelectItem } from "@/components/ui/select"
 import { usePlans } from "../../plans/_helpers/hooks"
 import { useState } from "react"
-import { usePaginatedParents } from "../../parents/_helpers/hooks"
+import { useForm } from "react-hook-form"
+
+import { cn, handleError, showResponse } from "@/lib/utils"
+import { createParentCashAction } from "../_helpers/actions"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { SearchableData } from "@/components/common/form/searchable-data"
-import { usePaginatedRideGroups } from "../../ride-groups/_helpers/hooks"
-import { LoadingButton } from "@/components/common/loading-button"
 import { DefaultLoading } from "@/components/common/loader"
+import { LoadingButton } from "@/components/common/loading-button"
+import { SelectField } from "@/components/common/form/select-field"
+import { SelectItem } from "@/components/ui/select"
 import { ErrorLabel } from "@/components/common/error-label"
+import { Button } from "@/components/ui/button"
+import { Check, Plus } from "lucide-react"
+import { Form } from "@/components/ui/form"
+import { InputField } from "@/components/common/form/input-field"
 
-type Props = {}
-
-export const CreateParentSubscriptionForm = ({}: Props) => {
-  const [dialog, setDialog] = useState<boolean>(false)
-  const [searchParents, setSearchParents] = useState<string>("")
-  const [searchRideGroups, setSearchRideGroups] = useState<string>("")
-
-  const qc = useQueryClient()
+export const CreateParentSubscriptionForm = () => {
   const t = useTranslations()
   const form = useForm({
     resolver: zodResolver(CreateParentSubscriptionSchema),
     defaultValues: {
       parent_id: 0,
       ride_group_id: 0,
-      plan_id: 0
+      plan_id: 0,
+      started_at: new Date()
     }
   })
+
+  const [dialog, setDialog] = useState<boolean>(false)
+  const [searchParents, setSearchParents] = useState<string>("")
+  const [searchRideGroups, setSearchRideGroups] = useState<string>("")
+  const [useDefaultPlan, setUseDefaultPlan] = useState<boolean>(false)
 
   const createMutation = useMutation({
     mutationFn: (data: z.infer<typeof CreateParentSubscriptionSchema>) => createParentCashAction(data),
@@ -58,7 +58,10 @@ export const CreateParentSubscriptionForm = ({}: Props) => {
   const { data: rideGroups, isLoading: isRideGroupsLoading, isRefetching: isRideGroupsRefetching, isError: isRideGroupsHasError, error: rideGroupsError } = usePaginatedRideGroups({ name: searchParents })
 
   const handleSubmit = () => {
-    createMutation.mutate(form.getValues())
+    createMutation.mutate({
+      ...form.getValues(),
+      default: useDefaultPlan
+    })
   }
 
   return (
@@ -115,7 +118,7 @@ export const CreateParentSubscriptionForm = ({}: Props) => {
               <ErrorLabel>{rideGroupsError?.message || "Something went wrong"}</ErrorLabel>
             ) : (
               <SearchableData
-                data={rideGroups?.rideGroups?.map((group) => ({
+                data={rideGroups?.rows?.map((group) => ({
                   id: group.id,
                   label: group.group_name
                 }))}
@@ -127,6 +130,14 @@ export const CreateParentSubscriptionForm = ({}: Props) => {
                 formItem='ride_group_id'
               />
             )}
+
+            <div className={cn("border p-2 flex gap-2 items-center px-4 rounded-md font-medium w-fit cursor-pointer select-none text-sm", useDefaultPlan && "bg-green-500")} onClick={() => setUseDefaultPlan((old) => !old)}>
+              {useDefaultPlan && <Check size={14} />}
+              Use Plan Months ?
+            </div>
+
+            <InputField name='started_at' type='date' defaultValue={new Date().toISOString().split("T")[0]} field={form.register("started_at", { valueAsDate: true })} label='Start' />
+            <InputField name='valid_until' type='date' defaultValue={new Date().toISOString().split("T")[0]} field={form.register("valid_until", { valueAsDate: true })} label='Valid Until' />
 
             <LoadingButton loading={createMutation.isPending}>{t("submit")}</LoadingButton>
           </form>

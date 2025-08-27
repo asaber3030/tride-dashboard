@@ -102,11 +102,11 @@ export const MergeManyRideGroupsList = ({}: Props) => {
             <DefaultLoading />
           ) : (
             <div>
-              {rideGroups?.rideGroups.length === 0 ? (
+              {rideGroups?.rows.length === 0 ? (
                 <div className='flex items-center justify-between mb-4'>No ride groups found. Please adjust your filters.</div>
               ) : (
                 <div className='grid xl:grid-cols-4 grid-cols-1 gap-2'>
-                  {rideGroups?.rideGroups
+                  {rideGroups?.rows
                     .filter((t) => t.group_type == "regular")
                     .filter((t) => t.current_seats_taken < 5)
                     .map((item) => (
@@ -144,11 +144,11 @@ export const MergeManyRideGroupsList = ({}: Props) => {
             <DefaultLoading />
           ) : (
             <div>
-              {destinationRideGroups?.rideGroups.length === 0 ? (
+              {destinationRideGroups?.rows.length === 0 ? (
                 <div className='flex items-center justify-between mb-4'>No ride groups found. Please adjust your filters.</div>
               ) : (
                 <div className='grid xl:grid-cols-4 grid-cols-1 gap-2'>
-                  {destinationRideGroups?.rideGroups
+                  {destinationRideGroups?.rows
                     .filter((t) => t.group_type == "regular")
                     .filter((t) => t.current_seats_taken < 5)
                     .map((item) => (

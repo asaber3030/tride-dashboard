@@ -1,19 +1,25 @@
+import routes from "@/lib/routes"
+
 import { capitalize, formatToEGP } from "@/lib/utils"
 
-import { ParentPaymentsStatus } from "@/lib/lists"
-import { ColumnDef } from "@tanstack/react-table"
-import { FullRideGroup, Payment } from "@/types/models"
-import { Badge } from "@/components/ui/badge"
-import { LinkBtn } from "@/components/common/link-button"
-import { DollarSign, Eye, Users2 } from "lucide-react"
-import routes from "@/lib/routes"
-import { MergeGroupModal } from "./merge-groups-modal"
 import { CreateChatForRideGroupModal } from "./create-chat-modal"
+import { MergeGroupModal } from "./merge-groups-modal"
+import { FullRideGroup } from "@/types/models"
+import { Eye, Users2 } from "lucide-react"
+import { ColumnDef } from "@tanstack/react-table"
+import { LinkBtn } from "@/components/common/link-button"
 
 export const RideGroupColumns: ColumnDef<FullRideGroup>[] = [
   {
     accessorKey: "id",
     header: "ID"
+  },
+  {
+    accessorKey: "parent.name",
+    header: "Parent",
+    cell: ({ row }) => {
+      return <div>{row.original.parentGroups?.[0]?.parent?.name || "N/A"}</div>
+    }
   },
   {
     accessorKey: "group_name",
@@ -42,13 +48,7 @@ export const RideGroupColumns: ColumnDef<FullRideGroup>[] = [
       return <div>{formatToEGP(row.original.parent_group_subscription[0]?.total_amount || "0")}</div>
     }
   },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => {
-      return <Badge variant={ParentPaymentsStatus[row.original.status as keyof typeof ParentPaymentsStatus] || ("outlineGray" as any)}>{capitalize(row.original.status || "unknown")}</Badge>
-    }
-  },
+
   {
     accessorKey: "actions",
     header: "Actions",

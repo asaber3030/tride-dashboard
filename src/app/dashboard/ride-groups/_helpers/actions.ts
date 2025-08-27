@@ -5,23 +5,11 @@ import { api } from "@/services/axios"
 
 import { ChatRoom, FullRideGroup, InstanceLocation, ParentGroup, ParentGroupSubscription, Payment, RideGroup, RideGroupInstance, RideGroupLocation } from "@/types/models"
 
-type GetRideGroups = {
-  pagination: {
-    page: number
-    nextPage: number | null
-    lastPage: number | null
-    itemCount: number
-    totalPages: number
-    totalItems: number
-  }
-  rideGroups: FullRideGroup[]
-}
-
 export async function getRideGroupsPaginated(searchParams: TObject = {}) {
   try {
     const sp = build(searchParams)
     const url = `/manage/ride/groups?${sp}`
-    const req = await api<GetRideGroups>("GET", url)
+    const req = await api<PaginatedData<FullRideGroup>>("GET", url)
     return req.data
   } catch (error) {
     console.error("Error fetching ride groups:", error)
@@ -64,9 +52,7 @@ export async function updateParentGroupStatus(groupId: number, parentId: number,
     console.dir(req.data, { depth: null })
     return req
   } catch (error) {
-    console.error("Error updating parent group status", error)
-    const err = error as ApiResponse<any>
-    throw new Error(err?.data?.message || "failed to updated")
+    return error as ApiResponse<any>
   }
 }
 
@@ -76,9 +62,7 @@ export async function updateParentGroupSubscriptionStatus(groupId: number, paren
     const req = await api<any>("PATCH", url, { status })
     return req.data
   } catch (error) {
-    console.error("Error updating parent group subscription status", error)
-    const err = error as ApiResponse<any>
-    throw new Error(err?.data?.message || "Error updating parent group subscription status")
+    return error as ApiResponse<any>
   }
 }
 
@@ -160,9 +144,7 @@ export async function assignDriverToRideGroupAction(groupId: number, driverId: n
     })
     return req
   } catch (error) {
-    const err = error as ApiResponse<any>
-    console.log(error)
-    throw new Error(err?.message || "Failed to assign driver to group")
+    return error as ApiResponse<any>
   }
 }
 
@@ -174,7 +156,7 @@ export async function mergeManyRideGroups(ids: number[], destinationId: number) 
     })
     return req
   } catch (error) {
-    return error
+    return error as ApiResponse<any>
   }
 }
 
@@ -185,7 +167,6 @@ export async function createRideGroupChatAction(id: number) {
     return req
   } catch (error) {
     const err = error as ApiResponse<any>
-    console.error("Error creating ride group chat:", error)
-    throw new Error(err?.data?.message || "Failed to create group chat")
+    return err
   }
 }

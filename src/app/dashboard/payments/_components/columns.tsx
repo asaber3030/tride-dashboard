@@ -34,7 +34,10 @@ export const PaymentsColumns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: "rideGroup.group_type",
-    header: "Group Type"
+    header: "Group Type",
+    cell: ({ row }) => {
+      return <div className='capitalize'>{row.original.rideGroup.group_type}</div>
+    }
   },
   {
     accessorKey: "rideGroup.school.school_name",

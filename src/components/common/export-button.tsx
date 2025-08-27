@@ -8,10 +8,11 @@ import { toast } from "react-toastify"
 
 import { LoadingButton } from "@/components/common/loading-button"
 import { FileIcon } from "lucide-react"
+import { Button } from "../ui/button"
 
-type Props = { url: string; fileName?: string }
+type Props = { disabled?: boolean; url: string; fileName?: string }
 
-export const ExportButton = ({ url, fileName = "data" }: Props) => {
+export const ExportButton = ({ disabled, url, fileName = "data" }: Props) => {
   const t = useTranslations()
 
   const mutation = useMutation({
@@ -41,9 +42,18 @@ export const ExportButton = ({ url, fileName = "data" }: Props) => {
   }
 
   return (
-    <LoadingButton loading={mutation.isPending} variant='outline' onClick={handleExport}>
-      <FileIcon className='mr-2 h-4 w-4' />
-      {t("export")}
-    </LoadingButton>
+    <>
+      {disabled ? (
+        <Button variant='outline' disabled>
+          <FileIcon className='mr-2 h-4 w-4' />
+          {t("export")}
+        </Button>
+      ) : (
+        <LoadingButton loading={mutation.isPending} variant='outline' onClick={handleExport}>
+          <FileIcon className='mr-2 h-4 w-4' />
+          {t("export")}
+        </LoadingButton>
+      )}
+    </>
   )
 }

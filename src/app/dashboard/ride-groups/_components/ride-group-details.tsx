@@ -9,8 +9,9 @@ import { RideGroupLoading } from "./ride-group-details-loader"
 import { DisplayError } from "@/components/common/error"
 import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
-import { capitalize } from "@/lib/utils"
+import { capitalize, cn } from "@/lib/utils"
 import { useTranslations } from "next-intl"
+import { useEffect } from "react"
 
 interface RideGroupProps {
   rideGroupId: number
@@ -18,7 +19,7 @@ interface RideGroupProps {
 
 export function RideGroupDetails({ rideGroupId }: RideGroupProps) {
   const t = useTranslations()
-  const { data: rideGroup, isLoading, error, isError } = useRideGroup(rideGroupId)
+  const { data: rideGroup, isLoading, error, isError, refetch } = useRideGroup(rideGroupId)
 
   const getStatusColor = (status: string) => {
     switch (status?.toLowerCase()) {
@@ -49,6 +50,10 @@ export function RideGroupDetails({ rideGroupId }: RideGroupProps) {
     })
   }
 
+  useEffect(() => {
+    refetch()
+  }, [rideGroupId])
+
   if (isLoading) return <RideGroupLoading />
   if (!rideGroup) return <div className='p-6 text-center text-gray-500'>Loading ride group details...</div>
   if (isError) return <DisplayError error={error} />
@@ -77,59 +82,61 @@ export function RideGroupDetails({ rideGroupId }: RideGroupProps) {
         </CardHeader>
       </Card>
 
-      <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
-        <Card>
-          <CardHeader>
-            <CardTitle className='flex items-center gap-2'>
-              <Car className='w-5 h-5' />
-              {t("driverInformation")}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className='space-y-4'>
-            <div className='flex items-center gap-4'>
-              <Avatar className='w-16 h-16'>
-                <AvatarImage src={rideGroup?.driver?.profile_pic || "/placeholder.svg"} alt={rideGroup?.driver?.name} />
-                <AvatarFallback>{rideGroup?.driver?.name.charAt(0)}</AvatarFallback>
-              </Avatar>
-              <div className='space-y-1'>
-                <h3 className='font-semibold text-lg'>{rideGroup?.driver?.name}</h3>
-                <div className='flex items-center gap-2 text-sm text-gray-600'>
-                  <Phone className='w-4 h-4' />
-                  {rideGroup?.driver?.phone}
+      {rideGroup?.driver && (
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+          <Card>
+            <CardHeader>
+              <CardTitle className='flex items-center gap-2'>
+                <Car className='w-5 h-5' />
+                {t("driverInformation")}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className='space-y-4'>
+              <div className='flex items-center gap-4'>
+                <Avatar className='w-16 h-16'>
+                  <AvatarImage src={rideGroup?.driver?.profile_pic || "/placeholder.svg"} alt={rideGroup?.driver?.name} />
+                  <AvatarFallback>{rideGroup?.driver?.name.charAt(0)}</AvatarFallback>
+                </Avatar>
+                <div className='space-y-1'>
+                  <h3 className='font-semibold text-lg'>{rideGroup?.driver?.name}</h3>
+                  <div className='flex items-center gap-2 text-sm text-gray-600'>
+                    <Phone className='w-4 h-4' />
+                    {rideGroup?.driver?.phone}
+                  </div>
+                  <div className='text-sm text-gray-600'>{t("driverLicense", { license: rideGroup?.driver?.license_number })}</div>
                 </div>
-                <div className='text-sm text-gray-600'>{t("driverLicense", { license: rideGroup?.driver?.license_number })}</div>
               </div>
-            </div>
-            <div className='flex items-start gap-2 text-sm'>
-              <MapPin className='w-4 h-4 mt-0.5 text-gray-500' />
-              <span className='text-gray-600'>{rideGroup?.driver?.formatted_address}</span>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className='h-fit'>
-          <CardHeader>
-            <CardTitle className='flex items-center gap-2'>
-              <School className='w-5 h-5' />
-              {t("schoolInformation")}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className='space-y-3'>
-              <h3 className='font-semibold text-lg'>{rideGroup?.school?.school_name}</h3>
               <div className='flex items-start gap-2 text-sm'>
                 <MapPin className='w-4 h-4 mt-0.5 text-gray-500' />
-                <span className='text-gray-600 flex gap-2 items-center'>
-                  {t("viewLocation")}:{" "}
-                  <a href='#' className='flex gap-2'>
-                    <MapIcon className='size-4' /> {t("googleMaps")}
-                  </a>
-                </span>
+                <span className='text-gray-600'>{rideGroup?.driver?.formatted_address}</span>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+            </CardContent>
+          </Card>
+
+          <Card className='h-fit'>
+            <CardHeader>
+              <CardTitle className='flex items-center gap-2'>
+                <School className='w-5 h-5' />
+                {t("schoolInformation")}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className='space-y-3'>
+                <h3 className='font-semibold text-lg'>{rideGroup?.school?.school_name}</h3>
+                <div className='flex items-start gap-2 text-sm'>
+                  <MapPin className='w-4 h-4 mt-0.5 text-gray-500' />
+                  <span className='text-gray-600 flex gap-2 items-center'>
+                    {t("viewLocation")}:{" "}
+                    <a href='#' className='flex gap-2'>
+                      <MapIcon className='size-4' /> {t("googleMaps")}
+                    </a>
+                  </span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
 
       {rideGroup?.parent_group_subscription?.length > 0 && (
         <Card>
@@ -144,7 +151,7 @@ export function RideGroupDetails({ rideGroupId }: RideGroupProps) {
               {rideGroup?.parent_group_subscription?.map((subscription) => (
                 <div key={subscription.id} className='border rounded-lg p-4 space-y-3'>
                   <div className='flex items-center justify-between'>
-                    <Badge className={getStatusColor(subscription.status)}>{subscription.status}</Badge>
+                    <Badge className={cn(getStatusColor(subscription.status), "capitalize")}>{subscription.status}</Badge>
                     <span className='font-semibold text-lg'>${subscription.total_amount}</span>
                   </div>
                   <div className='space-y-2 text-sm'>
@@ -186,7 +193,7 @@ export function RideGroupDetails({ rideGroupId }: RideGroupProps) {
                   <div className='flex items-center gap-4 mb-4'>
                     <Avatar className='w-12 h-12'>
                       <AvatarImage src={parentGroup.parent?.profile_pic || "/placeholder.svg"} alt={parentGroup.parent?.name} />
-                      <AvatarFallback>{parentGroup.parent?.name.charAt(0)}</AvatarFallback>
+                      <AvatarFallback>{parentGroup.parent?.name?.charAt(0)}</AvatarFallback>
                     </Avatar>
                     <div className='flex-1'>
                       <div className='flex items-center gap-3'>
@@ -214,7 +221,7 @@ export function RideGroupDetails({ rideGroupId }: RideGroupProps) {
                       </div>
                     </div>
                     <div className='text-right'>
-                      <div className='text-sm font-medium'>{parentGroup.current_seats_taken} seats</div>
+                      <div className='text-sm font-medium'>{parentGroup?.current_seats_taken} seats</div>
                     </div>
                   </div>
 
@@ -231,15 +238,15 @@ export function RideGroupDetails({ rideGroupId }: RideGroupProps) {
                             <div key={childDetail.id} className='bg-gray-50 rounded-lg p-3'>
                               <div className='flex items-center gap-3'>
                                 <Avatar className='w-8 h-8'>
-                                  <AvatarImage src={childDetail.child.profile_pic || "/placeholder.svg"} alt={childDetail.child.name} />
-                                  <AvatarFallback className='text-xs'>{childDetail.child.name.charAt(0)}</AvatarFallback>
+                                  <AvatarImage src={childDetail?.child?.profile_pic || "/placeholder.svg"} alt={childDetail?.child?.name} />
+                                  <AvatarFallback className='text-xs'>{childDetail?.child?.name.charAt(0)}</AvatarFallback>
                                 </Avatar>
                                 <div className='flex-1'>
-                                  <div className='font-medium text-sm'>{childDetail.child.name}</div>
-                                  <div className='text-xs text-gray-600'>Grade {childDetail.child.grade}</div>
+                                  <div className='font-medium text-sm'>{childDetail?.child?.name}</div>
+                                  <div className='text-xs text-gray-600'>Grade {childDetail?.child?.grade}</div>
                                   <div className='flex items-center gap-2 text-xs text-gray-500'>
                                     <Clock className='w-3 h-3' />
-                                    {formatTime(childDetail.timing_from)} - {formatTime(childDetail.timing_to)}
+                                    {formatTime(childDetail?.timing_from)} - {formatTime(childDetail?.timing_to)}
                                   </div>
                                 </div>
                               </div>

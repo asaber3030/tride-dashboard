@@ -105,7 +105,7 @@ export const ChangeParentGroupStatus = ({ parentGroup }: Props) => {
               </SelectField>
             )}
 
-            <LoadingButton loading={subMutation.isPending || groupMutation.isPending}>Submit</LoadingButton>
+            {!sub.data ? <p className='text-red-500'>Please create a subscription first to be able to change this group status!</p> : <LoadingButton loading={subMutation.isPending || groupMutation.isPending}>Submit</LoadingButton>}
           </form>
         </Form>
       </DialogContent>

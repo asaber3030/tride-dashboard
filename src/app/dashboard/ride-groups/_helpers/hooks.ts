@@ -30,7 +30,8 @@ export function useGroupSubscriptionOfParent(groupId: number, parentId: number) 
 export function useRideGroup(id: number) {
   return useQuery({
     queryKey: qk.rideGroups.single(id),
-    queryFn: ({ queryKey }) => getRideGroup(queryKey[1] as number)
+    queryFn: ({ queryKey }) => getRideGroup(queryKey[1] as number),
+    retry: false
   })
 }
 

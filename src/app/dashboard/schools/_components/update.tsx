@@ -77,8 +77,8 @@ export const UpdateSchoolForm = ({ school }: { school: School }) => {
         <InputField name='school_name' label={t("name")} field={form.register("school_name")} error={form.formState?.errors?.school_name} />
 
         <div className='grid xl:grid-cols-2 grid-cols-1 gap-2'>
-          <InputField disabled name='lat' label={t("latitude")} field={form.register("lat")} error={form.formState?.errors?.lat} type='number' step='any' />
-          <InputField disabled name='lng' label={t("longitude")} field={form.register("lng")} error={form.formState?.errors?.lng} type='number' step='any' />
+          <InputField name='lat' label={t("latitude")} field={form.register("lat")} error={form.formState?.errors?.lat} type='number' step='any' />
+          <InputField name='lng' label={t("longitude")} field={form.register("lng")} error={form.formState?.errors?.lng} type='number' step='any' />
         </div>
 
         <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY}>

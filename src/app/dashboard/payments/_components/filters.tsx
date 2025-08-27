@@ -9,44 +9,13 @@ import { TableAction } from "@/components/common/table-action"
 import { DatePicker } from "@/components/common/date-picker"
 import { FileIcon } from "lucide-react"
 import { CreateParentSubscriptionForm } from "./create-subscription"
+import { ExportButton } from "@/components/common/export-button"
 
 export const PaymentsFilters = () => {
   const [startDate, setStartDate] = useState<Date | undefined>(undefined)
   const [endDate, setEndDate] = useState<Date | undefined>(undefined)
 
-  const mutation = useMutation({
-    mutationFn: async ({ startDate, endDate }: { startDate: Date; endDate: Date }) => {
-      const blob = await exportPaymentsToExcel(startDate, endDate)
-      const url = window.URL.createObjectURL(blob)
-
-      const link = document.createElement("a")
-      link.href = url
-      link.setAttribute("download", "payments.xlsx")
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-
-      window.URL.revokeObjectURL(url)
-    },
-    onSuccess: () => {
-      toast.success("Payments exported successfully!")
-    },
-    onError: (error: Error) => {
-      toast.error(`Failed to export payments: ${error.message}`)
-    }
-  })
-
-  const handleExport = () => {
-    if (!startDate || !endDate) {
-      toast.error("Please select both start and end dates.")
-      return
-    }
-
-    mutation.mutate({
-      startDate,
-      endDate
-    })
-  }
+  const url = `payments/export/all?${`from=${startDate?.toLocaleDateString("en-CA")}`}${`&to=${endDate?.toLocaleDateString("en-CA")}`}`
 
   return (
     <TableAction
@@ -59,9 +28,7 @@ export const PaymentsFilters = () => {
       className='mb-4'
     >
       <div className='flex items-center gap-2'>
-        <LoadingButton icon={FileIcon} loading={mutation.isPending} onClick={handleExport}>
-          Export
-        </LoadingButton>
+        <ExportButton disabled={!startDate || !endDate} url={url} />
         <CreateParentSubscriptionForm />
       </div>
     </TableAction>

@@ -487,5 +487,11 @@
   "Subscriptions": "Subscriptions",
   "Parent ID": "Parent ID",
   "Valid Until": "Valid Until",
-  "parentGroupsOfRideGroupId": "Parent Groups of Ride Group ID: #{id}"
+  "parentGroupsOfRideGroupId": "Parent Groups of Ride Group ID: #{id}",
+  "salary": "Salary",
+  "issuedFor": "Issued For",
+  "createDriverPaymentTitle": "Create Driver Payment",
+  "createDriverPaymentDescription": "Create driver payment and assign a salary",
+  "updateDriverPaymentTitle": "Update Driver Payment",
+  "updateDriverPaymentDescription": "Update driver payment and assign a salary"
 }

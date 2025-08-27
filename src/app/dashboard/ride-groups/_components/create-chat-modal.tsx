@@ -24,13 +24,14 @@ type Props = {
 export const CreateChatForRideGroupModal = ({ children, group }: Props) => {
   const qc = useQueryClient()
 
-  const { data: chat, isLoading: isChatLoading } = useRideGroupChat(group.id)
+  const { data: chat, isLoading: isChatLoading, refetch } = useRideGroupChat(group.id)
 
   const mutation = useMutation({
     mutationFn: () => createRideGroupChatAction(group.id),
     onSuccess: (data) =>
       showResponse(data, () => {
         qc.invalidateQueries({ queryKey: qk.rideGroups.singleChat(group.id) })
+        refetch()
       }),
     onError: (error) => handleError(error)
   })

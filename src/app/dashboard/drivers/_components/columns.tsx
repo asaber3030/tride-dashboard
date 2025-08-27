@@ -6,8 +6,9 @@ import { Driver } from "@/types/models"
 import { ColumnDef } from "@tanstack/react-table"
 import { UpdateDriverStatusModal } from "./change-status-modal"
 import { LinkBtn } from "@/components/common/link-button"
-import { Eye } from "lucide-react"
+import { DollarSign, Eye } from "lucide-react"
 import routes from "@/lib/routes"
+import { CreateDriverPaymentModal } from "./payments/create-payment"
 
 export const DriversColumns: ColumnDef<Driver>[] = [
   {
@@ -78,6 +79,8 @@ export const DriversColumns: ColumnDef<Driver>[] = [
       return (
         <div className='flex items-center gap-2'>
           {row.original.papers && <UpdateDriverStatusModal currentStatus={!!row.original.papers?.approved} driverId={row.original.id} />}
+          <CreateDriverPaymentModal driverId={row.original.id} />
+          <LinkBtn icon={DollarSign} href={routes.viewDriverPayment(row.original.id)} size='icon' variant='outline' />
           <LinkBtn icon={Eye} href={routes.viewDriver(row.original.id)} size='icon' variant='outline' />
         </div>
       )

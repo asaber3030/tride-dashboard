@@ -42,7 +42,7 @@ export function formatToEGP(amount: string): string {
 }
 
 export function capitalize(str: string): string {
-  return str.replace(/_/g, " ").replace(/\b\w/g, (char) => char.toUpperCase())
+  return str?.replace(/_/g, " ")?.replace(/\b\w/g, (char) => char.toUpperCase())
 }
 
 export function checkLanguage(locale: string): TLanguage {

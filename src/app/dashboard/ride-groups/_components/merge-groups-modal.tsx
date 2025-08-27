@@ -86,10 +86,12 @@ export const MergeGroupModal = ({ rideGroup }: Props) => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)}>
             <SearchableData
-              data={data?.rideGroups.map((group) => ({
-                id: group.id,
-                label: group.group_name
-              }))}
+              data={data?.rows
+                .filter((group) => group.id != rideGroup.id)
+                .map((group) => ({
+                  id: group.id,
+                  label: group.group_name
+                }))}
               search={search}
               setSearch={setSearch}
               label={t("mergeGroupsLabel")}
@@ -99,17 +101,7 @@ export const MergeGroupModal = ({ rideGroup }: Props) => {
               form={form}
               formItem='groupId'
             />
-            <Button
-              type='button'
-              onClick={() => {
-                console.log({
-                  errors: form.formState.errors,
-                  data: form.getValues()
-                })
-              }}
-            >
-              Show
-            </Button>
+
             <LoadingButton loading={mutation.isPending} className='w-full'>
               {t("mergeGroupsButton")}
             </LoadingButton>

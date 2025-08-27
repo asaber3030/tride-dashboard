@@ -75,7 +75,6 @@ export async function createParentCashAction(data: z.infer<typeof CreateParentSu
     return req
   } catch (error) {
     const err = error as ApiResponse<any>
-    console.error("Error creating cash payment:", error)
-    throw new Error(err?.data?.data?.message || "Failed to create cash payment")
+    return err
   }
 }

@@ -29,7 +29,8 @@ const qk = {
   },
   drivers: {
     paginated: (sp: TObject = {}) => ["drivers", "paginated", sp],
-    single: (driverId: number) => ["drivers", driverId]
+    single: (driverId: number) => ["drivers", driverId],
+    singlePayments: (driverId: number, searchParams: TObject = {}) => ["drivers", driverId, "payments", searchParams]
   },
   parents: {
     paginated: (sp: TObject = {}) => ["parents", "paginated", sp],

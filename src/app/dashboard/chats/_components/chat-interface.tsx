@@ -12,7 +12,7 @@ type Props = {
 
 export function SingleChatInterface({ chatRoomId, type, sp }: Props) {
   return (
-    <div className='flex h-screen bg-white border py-2 rounded-md'>
+    <div className='xl:flex h-screen bg-white border py-2 rounded-md'>
       <div className={"block w-[340px] border-r border-gray-200 px-2"}>
         <ChatSidebar type={type} sp={sp} />
       </div>

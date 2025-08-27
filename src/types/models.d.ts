@@ -330,6 +330,16 @@ type DriverPapers = {
   face_auth_complete: number
 }
 
+type DriverPayment = {
+  id: number
+  driver_id: number
+  salary: number
+  issued_for: string
+  issued_at: string
+  status: "paid" | "pending"
+  driver: Driver
+}
+
 type DriverAccount = {
   id: number
   email: string

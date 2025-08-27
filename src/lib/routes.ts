@@ -13,6 +13,7 @@ const routes = {
   updateSchool: (id: number): string => `/dashboard/schools/${id}`,
   drivers: "/dashboard/drivers",
   viewDriver: (id: number) => `/dashboard/drivers/${id}`,
+  viewDriverPayment: (id: number) => `/dashboard/drivers/${id}/payments`,
   liveTracking: {
     index: "/dashboard/live-tracking",
     single: (id: number): string => `/dashboard/live-tracking/${id}`,
@@ -25,7 +26,7 @@ const routes = {
     merge: "/dashboard/ride-groups/merge",
     view: (id: number): string => `/dashboard/ride-groups/${id}`,
     viewParentGroups: (id: number): string => `/dashboard/ride-groups/${id}/parent-groups`,
-    viewParentGroup: (id: number, parentGroupId: number): string => `/dashboard/ride-groups/${id}/parent-groups/${parentGroupId}`,
+    viewParentGroup: (id: number, parentGroupId: number): string => `/dashboard/ride-groups/${id}/parent-groups/${parentGroupId}`
   },
   payments: (path?: string): string => (path ? `/dashboard/payments/${path}` : "/dashboard/payments"),
   viewPayment: (id: number): string => `/dashboard/payments/${id}`,
