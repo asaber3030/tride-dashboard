@@ -22,7 +22,9 @@ export function useLogin() {
     mutationFn: ({ data, accountType, redirectUrl, rememberMe, deviceToken }: TMut) => loginAction({ data, rememberMe, accountType, deviceToken, redirectUrl }),
     onSuccess: (data) =>
       showResponse(data, () => {
-        router.push(routes.dashboard)
+        if (data.status === 200) {
+          router.push(routes.dashboard)
+        }
       }),
     onError: (error) => handleError(error)
   })
