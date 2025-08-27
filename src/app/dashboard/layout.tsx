@@ -1,9 +1,15 @@
+import { getUserDetails } from "@/actions/app"
+import { getUser } from "@/actions/auth"
 import { DashboardSidebar } from "@/components/app/sidebar"
 import { getLocale } from "next-intl/server"
+import { redirect } from "next/navigation"
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const locale = await getLocale()
   const isArabic = locale === "ar"
+
+  const user = await getUser()
+  if (!user) return redirect("/login")
 
   return (
     <div className='min-h-screen bg-gray-50'>
