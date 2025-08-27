@@ -8,11 +8,11 @@ BRANCH="main"
 echo "🔄 Pulling latest changes from GitHub..."
 git pull origin $BRANCH
 
-echo "🐳 Building new Docker image..."
-docker build -t $APP_NAME .
-
 echo "🛑 Stopping old container (if exists)..."
 docker rm -f $CONTAINER_NAME || true
+
+echo "🐳 Building new Docker image..."
+docker build -t $APP_NAME .
 
 echo "🚀 Starting new container..."
 docker run -d -p 3000:3000 --name $CONTAINER_NAME $APP_NAME
