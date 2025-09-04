@@ -1,5 +1,5 @@
 import routes from "./routes"
-import { BarChart2, Car, UsersRound, FileText, MapPin, MessageSquare, CreditCard, School, LockIcon, BuildingIcon, ClipboardIcon, CarTaxiFront, TrainTrack, RotateCwIcon } from "lucide-react"
+import { BarChart2, Car, UsersRound, FileText, MapPin, MessageSquare, CreditCard, School, LockIcon, BuildingIcon, ClipboardIcon, CarTaxiFront, TrainTrack, RotateCwIcon, Rotate3D } from "lucide-react"
 
 export const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
@@ -51,7 +51,7 @@ export const SidebarLinks = [
   {
     name: "rideGroupsMerge",
     href: "/dashboard/ride-groups/merge",
-    icon: TrainTrack
+    icon: Rotate3D
   },
   {
     name: "liveTracking",

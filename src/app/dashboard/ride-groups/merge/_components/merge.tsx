@@ -69,6 +69,8 @@ export const MergeManyRideGroupsList = ({}: Props) => {
     type: "regular"
   })
 
+  console.log({ rideGroups })
+
   const {
     data: destinationRideGroups,
     isLoading: isDestinationLoading,

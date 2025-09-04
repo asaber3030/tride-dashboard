@@ -194,6 +194,7 @@ export type FullRideGroup = {
   group_plan_id: number | null
   creator: {
     id: number
+    name: string
   }
   parent_group_subscription: {
     id: number

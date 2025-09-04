@@ -17,6 +17,9 @@ export const MergeSingleDestinationRideGroup = ({ destinationId, group, setDesti
           <Separator className='my-1' />
           <ul className='space-y-1'>
             <li className='text-sm text-muted-foreground capitalize flex items-center justify-between'>
+              <span className='font-semibold'>Parent:</span> <span>{group.creator?.name || "N/A"}</span>
+            </li>
+            <li className='text-sm text-muted-foreground capitalize flex items-center justify-between'>
               <span className='font-semibold'>ID:</span> <span>{group.id}</span>
             </li>
             <li className='text-sm text-muted-foreground capitalize flex items-center justify-between'>
