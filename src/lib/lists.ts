@@ -49,6 +49,11 @@ export const SidebarLinks = [
     icon: TrainTrack
   },
   {
+    name: "rideGroupsMerge",
+    href: "/dashboard/ride-groups/merge",
+    icon: TrainTrack
+  },
+  {
     name: "liveTracking",
     href: "/dashboard/live-tracking",
     icon: RotateCwIcon

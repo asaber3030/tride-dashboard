@@ -35,9 +35,10 @@ export const MergeGroupModal = ({ rideGroup }: Props) => {
 
   const [search, setSearch] = useState<string>("")
   const [open, setOpen] = useState<boolean>(false)
+  const [debouncedSearch] = useState<string>(search)
 
   const { data, isLoading, isRefetching } = usePaginatedRideGroups({
-    name: search.trim()
+    name: debouncedSearch
   })
 
   const form = useForm({
@@ -84,7 +85,7 @@ export const MergeGroupModal = ({ rideGroup }: Props) => {
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)}>
+          <form onSubmit={form.handleSubmit(handleSubmit)} className='space-y-2'>
             <SearchableData
               data={data?.rows
                 .filter((group) => group.id != rideGroup.id)

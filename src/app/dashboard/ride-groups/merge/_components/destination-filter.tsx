@@ -21,7 +21,9 @@ export const MergeManyRideGroupsDestinationFilters = ({}: Props) => {
   const [searchGroups, setSearchGroups] = useState<string>(sp.get("name") || "")
   const [selectedSchool, setSelectedSchool] = useState<string>("")
 
-  const { data: schools, isLoading: isSchoolsLoading, isRefetching: isSchoolsRefetching, isError: isSchoolsHasError, error: schoolsError } = usePaginatedSchools()
+  const [debouncedSearchSchools] = useState<string>(searchSchools)
+
+  const { data: schools, isLoading: isSchoolsLoading, isRefetching: isSchoolsRefetching, isError: isSchoolsHasError, error: schoolsError } = usePaginatedSchools({ name: debouncedSearchSchools })
 
   const onSubmitFilters = () => {
     const query = build({
@@ -37,7 +39,7 @@ export const MergeManyRideGroupsDestinationFilters = ({}: Props) => {
   }
 
   return (
-    <div className='flex gap-2 items-end justify-end'>
+    <div className='flex gap-2 flex-wrap justify-end items-center'>
       <div className='space-y-2 w-[350px]'>
         <Label>Search by name or id</Label>
         <Input value={searchGroups} onChange={(e) => setSearchGroups(e.target.value)} placeholder='Search by name or id' className='w-full' type='text' />

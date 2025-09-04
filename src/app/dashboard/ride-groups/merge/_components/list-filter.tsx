@@ -22,7 +22,15 @@ export const MergeManyRideGroupsFilters = ({}: Props) => {
   const [searchGroupsId, setSearchGroupsId] = useState<string>(sp.get("ride_group_id") || "")
   const [selectedSchool, setSelectedSchool] = useState<string>("")
 
-  const { data: schools, isLoading: isSchoolsLoading, isRefetching: isSchoolsRefetching, isError: isSchoolsHasError, error: schoolsError } = usePaginatedSchools()
+  const {
+    data: schools,
+    isLoading: isSchoolsLoading,
+    isRefetching: isSchoolsRefetching,
+    isError: isSchoolsHasError,
+    error: schoolsError
+  } = usePaginatedSchools({
+    name: searchSchools
+  })
 
   const onSubmitFilters = () => {
     const query = build({
@@ -39,7 +47,7 @@ export const MergeManyRideGroupsFilters = ({}: Props) => {
 
   return (
     <div className='flex gap-2 items-end justify-end'>
-      <div className='flex gap-2'>
+      <div className='flex gap-2 flex-wrap justify-end items-center'>
         <div className='space-y-2 w-[450px]'>
           <Label>Search for ride groups</Label>
           <Input value={searchGroups} onChange={(e) => setSearchGroups(e.target.value)} placeholder='Search by name' className='w-full' type='text' />
