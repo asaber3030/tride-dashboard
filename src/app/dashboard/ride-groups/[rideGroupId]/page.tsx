@@ -20,7 +20,7 @@ export default async function RideGroupsPage({ params, searchParams }: Props) {
   if (!hasAccess) return notFound()
 
   return (
-    <div className='p-6'>
+    <div>
       <PageHeader title={t("rideGroups")} description={t("rideGroupsDescription")} />
       <RideGroupDetails rideGroupId={+rideGroupId} />
     </div>

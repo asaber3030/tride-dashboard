@@ -16,7 +16,7 @@ export default async function CitiesPage({ searchParams }: Props) {
   if (!user || user.role?.role_name != "super admin") return notFound()
 
   return (
-    <div className='p-6'>
+    <div>
       <PageHeader title={t("cities")} description={t("citiesDescription")} />
       <CitiesTable sp={sp} />
     </div>

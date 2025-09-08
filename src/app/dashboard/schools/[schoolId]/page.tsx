@@ -24,7 +24,7 @@ export default async function UpdateSchoolPage({ params }: Props) {
   if (!school) return notFound()
 
   return (
-    <div className='p-6'>
+    <div>
       <PageHeader title={t("schoolsSchema.updateTitle")} description={t("schoolsSchema.updateDescription")} />
       <UpdateSchoolForm school={school} />
     </div>

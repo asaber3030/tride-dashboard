@@ -13,10 +13,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 export function SingleRideGroupDetails({ rideGroup }: { rideGroup: FullRideGroup }) {
   return (
-    <Card className='rounded-2xl shadow-md border bg-white h-fit'>
+    <Card className='rounded-2xl shadow-md border bg-white'>
       <CardHeader className='flex items-center justify-between'>
         <CardTitle className='text-xl font-semibold'>{rideGroup.group_name}</CardTitle>
-        <Badge className={`px-3 py-1 rounded-full capitalize ${rideGroup.status === "active" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"}`}>{rideGroup.status}</Badge>
       </CardHeader>
 
       <CardContent className='space-y-6'>

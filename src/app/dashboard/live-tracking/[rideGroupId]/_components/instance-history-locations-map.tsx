@@ -4,13 +4,19 @@ import { MapWrapper } from "@/components/common/map-wrapper"
 import { DEFAULT_COORDINATES } from "@/lib/constants"
 import { InstanceLocation } from "@/types/models"
 import { GoogleMap, Marker, Polyline } from "@react-google-maps/api"
+import { TriangleAlert } from "lucide-react"
 
 type Props = {
   locations: InstanceLocation[]
 }
 
 export const InstanceLocationsHistory = ({ locations }: Props) => {
-  if (locations.length === 0) return <p>No Locations Found</p>
+  if (locations.length === 0)
+    return (
+      <p className='text-lg text-red-500 font-semibold flex gap-2 items-center'>
+        <TriangleAlert className='size-4' /> No Locations Found
+      </p>
+    )
   return (
     <MapWrapper>
       <GoogleMap center={{ lat: locations[0].lat, lng: locations[0].lng }} zoom={12} mapContainerStyle={{ width: "100%", height: "100vh" }}>

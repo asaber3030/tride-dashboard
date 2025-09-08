@@ -49,7 +49,7 @@ export const PaymentsColumns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: "plan.months_count",
-    header: "Plan Montions"
+    header: "Plan Months"
   },
   {
     accessorKey: "status",

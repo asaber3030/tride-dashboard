@@ -17,7 +17,7 @@ type Props = {
 export const RideGroupTrackerRGList = ({ searchParams }: Props) => {
   const t = useTranslations()
 
-  const { data: rideGroups, isLoading, isRefetching, isError, error } = usePaginatedRideGroups(searchParams)
+  const { data: rideGroups, isLoading, isRefetching, isError, error } = usePaginatedRideGroups({ ...searchParams, name: searchParams.search })
   const { rideGroupId, setRideGroupId } = useRideGroupTrackerStore()
 
   if (isLoading || isRefetching) return <LoadingState />

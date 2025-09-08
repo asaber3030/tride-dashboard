@@ -27,7 +27,7 @@ export default async function ParentGroups({ searchParams, params }: Props) {
   if (isNaN(Number(rideGroupId))) return notFound()
 
   return (
-    <div className='p-6'>
+    <div>
       <PageHeader title={t("parentGroupsOfRideGroupId", { id: rideGroupId })} description={t("rideGroupsDescription")} />
       <div className='overflow-x-auto'>
         <ParentGroupsTable rideGroupId={+rideGroupId} sp={sp} />

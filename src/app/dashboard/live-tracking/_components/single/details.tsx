@@ -50,11 +50,11 @@ export const SingleRideGroupTrackingDetails = ({ group }: Props) => {
               </div>
               <div>
                 <p className='font-medium'>{group.driver?.name}</p>
-                <p className='text-sm text-muted-foreground'>{group.driver.phone}</p>
+                <p className='text-sm text-muted-foreground'>{group.driver?.phone || "N/A"}</p>
               </div>
             </div>
             <div className='bg-muted/30 rounded-lg p-3 border shadow-sm'>
-              <p className='text-sm text-muted-foreground'>{group.driver.formatted_address}</p>
+              <p className='text-sm text-muted-foreground'>{group.driver?.formatted_address || "N/A"}</p>
             </div>
           </div>
         ) : (
@@ -88,7 +88,7 @@ export const SingleRideGroupTrackingDetails = ({ group }: Props) => {
           <div className='grid grid-cols-2 gap-2'>
             {group.dayDates.map((day) => (
               <div key={day.id} className='bg-accent/50 rounded-lg p-2 text-center border shadow-sm'>
-                <p className='text-xs font-medium text-accent-foreground'>{day.date_day}</p>
+                <p className='text-xs font-medium text-accent-foreground capitalize'>{day.date_day}</p>
               </div>
             ))}
           </div>

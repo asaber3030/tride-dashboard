@@ -17,7 +17,7 @@ export default async function RequestsPage() {
   if (!hasAccess) return notFound()
 
   return (
-    <div className='p-6'>
+    <div>
       <PageHeader title={t("driversRequests")} description={t("driversRequestsDescription")} />
       <RequestsTable />
     </div>

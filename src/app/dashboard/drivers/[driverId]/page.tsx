@@ -9,7 +9,7 @@ export default async function DriverDocumentsPage({ params }: Props) {
   const id = +driverId
 
   return (
-    <div className='p-6'>
+    <div>
       <DriverDocuments driverId={id} />
     </div>
   )

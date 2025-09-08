@@ -14,7 +14,7 @@ export default async function AdminsPage({ searchParams }: Props) {
   if (!user || user.role?.role_name != "super admin") return notFound()
 
   return (
-    <div className='p-6'>
+    <div>
       <PageHeader title='Admins' description='Manage available Admins and control actions & filter.' />
       <AdminsTable sp={sp} />
     </div>

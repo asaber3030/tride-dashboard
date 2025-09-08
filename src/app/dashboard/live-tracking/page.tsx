@@ -6,6 +6,7 @@ import { LiveTrackingRideGroupsList } from "./_components/all/list-ride-groups"
 import { SocketProvider } from "@/providers/ws.provider"
 import { FiltersSidebar } from "./_components/all/filters"
 import { Metadata } from "next"
+import { PageHeader } from "@/components/dashboard/page-header"
 
 export const metadata: Metadata = {
   title: "Live Tracking",
@@ -25,9 +26,13 @@ export default async function Page({ searchParams }: Props) {
   const rideGroups = await getRideGroupsPaginated(sp)
 
   return (
-    <div className='flex h-screen bg-gray-50 gap-4'>
-      <FiltersSidebar rideGroupsLength={rideGroups.rideGroups.length} sp={sp} />
-      <LiveTrackingRideGroupsList rideGroups={rideGroups.rideGroups} sp={sp} />
+    <div>
+      <PageHeader hasSearch={false} title='Live Tracking' description='Start Live Tracking All Rides.' />
+
+      <div className='flex h-screen bg-gray-50 gap-4'>
+        <FiltersSidebar rideGroupsLength={rideGroups.rows.length} sp={sp} />
+        <LiveTrackingRideGroupsList rideGroups={rideGroups.rows} sp={sp} />
+      </div>
     </div>
   )
 }

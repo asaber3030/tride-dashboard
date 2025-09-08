@@ -17,7 +17,7 @@ export default async function TripsPage() {
   if (!hasAccess) return notFound()
 
   return (
-    <div className='p-6'>
+    <div>
       <PageHeader title={t("trips")} description={t("tripsDescription")} />
       <TripsTable />
     </div>

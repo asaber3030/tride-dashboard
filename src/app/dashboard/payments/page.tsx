@@ -16,7 +16,7 @@ export default async function PaymentsPage({ searchParams }: Props) {
   if (!hasAccess) return notFound()
 
   return (
-    <div className='p-6'>
+    <div>
       <PageHeader title={t("payments")} description={t("paymentsDescription")} />
       <div className='overflow-x-auto'>
         <PaymentsTable sp={sp} />

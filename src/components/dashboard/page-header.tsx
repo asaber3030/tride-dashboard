@@ -13,9 +13,9 @@ type Props = {
   className?: ClassValue
 }
 
-export const PageHeader = ({ title, description, actions, hasSearch = true, className }: Props) => {
+export const PageHeader = ({ title, description, actions, hasSearch = false, className }: Props) => {
   return (
-    <div className={cn("mb-10 flex flex-col gap-4", className)}>
+    <div className={cn("mb-10 flex flex-col gap-4 bg-white shadow-sm rounded-md p-4", className)}>
       <div className='flex xl:flex-row flex-col gap-4 xl:items-center justify-between'>
         <div>
           <h1 className='text-xl font-medium'>{title}</h1>
@@ -28,7 +28,7 @@ export const PageHeader = ({ title, description, actions, hasSearch = true, clas
           {actions}
         </div>
       </div>
-      <SearchBar />
+      {hasSearch && <SearchBar />}
     </div>
   )
 }

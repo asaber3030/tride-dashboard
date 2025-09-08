@@ -17,7 +17,7 @@ export default async function ParentsPage({ searchParams }: Props) {
   const sp = await searchParams
 
   return (
-    <div className='p-6'>
+    <div>
       <PageHeader title={t("parents")} description={t("parentsDescription")} />
       <ParentsTable sp={sp} />
     </div>

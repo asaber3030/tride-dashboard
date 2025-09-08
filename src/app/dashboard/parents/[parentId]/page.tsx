@@ -12,10 +12,10 @@ export default async function DriverDocumentsPage({ params }: Props) {
   const t = await getTranslations()
   const id = +parentId
 
-  if (isNaN(id)) return <div className='p-6'>Invalid Parent ID</div>
+  if (isNaN(id)) return <div>Invalid Parent ID</div>
 
   return (
-    <div className='p-6'>
+    <div>
       <PageHeader title={t("parents")} description={t("parentsDescription")} />
       <ParentDetails parentId={id} />
     </div>

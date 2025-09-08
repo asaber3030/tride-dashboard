@@ -17,7 +17,7 @@ export default async function SchoolPage({ searchParams }: Props) {
   if (!hasAccess) return notFound()
 
   return (
-    <div className='p-6'>
+    <div>
       <PageHeader title={t("schools")} description={t("schoolsDescription")} />
       <SchoolsTable sp={sp} />
     </div>

@@ -22,7 +22,7 @@ export default async function DriversPage({ searchParams }: Props) {
   if (!user || user.role?.role_name != "super admin") return notFound()
 
   return (
-    <div className='p-6'>
+    <div>
       <PageHeader title={t("drivers")} description={t("driversDescription")} />
       <DriversTable sp={sp} />
     </div>

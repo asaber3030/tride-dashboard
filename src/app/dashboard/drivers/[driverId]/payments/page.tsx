@@ -13,7 +13,7 @@ export default async function DriverPaymentsPage({ searchParams, params }: Props
   const id = +driverId
 
   return (
-    <div className='p-6'>
+    <div>
       <PageHeader title='Driver Payments' description='Manage driver payments' />
       <DriverPaymentTable driverId={id} sp={sp} />
     </div>

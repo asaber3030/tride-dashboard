@@ -12,7 +12,7 @@ export default async function CreateSchoolPage() {
   if (!hasAccess) return notFound()
 
   return (
-    <div className='p-6'>
+    <div>
       <PageHeader title={t("schoolsSchema.createTitle")} description={t("schoolsSchema.createDescription")} />
       <CreateSchoolForm />
     </div>

@@ -12,7 +12,7 @@ export default async function ViewPaymentDetails({ params }: Props) {
   const id = +paymentId
 
   return (
-    <div className='p-6'>
+    <div>
       <PageHeader title={"View Details"} description={"View All payment details and its history"} />
       <div className='overflow-x-auto'>
         <PaymentDetails id={id} />
